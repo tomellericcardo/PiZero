@@ -8,6 +8,8 @@ from json import dumps
 app = Flask(__name__)
 zero = Zero(g)
 
+app.debug = True
+
 
 # OPERAZIONI DI SESSIONE
 
