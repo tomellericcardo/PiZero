@@ -1,0 +1,119 @@
+/*** FONTS ***/
+
+p, h1, button {
+    font-family: 'Roboto', sans-serif;
+}
+
+i {
+    vertical-align: middle;
+}
+
+
+/*** LINKS ***/
+
+a:link, a:visited {
+    text-decoration: none;
+    color: #2196f3;
+}
+
+a:hover, a:active {
+    text-decoration: none;
+    color: #4caf50;
+}
+
+
+/*** HEADER **/
+
+header {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+body {
+    padding-top: 60px;
+}
+
+
+/*** INPUTS ***/
+
+input:focus {
+    outline: none;
+}
+
+input::placeholder, textarea::placeholder {
+    opacity: 1;
+    color: #989898;
+}
+
+
+/*** BOTTONI ***/
+
+.w3-btn {
+    border-radius: 3px;
+    box-shadow: 0 4px 6px 1px rgba(0,0,0,0.2);
+}
+
+.bottone_circolare {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 55px;
+    height: 55px;
+    padding-top: 15px;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+.bottone_header {
+    cursor: pointer;
+}
+
+
+/*** SPAZIATORI ***/
+
+.vuoto {
+    height: 60vh;
+}
+
+#spazio {
+    height: 100px;
+}
+
+
+/*** MODALS ***/
+
+.w3-modal {
+    padding-top: 25vh;
+}
+
+.w3-modal-content {
+    max-width: 450px;
+}
+
+.sfondo_modal {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+
+/*** CARICAMENTO ***/
+
+#caricamento {
+    display: none;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    font-size: 12px;
+    box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#attesa {
+    display: none;
+}

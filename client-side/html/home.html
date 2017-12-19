@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta charset="UTF-8">
+        
+        <!-- STYLES -->
+        <link rel="stylesheet" href="/css/w3.css">
+        <link rel="stylesheet" href="/css/style.css">
+        
+        <!-- FONTS -->
+        <link rel="stylesheet" href="/css/font.css">
+        <link rel="stylesheet" href="/css/icons.css">
+        
+        <!-- ANDROID -->
+        <link rel="manifest" href="/json/manifest.json">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" type="image/png" sizes="128x128" href="/img/icona.png">
+        <meta name="theme-color" content="#4caf50">
+        
+    </head>
+    <body>
+        
+        <!-- HEADER -->
+        <header class="w3-container w3-center w3-green ombra">
+            <h1 class="w3-xlarge">Home</h1>
+        </header>
+        
+        <!-- PAGINA -->
+        <div class="w3-row-padding w3-margin-top w3-white">
+            
+            <!-- CAMERA -->
+             <div id="camera" class="w3-col s6 m3 l2 w3-margin-top">
+                <div class="w3-card-4 padding-top w3-center w3-blue">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">photo_camera</i>
+                    <div class="w3-container">
+                        <p class="w3-large">Camera</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ALBUM -->
+             <div id="album" class="w3-col s6 m3 l2 w3-margin-top">
+                <div class="w3-card-4 padding-top w3-center w3-water">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">photo_library</i>
+                    <div class="w3-container">
+                        <p class="w3-large">Album</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DASHBOARD -->
+             <div id="dashboard" class="w3-col s6 m3 l2 w3-margin-top">
+                <div class="w3-card-4 padding-top w3-center w3-green">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">assessment</i>
+                    <div class="w3-container">
+                        <p class="w3-large">Dashboard</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- IMPOSTAZIONI -->
+             <div id="impostazioni" class="w3-col s6 m3 l2 w3-margin-top">
+                <div class="w3-card-4 padding-top w3-center w3-violet">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">settings</i>
+                    <div class="w3-container">
+                        <p class="w3-large">Impostazioni</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RIAVVIA -->
+             <div id="riavvia" class="w3-col s6 m3 l2 w3-margin-top">
+                <div class="w3-card-4 padding-top w3-center w3-amber w3-text-white">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">refresh</i>
+                    <div class="w3-container">
+                        <p class="w3-large">Riavvia</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SPEGNI -->
+             <div id="spegni" class="w3-col s6 m3 l2 w3-margin-top">
+                <div class="w3-card-4 padding-top w3-center w3-red">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">power_settings_new</i>
+                    <div class="w3-container">
+                        <p class="w3-large">Spegni</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- CONFERMA RIAVVIA -->
+        <div id="modal_riavvia" class="w3-modal">
+            <div id="sfondo_riavvia" class="sfondo_modal"></div>
+            <div class="w3-modal-content w3-card-8">
+                
+                <!-- HEADER -->
+                <div class="w3-container w3-indigo">
+                    <span id="chiudi_riavvia" class="w3-closebtn">&times;</span>
+                    <h1 class="w3-xlarge">Riavvia</h1>
+                </div>
+                
+                <!-- MESSAGGIO -->
+                <div class="w3-container w3-padding-bottom w3-white">
+                    <p>Sicuro di voler riavviare il sistema?</p>
+                    <button id="conferma_riavvia" class="w3-btn w3-margin-bottom w3-right w3-blue">Conferma</button>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- CONFERMA SPEGNI -->
+        <div id="modal_spegni" class="w3-modal">
+            <div id="sfondo_spegni" class="sfondo_modal"></div>
+            <div class="w3-modal-content w3-card-8">
+                
+                <!-- HEADER -->
+                <div class="w3-container w3-indigo">
+                    <span id="chiudi_spegni" class="w3-closebtn">&times;</span>
+                    <h1 class="w3-xlarge">Spegni</h1>
+                </div>
+                
+                <!-- MESSAGGIO -->
+                <div class="w3-container w3-padding-bottom w3-white">
+                    <p>Sicuro di voler arrestare il sistema?</p>
+                    <button id="conferma_spegni" class="w3-btn w3-margin-bottom w3-right w3-blue">Conferma</button>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- SCRIPTS -->
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/home.js"></script>
+        
+    </body>
+</html>

@@ -1,0 +1,17 @@
+{
+    "name": "PiZero",
+    "short_name": "PiZero",
+    "description": "Raspberry Pi Zero Wireless Project",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#4caf50",
+    "background_color": "#4caf50",
+    "icons": [
+        {
+            "src": "/img/icona.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        }
+    ]
+}

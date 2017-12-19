@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta charset="UTF-8">
+        
+        <!-- STYLES -->
+        <link rel="stylesheet" href="/css/w3.css">
+        <link rel="stylesheet" href="/css/style.css">
+        
+        <!-- FONTS -->
+        <link rel="stylesheet" href="/css/font.css">
+        <link rel="stylesheet" href="/css/icons.css">
+        
+        <!-- ANDROID -->
+        <link rel="manifest" href="/json/manifest.json">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" type="image/png" sizes="128x128" href="/img/icona.png">
+        <meta name="theme-color" content="#4caf50">
+        
+    </head>
+    <body>
+        
+        <!-- HEADER -->
+        <header class="w3-container w3-center w3-green ombra">
+            <i id="home" class="w3-margin w3-display-topleft material-icons bottone_header">arrow_back</i>
+            <h1 class="w3-xlarge">Dashboard</h1>
+        </header>
+        
+        <!-- TEMPERATURA -->
+        <div class="w3-container w3-center w3-white">
+            <p class="w3-text-grey">
+                <b><span id="temp" class="w3-xxlarge">0</span></b><span class="w3-xlarge">&deg;C</span>
+            </p>
+        </div>
+        
+        <!-- CONTATORI -->
+        <div class="w3-row-padding w3-white">
+            
+            <!-- CPU -->
+            <div class="w3-container w3-white">
+                <p class="w3-large">
+                    CPU <b><span id="cpu_perc" class="w3-right">0%</span></b>
+                </p>
+                <div class="w3-light-grey">
+                    <div id="cpu_bar" class="w3-red" style="width: 0px;">&nbsp;</div>
+                </div>
+            </div>
+            
+            <!-- RAM -->
+            <div class="w3-container w3-margin-top w3-white">
+                <p class="w3-large">
+                    RAM <b><span id="ram_perc" class="w3-right">0%</span></b>
+                </p>
+                <div class="w3-light-grey">
+                    <div id="ram_bar" class="w3-amber" style="width: 0px;">&nbsp;</div>
+                </div>
+                <p id="ram_stat" class="w3-text-grey"></p>
+            </div>
+            
+            <!-- SD -->
+            <div class="w3-container w3-white">
+                <p class="w3-large">
+                    SD <b><span id="sd_perc" class="w3-right">0%</span></b>
+                </p>
+                <div class="w3-light-grey">
+                    <div id="sd_bar" class="w3-blue" style="width: 0px;">&nbsp;</div>
+                </div>
+                <p id="sd_stat" class="w3-text-grey"></p>
+            </div>
+            
+        </div>
+        
+        <!-- ERRORE -->
+        <div id="errore" class="w3-modal">
+            <div id="sfondo_errore" class="sfondo_modal"></div>
+            <div class="w3-modal-content w3-card-8">
+                
+                <!-- HEADER -->
+                <div class="w3-container w3-red">
+                    <span id="chiudi_errore" class="w3-closebtn">&times;</span>
+                    <h1 class="w3-xlarge">Errore!</h1>
+                </div>
+                
+                <!-- MESSAGGIO -->
+                <div class="w3-container w3-padding-bottom w3-white">
+                    <p id="messaggio"></p>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- SCRIPTS -->
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/errore.js"></script>
+        <script type="text/javascript" src="/js/dashboard.js"></script>
+        
+    </body>
+</html>
