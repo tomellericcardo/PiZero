@@ -18,7 +18,8 @@ var camera = {
             contentType: 'application/json',
             dataType: 'json',
             success: function() {
-                $('#pagina').html('<img src="/img/image.jpg">');
+                var nc = Date.now().toString();
+                $('#pagina').html('<img src="/img/image.jpg?nc=' + nc + '" class="w3-image">');
             },
             error: function() {
                 errore.messaggio('Errore del server!');
