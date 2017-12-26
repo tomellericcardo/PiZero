@@ -22,7 +22,7 @@ class Zero:
     
     # Aggiornamento immagine
     def aggiorna_immagine(self):
-        camera.capture('/home/pi/PiZero/client-side/img/image.jpg')
+        self.camera.capture('/home/pi/PiZero/client-side/img/image.jpg')
     
     # Lettura statistiche dashboard
     def leggi_statistiche(self):
