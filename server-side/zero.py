@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from manager import Manager
+from picamera import PiCamera
 from subprocess import call, Popen, PIPE
 from psutil import cpu_percent, virtual_memory, disk_usage
 
@@ -9,6 +10,7 @@ class Zero:
     
     def __init__(self, g):
         self.manager = Manager(g)
+        self.camera = PiCamera()
     
     # Riavvio
     def riavvia(self):
@@ -17,6 +19,10 @@ class Zero:
     # Arresto
     def spegni(self):
         call('sudo shutdown now', shell = True)
+    
+    # Aggiornamento immagine
+    def aggiorna_immagine(self):
+        camera.capture('/home/pi/PiZero/client-side/img/image.jpg')
     
     # Lettura statistiche dashboard
     def leggi_statistiche(self):
