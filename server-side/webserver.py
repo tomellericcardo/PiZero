@@ -60,12 +60,6 @@ def aggiorna():
     zero.aggiorna()
     return dumps({'success': True})
 
-# Scatto della foto
-@app.route('/scatta_foto', methods = ['POST'])
-def scatta_foto():
-    zero.scatta_foto()
-    return dumps({'success': True})
-
 # Salvataggio dell'elemento
 @app.route('/salva', methods = ['POST'])
 def salva():

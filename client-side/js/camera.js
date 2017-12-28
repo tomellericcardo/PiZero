@@ -18,7 +18,7 @@ var camera = {
         $('#foto').on('click', function() {
             clearInterval(camera.auto);
             $.ajax({
-                url: 'scatta_foto',
+                url: 'aggiorna',
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
@@ -71,7 +71,7 @@ var camera = {
             contentType: 'application/json',
             dataType: 'json',
             success: function() {
-                $('#pagina').html('<img src="/img/temp.jpg?nc=' + Date.now().toString() + '" class="w3-image">');
+                $('#pagina').html('<img src="/img/foto.jpg?nc=' + Date.now().toString() + '" class="w3-image">');
             },
             error: function() {
                 errore.messaggio('Errore del server!');

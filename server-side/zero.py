@@ -30,7 +30,7 @@ class Zero:
     # Aggiornamento della foto
     def aggiorna(self):
         self.lock.acquire()
-        self.camera.capture('/home/pi/PiZero/client-side/img/temp.jpg')
+        self.camera.capture('/home/pi/PiZero/client-side/img/foto.jpg')
         self.lock.release()
     
     # Scatto della foto
