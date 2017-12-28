@@ -5,6 +5,7 @@ var camera = {
         camera.init_foto();
         camera.init_salva();
         camera.init_scarta();
+        camera.auto = setInterval(camera.aggiorna, 1000);
     },
     
     init_home: function() {
@@ -15,6 +16,7 @@ var camera = {
     
     init_foto: function() {
         $('#foto').on('click', function() {
+            clearInterval(camera.auto);
             $.ajax({
                 url: 'scatta_foto',
                 method: 'POST',
@@ -47,6 +49,7 @@ var camera = {
                     $('#pagina').html('<img src="/img/default.jpg" class="w3-image">');
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
+                    camera.auto = setInterval(camera.aggiorna, 1000);
                 },
                 error: function() {
                     errore.messaggio('Errore del server!');
@@ -60,6 +63,7 @@ var camera = {
             $('#pagina').html('<img src="/img/default.jpg" class="w3-image">');
             $('#operazioni').css('display', 'block');
             $('#salvataggio').css('display', 'none');
+            camera.auto = setInterval(camera.aggiorna, 1000);
         });
     }
     

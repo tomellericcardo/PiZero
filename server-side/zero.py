@@ -24,9 +24,6 @@ class Zero:
     def scatta_foto(self):
         self.camera.capture('/home/pi/PiZero/client-side/img/foto.jpg')
     
-    def salva(self):
-        return True
-    
     # Lettura statistiche dashboard
     def leggi_statistiche(self):
         risposta = {}
