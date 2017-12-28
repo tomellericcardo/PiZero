@@ -5,7 +5,7 @@ var camera = {
         camera.init_foto();
         camera.init_salva();
         camera.init_scarta();
-        camera.auto = setInterval(camera.aggiorna, 1000);
+        camera.auto = setInterval(camera.aggiorna, 2000);
     },
     
     init_home: function() {
@@ -23,8 +23,8 @@ var camera = {
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function() {
-                    var nc = Date.now().toString();
-                    $('#pagina').html('<img src="/img/foto.jpg?nc=' + nc + '" class="w3-image">');
+                    camera.id = Date.now().toString();
+                    $('#pagina').html('<img src="/img/foto.jpg?nc=' + camera.id + '" class="w3-image">');
                     $('#operazioni').css('display', 'none');
                     $('#salvataggio').css('display', 'block');
                     camera.tipo = 'foto';
@@ -43,13 +43,11 @@ var camera = {
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
-                data: JSON.stringify({tipo: camera.tipo}),
+                data: JSON.stringify({tipo: camera.tipo, id: camera.id}),
                 success: function() {
-                    var nc = Date.now().toString();
-                    $('#pagina').html('<img src="/img/default.jpg" class="w3-image">');
+                    camera.auto = setInterval(camera.aggiorna, 2000);
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
-                    camera.auto = setInterval(camera.aggiorna, 1000);
                 },
                 error: function() {
                     errore.messaggio('Errore del server!');
@@ -60,12 +58,26 @@ var camera = {
     
     init_scarta: function() {
         $('#scarta').on('click', function() {
-            $('#pagina').html('<img src="/img/default.jpg" class="w3-image">');
+            camera.auto = setInterval(camera.aggiorna, 2000);
             $('#operazioni').css('display', 'block');
             $('#salvataggio').css('display', 'none');
-            camera.auto = setInterval(camera.aggiorna, 1000);
         });
-    }
+    },
+    
+    aggiorna: function() {
+        $.ajax({
+            url: 'aggiorna',
+            method: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function() {
+                $('#pagina').html('<img src="/img/temp.jpg?nc=' + Date.now().toString() + '" class="w3-image">');
+            },
+            error: function() {
+                errore.messaggio('Errore del server!');
+            }
+        });
+    },
     
 };
 

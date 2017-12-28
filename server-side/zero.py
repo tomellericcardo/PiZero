@@ -2,6 +2,7 @@
 
 from manager import Manager
 from picamera import PiCamera
+from threading import Lock
 from subprocess import call, Popen, PIPE
 from psutil import cpu_percent, virtual_memory, disk_usage
 
@@ -11,21 +12,47 @@ class Zero:
     def __init__(self, g):
         self.manager = Manager(g)
         self.camera = PiCamera()
+        self.lock = Lock()
+        self.estensioni = {'foto': '.jpg'}
     
     # Riavvio
     def riavvia(self):
+        self.lock.acquire()
         call('sudo reboot now', shell = True)
+        self.lock.release()
     
     # Arresto
     def spegni(self):
+        self.lock.acquire()
         call('sudo shutdown now', shell = True)
+        self.lock.release()
+    
+    # Aggiornamento della foto
+    def aggiorna(self):
+        self.lock.acquire()
+        self.camera.capture('/home/pi/PiZero/client-side/img/temp.jpg')
+        self.lock.release()
     
     # Scatto della foto
     def scatta_foto(self):
+        self.lock.acquire()
         self.camera.capture('/home/pi/PiZero/client-side/img/foto.jpg')
+        self.lock.release()
+    
+    # Salvataggio dell'elemento
+    def salva(self, tipo, id_elemento):
+        self.lock.acquire()
+        sorgente = '/home/pi/PiZero/client-side/img/' + tipo + self.estensioni[tipo]
+        cartella = '/img/album/' + tipo.upper() + id_elemento + self.estensioni[tipo]
+        destinazione = '/home/pi/PiZero/client-side' + cartella
+        comando = 'sudo cp ' + sorgente + ' ' + destinazione
+        call(comando, shell = True)
+        self.manager.scrivi('INSERT INTO ' + tipo + ' VALUES (?, ?)', (id_elemento, cartella))
+        self.lock.release()
     
     # Lettura statistiche dashboard
     def leggi_statistiche(self):
+        self.lock.acquire()
         risposta = {}
         
         # Temperatura e CPU
@@ -44,6 +71,7 @@ class Zero:
         risposta['sd_free'] = str(round(((sd.total - sd.used) / 1024.0 / 1024.0 / 1024.0), 1)) + ' GB'
         risposta['sd_tot'] = str(round((sd.total / 1024.0 / 1024.0 / 1024.0), 1)) + ' GB'
         
+        self.lock.release()
         return risposta
     
     # Lettura della temperatura

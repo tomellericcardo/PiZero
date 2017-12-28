@@ -54,15 +54,25 @@ def spegni():
     zero.spegni()
     return dumps({'success': True})
 
+# Aggiornamento della foto
+@app.route('/aggiorna', methods = ['POST'])
+def aggiorna():
+    zero.aggiorna()
+    return dumps({'success': True})
+
 # Scatto della foto
 @app.route('/scatta_foto', methods = ['POST'])
 def scatta_foto():
     zero.scatta_foto()
     return dumps({'success': True})
 
-# Salvataggio
+# Salvataggio dell'elemento
 @app.route('/salva', methods = ['POST'])
 def salva():
+    richiesta = request.get_json(force = True)
+    tipo = richiesta['tipo']
+    id_elemento = richiesta['id']
+    zero.salva(tipo, id_elemento)
     return dumps({'success': True})
 
 # Lettura statistiche dashboard

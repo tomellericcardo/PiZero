@@ -17,10 +17,13 @@ class Manager:
     def init_db(self):
         database = connect(self.percorso)
         cursore = database.cursor()
-        '''
-        cursore.execute('')
+        cursore.execute('''
+            CREATE TABLE IF NOT EXISTS foto (
+                    id TEXT PRIMARY KEY,
+                    percorso TEXT NOT NULL
+            )
+        ''')
         database.commit()
-        '''
         cursore.close()
         database.close()
     

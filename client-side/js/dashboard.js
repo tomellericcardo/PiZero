@@ -3,7 +3,7 @@ var dashboard = {
     init: function() {
         dashboard.init_home();
         dashboard.aggiorna_contatori();
-        setInterval(dashboard.aggiorna_contatori, 1000);
+        setInterval(dashboard.aggiorna_contatori, 3000);
     },
     
     init_home: function() {
