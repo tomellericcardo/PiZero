@@ -60,6 +60,11 @@ def scatta_foto():
     zero.scatta_foto()
     return dumps({'success': True})
 
+# Salvataggio
+@app.route('/salva', methods = ['POST'])
+def salva():
+    return dumps({'success': zero.salva})
+
 # Lettura statistiche dashboard
 @app.route('/leggi_statistiche', methods = ['POST'])
 def leggi_statistiche():

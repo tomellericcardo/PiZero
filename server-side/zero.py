@@ -22,7 +22,10 @@ class Zero:
     
     # Scatto della foto
     def scatta_foto(self):
-        self.camera.capture('/home/pi/PiZero/client-side/img/temp/foto.jpg')
+        self.camera.capture('/home/pi/PiZero/client-side/img/foto.jpg')
+    
+    def salva(self):
+        return True
     
     # Lettura statistiche dashboard
     def leggi_statistiche(self):
