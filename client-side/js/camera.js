@@ -2,7 +2,7 @@ var camera = {
     
     init: function() {
         camera.init_home();
-        setInterval(camera.aggiorna_immagine, 2000);
+        camera.init_foto();
     },
     
     init_home: function() {
@@ -11,19 +11,21 @@ var camera = {
         });
     },
     
-    aggiorna_immagine: function() {
-        $.ajax({
-            url: 'aggiorna_immagine',
-            method: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            success: function() {
-                var nc = Date.now().toString();
-                $('#pagina').html('<img src="/img/image.jpg?nc=' + nc + '" class="w3-image">');
-            },
-            error: function() {
-                errore.messaggio('Errore del server!');
-            }
+    init_foto: function() {
+        $('#foto').on('click', function() {
+            $.ajax({
+                url: 'scatta_foto',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function() {
+                    var nc = Date.now().toString();
+                    $('#pagina').html('<img src="/img/temp/foto.jpg?nc=' + nc + '" class="w3-image">');
+                },
+                error: function() {
+                    errore.messaggio('Errore del server!');
+                }
+            });
         });
     }
     

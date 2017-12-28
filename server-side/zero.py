@@ -20,9 +20,9 @@ class Zero:
     def spegni(self):
         call('sudo shutdown now', shell = True)
     
-    # Aggiornamento immagine
-    def aggiorna_immagine(self):
-        self.camera.capture('/home/pi/PiZero/client-side/img/image.jpg')
+    # Scatto della foto
+    def scatta_foto(self):
+        self.camera.capture('/home/pi/PiZero/client-side/img/temp/foto.jpg')
     
     # Lettura statistiche dashboard
     def leggi_statistiche(self):

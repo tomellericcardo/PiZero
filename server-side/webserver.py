@@ -54,10 +54,10 @@ def spegni():
     zero.spegni()
     return dumps({'success': True})
 
-# Aggiornamento immagine
-@app.route('/aggiorna_immagine', methods = ['POST'])
-def aggiorna_immagine():
-    zero.aggiorna_immagine()
+# Scatto della foto
+@app.route('/scatta_foto', methods = ['POST'])
+def scatta_foto():
+    zero.scatta_foto()
     return dumps({'success': True})
 
 # Lettura statistiche dashboard
