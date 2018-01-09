@@ -33,8 +33,8 @@ var album = {
     formatta_risposta: function(lista) {
         var tipo;
         for (var i = 0; i < lista.elementi.length; i++) {
-            lista.elementi[i] = {percorso: lista.elementi[i][0]};
             tipo = lista.elementi[i][1];
+            lista.elementi[i] = {percorso: lista.elementi[i][0]};
             if (tipo.equals('FOTO'))
                 lista.elementi[i].foto = true;
             else if (tipo.equals('VIDEO'))
