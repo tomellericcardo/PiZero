@@ -5,9 +5,21 @@
     
     <!-- ELEMENTI -->
     {{#elementi}}
-        <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
-            <img src="{{percorso}}" class="elemento_galleria">
-        </div>
+        
+        <!-- FOTO -->
+        {{#foto}}
+            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
+                <img src="{{percorso}}" class="elemento_galleria">
+            </div>
+        {{/foto}}
+        
+        <!-- VIDEO -->
+        {{#video}}
+            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
+                <img src="/img/default.jpg" class="elemento_galleria">
+            </div>
+        {{/video}}
+        
     {{/elementi}}
     
     <!-- NESSUNO -->

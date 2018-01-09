@@ -65,7 +65,7 @@ class Zero:
     # Lettura della galleria
     def leggi_galleria(self):
         return self.manager.leggi_righe('''
-            SELECT percorso
+            SELECT percorso, tipo
             FROM galleria
             ORDER BY id DESC
         ''')
