@@ -37,6 +37,8 @@ class Zero:
     # Registrazione del video
     def registra_video(self):
         self.lock.acquire()
+        comando = 'sudo rm ' + self.percorso + 'VIDEO.*'
+        call(comando, shell = True)
         self.camera.start_recording(self.percorso + 'VIDEO.h264')
     
     # Interruzione del video
