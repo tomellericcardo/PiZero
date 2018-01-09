@@ -3,6 +3,7 @@ var camera = {
     init: function() {
         camera.init_home();
         camera.init_foto();
+        camera.init_video();
         camera.init_salva();
         camera.init_scarta();
     },
@@ -23,9 +24,46 @@ var camera = {
                 success: function() {
                     camera.id = Date.now().toString();
                     camera.tipo = 'FOTO';
-                    $('#pagina').html('<img src="/img/FOTO.jpg?nc=' + camera.id + '" class="w3-image">');
+                    $('#anteprima').html('<img src="/img/FOTO.jpg?nc=' + camera.id + '" class="w3-image">');
                     $('#operazioni').css('display', 'none');
                     $('#salvataggio').css('display', 'block');
+                },
+                error: function() {
+                    errore.messaggio('Errore del server!');
+                }
+            });
+        });
+    },
+    
+    init_video: function() {
+        $('#video').bind('mousedown touchstart', function() {
+            $.ajax({
+                url: 'registra_video',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function() {
+                    $('#operazioni div').css('visibility', 'hidden');
+                    $('#operazioni #video div').css('visibility', 'visible');
+                },
+                error: function() {
+                    errore.messaggio('Errore del server!');
+                }
+            });
+        }).bind('mouseup touchend', function() {
+            $.ajax({
+                url: 'stop_video',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function() {
+                    camera.id = Date.now().toString();
+                    camera.tipo = 'VIDEO';
+                    var video = '<video controls><source src="/img/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                    $('#anteprima').html(video);
+                    $('#operazioni').css('display', 'none');
+                    $('#salvataggio').css('display', 'block');
+                    $('#operazioni div').css('visibility', 'visible');
                 },
                 error: function() {
                     errore.messaggio('Errore del server!');
@@ -43,6 +81,7 @@ var camera = {
                 dataType: 'json',
                 data: JSON.stringify({tipo: camera.tipo, id: camera.id}),
                 success: function() {
+                    $('#anteprima').html('<img src="/img/default.jpg" class="w3-image">');
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
                 },
@@ -55,6 +94,7 @@ var camera = {
     
     init_scarta: function() {
         $('#scarta').on('click', function() {
+            $('#anteprima').html('<img src="/img/default.jpg" class="w3-image">');
             $('#operazioni').css('display', 'block');
             $('#salvataggio').css('display', 'none');
         });

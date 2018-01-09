@@ -14,6 +14,7 @@ class Zero:
         self.camera = PiCamera()
         self.lock = Lock()
         self.estensioni = {'FOTO': '.jpg'}
+        self.percorso = '/home/pi/PiZero/client-side/img/'
     
     # Riavvio
     def riavvia(self):
@@ -30,13 +31,25 @@ class Zero:
     # Scatto della foto
     def scatta_foto(self):
         self.lock.acquire()
-        self.camera.capture('/home/pi/PiZero/client-side/img/FOTO.jpg')
+        self.camera.capture(self.percorso + 'FOTO.jpg')
+        self.lock.release()
+    
+    # Registrazione del video
+    def registra_video(self):
+        self.lock.acquire()
+        self.camera.start_recording(self.percorso + 'VIDEO.h264')
+    
+    # Interruzione del video
+    def stop_video(self):
+        self.camera.stop_recording()
+        comando = 'MP4Box -add ' + self.percorso + 'VIDEO.h264 ' + self.percorso + 'VIDEO.mp4'
+        call(comando, shell = True)
         self.lock.release()
     
     # Salvataggio dell'elemento
     def salva(self, tipo, id_elemento):
         self.lock.acquire()
-        sorgente = '/home/pi/PiZero/client-side/img/' + tipo + self.estensioni[tipo]
+        sorgente = self.percorso + tipo + self.estensioni[tipo]
         cartella = '/img/album/' + tipo + '_' + id_elemento + self.estensioni[tipo]
         destinazione = '/home/pi/PiZero/client-side' + cartella
         comando = 'sudo cp ' + sorgente + ' ' + destinazione

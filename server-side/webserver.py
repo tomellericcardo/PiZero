@@ -65,6 +65,18 @@ def scatta_foto():
     zero.scatta_foto()
     return dumps({'success': True})
 
+# Registrazione del video
+@app.route('/registra_video', methods = ['POST'])
+def registra_video():
+    zero.registra_video()
+    return dumps({'success': True})
+
+# Interruzione del video
+@app.route('/stop_video', methods = ['POST'])
+def stop_video():
+    zero.stop_video()
+    return dumps({'success': True})
+
 # Salvataggio dell'elemento
 @app.route('/salva', methods = ['POST'])
 def salva():
