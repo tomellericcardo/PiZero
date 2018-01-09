@@ -39,10 +39,10 @@ def invia_file(cartella, nome_file):
     percorso = '../client-side/' + cartella + '/'
     return send_from_directory(percorso, nome_file)
 
-# Elemento
-@app.route('/img/album/<nome_file>')
-def invia_elemento(nome_file):
-    return send_from_directory('../client-side/img/album/', nome_file)
+# Anteprima e Galleria
+@app.route('/img/<cartella>/<nome_file>')
+def invia_elemento(cartella, nome_file):
+    return send_from_directory('../client-side/img/' + cartella + '/', nome_file)
 
 
 # CONTESTI

@@ -31,27 +31,27 @@ class Zero:
     # Scatto della foto
     def scatta_foto(self):
         self.lock.acquire()
-        self.camera.capture(self.percorso + 'FOTO.jpg')
+        self.camera.capture(self.percorso + 'temp/FOTO.jpg')
         self.lock.release()
     
     # Registrazione del video
     def registra_video(self):
         self.lock.acquire()
-        comando = 'sudo rm ' + self.percorso + 'VIDEO.*'
+        comando = 'sudo rm ' + self.percorso + 'temp/VIDEO.*'
         call(comando, shell = True)
-        self.camera.start_recording(self.percorso + 'VIDEO.h264')
+        self.camera.start_recording(self.percorso + 'temp/VIDEO.h264')
     
     # Interruzione del video
     def stop_video(self):
         self.camera.stop_recording()
-        comando = 'MP4Box -add ' + self.percorso + 'VIDEO.h264 ' + self.percorso + 'VIDEO.mp4'
+        comando = 'MP4Box -add ' + self.percorso + 'temp/VIDEO.h264 ' + self.percorso + 'temp/VIDEO.mp4'
         call(comando, shell = True)
         self.lock.release()
     
     # Salvataggio dell'elemento
     def salva(self, tipo, id_elemento):
         self.lock.acquire()
-        sorgente = self.percorso + tipo + self.estensioni[tipo]
+        sorgente = self.percorso + 'temp/' + tipo + self.estensioni[tipo]
         cartella = '/img/album/' + tipo + '_' + id_elemento + self.estensioni[tipo]
         destinazione = '/home/pi/PiZero/client-side' + cartella
         comando = 'sudo cp ' + sorgente + ' ' + destinazione

@@ -24,7 +24,7 @@ var camera = {
                 success: function() {
                     camera.id = Date.now().toString();
                     camera.tipo = 'FOTO';
-                    $('#anteprima').html('<img class="elemento_anteprima" src="/img/FOTO.jpg?nc=' + camera.id + '" class="w3-image">');
+                    $('#anteprima').html('<img src="/img/temp/FOTO.jpg?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
                     $('#operazioni').css('display', 'none');
                     $('#salvataggio').css('display', 'block');
                 },
@@ -59,7 +59,7 @@ var camera = {
                 success: function() {
                     camera.id = Date.now().toString();
                     camera.tipo = 'VIDEO';
-                    var video = '<video class="elemento_anteprima" controls><source src="/img/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                    var video = '<video class="elemento_anteprima" controls><source src="/img/temp/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
                     $('#anteprima').html(video);
                     $('#operazioni').css('display', 'none');
                     $('#salvataggio').css('display', 'block');
@@ -81,7 +81,7 @@ var camera = {
                 dataType: 'json',
                 data: JSON.stringify({tipo: camera.tipo, id: camera.id}),
                 success: function() {
-                    $('#anteprima').html('<img class="elemento_anteprima" src="/img/default.jpg" class="w3-image">');
+                    $('#anteprima').html('<img src="/img/default.jpg" class="w3-image elemento_anteprima">');
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
                 },
@@ -94,7 +94,7 @@ var camera = {
     
     init_scarta: function() {
         $('#scarta').on('click', function() {
-            $('#anteprima').html('<img class="elemento_anteprima" src="/img/default.jpg" class="w3-image">');
+            $('#anteprima').html('<img src="/img/default.jpg" class="w3-image elemento_anteprima">');
             $('#operazioni').css('display', 'block');
             $('#salvataggio').css('display', 'none');
         });
