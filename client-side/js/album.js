@@ -35,9 +35,9 @@ var album = {
         for (var i = 0; i < lista.elementi.length; i++) {
             tipo = lista.elementi[i][1];
             lista.elementi[i] = {percorso: lista.elementi[i][0]};
-            if (tipo.equals('FOTO'))
+            if (tipo == 'FOTO')
                 lista.elementi[i].foto = true;
-            else if (tipo.equals('VIDEO'))
+            else if (tipo == 'VIDEO')
                 lista.elementi[i].video = true;
         }
         return lista;
