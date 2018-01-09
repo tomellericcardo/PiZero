@@ -5,7 +5,6 @@ var camera = {
         camera.init_foto();
         camera.init_salva();
         camera.init_scarta();
-        camera.auto = setInterval(camera.aggiorna, 2000);
     },
     
     init_home: function() {
@@ -16,18 +15,17 @@ var camera = {
     
     init_foto: function() {
         $('#foto').on('click', function() {
-            clearInterval(camera.auto);
             $.ajax({
-                url: 'aggiorna',
+                url: 'scatta_foto',
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function() {
                     camera.id = Date.now().toString();
-                    $('#pagina').html('<img src="/img/foto.jpg?nc=' + camera.id + '" class="w3-image">');
+                    camera.tipo = 'FOTO';
+                    $('#pagina').html('<img src="/img/FOTO.jpg?nc=' + camera.id + '" class="w3-image">');
                     $('#operazioni').css('display', 'none');
                     $('#salvataggio').css('display', 'block');
-                    camera.tipo = 'foto';
                 },
                 error: function() {
                     errore.messaggio('Errore del server!');
@@ -45,7 +43,6 @@ var camera = {
                 dataType: 'json',
                 data: JSON.stringify({tipo: camera.tipo, id: camera.id}),
                 success: function() {
-                    camera.auto = setInterval(camera.aggiorna, 2000);
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
                 },
@@ -58,26 +55,10 @@ var camera = {
     
     init_scarta: function() {
         $('#scarta').on('click', function() {
-            camera.auto = setInterval(camera.aggiorna, 2000);
             $('#operazioni').css('display', 'block');
             $('#salvataggio').css('display', 'none');
         });
-    },
-    
-    aggiorna: function() {
-        $.ajax({
-            url: 'aggiorna',
-            method: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            success: function() {
-                $('#pagina').html('<img src="/img/foto.jpg?nc=' + Date.now().toString() + '" class="w3-image">');
-            },
-            error: function() {
-                errore.messaggio('Errore del server!');
-            }
-        });
-    },
+    }
     
 };
 

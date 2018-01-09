@@ -13,7 +13,7 @@ class Zero:
         self.manager = Manager(g)
         self.camera = PiCamera()
         self.lock = Lock()
-        self.estensioni = {'foto': '.jpg'}
+        self.estensioni = {'FOTO': '.jpg'}
     
     # Riavvio
     def riavvia(self):
@@ -27,28 +27,33 @@ class Zero:
         call('sudo shutdown now', shell = True)
         self.lock.release()
     
-    # Aggiornamento della foto
-    def aggiorna(self):
-        self.lock.acquire()
-        self.camera.capture('/home/pi/PiZero/client-side/img/foto.jpg')
-        self.lock.release()
-    
     # Scatto della foto
     def scatta_foto(self):
         self.lock.acquire()
-        self.camera.capture('/home/pi/PiZero/client-side/img/foto.jpg')
+        self.camera.capture('/home/pi/PiZero/client-side/img/FOTO.jpg')
         self.lock.release()
     
     # Salvataggio dell'elemento
     def salva(self, tipo, id_elemento):
         self.lock.acquire()
         sorgente = '/home/pi/PiZero/client-side/img/' + tipo + self.estensioni[tipo]
-        cartella = '/img/album/' + tipo.upper() + id_elemento + self.estensioni[tipo]
+        cartella = '/img/album/' + tipo + '_' + id_elemento + self.estensioni[tipo]
         destinazione = '/home/pi/PiZero/client-side' + cartella
         comando = 'sudo cp ' + sorgente + ' ' + destinazione
         call(comando, shell = True)
-        self.manager.scrivi('INSERT INTO ' + tipo + ' VALUES (?, ?)', (id_elemento, cartella))
+        self.manager.scrivi('''
+            INSERT INTO galleria
+            VALUES (?, ?, ?)
+        ''', (id_elemento, tipo, cartella))
         self.lock.release()
+    
+    # Lettura della galleria
+    def leggi_galleria(self):
+        return self.manager.leggi_righe('''
+            SELECT percorso
+            FROM galleria
+            ORDER BY id DESC
+        ''')
     
     # Lettura statistiche dashboard
     def leggi_statistiche(self):

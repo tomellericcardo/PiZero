@@ -39,6 +39,11 @@ def invia_file(cartella, nome_file):
     percorso = '../client-side/' + cartella + '/'
     return send_from_directory(percorso, nome_file)
 
+# Elemento
+@app.route('/img/album/<nome_file>')
+def invia_elemento(nome_file):
+    return send_from_directory('../client-side/img/album/', nome_file)
+
 
 # CONTESTI
 
@@ -54,10 +59,10 @@ def spegni():
     zero.spegni()
     return dumps({'success': True})
 
-# Aggiornamento della foto
-@app.route('/aggiorna', methods = ['POST'])
-def aggiorna():
-    zero.aggiorna()
+# Scatto della foto
+@app.route('/scatta_foto', methods = ['POST'])
+def scatta_foto():
+    zero.scatta_foto()
     return dumps({'success': True})
 
 # Salvataggio dell'elemento
@@ -68,6 +73,11 @@ def salva():
     id_elemento = richiesta['id']
     zero.salva(tipo, id_elemento)
     return dumps({'success': True})
+
+# Lettura della galleria
+@app.route('/leggi_galleria', methods = ['POST'])
+def leggi_galleria():
+    return dumps({'elementi': zero.leggi_galleria()})
 
 # Lettura statistiche dashboard
 @app.route('/leggi_statistiche', methods = ['POST'])

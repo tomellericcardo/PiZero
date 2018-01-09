@@ -117,3 +117,10 @@ input::placeholder, textarea::placeholder {
 #attesa {
     display: none;
 }
+
+
+/*** GALLERIA ***/
+
+.elemento_galleria {
+    max-width: 100%;
+}

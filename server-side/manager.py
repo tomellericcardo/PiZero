@@ -18,8 +18,9 @@ class Manager:
         database = connect(self.percorso)
         cursore = database.cursor()
         cursore.execute('''
-            CREATE TABLE IF NOT EXISTS foto (
+            CREATE TABLE IF NOT EXISTS galleria (
                     id TEXT PRIMARY KEY,
+                    tipo TEXT NOT NULL,
                     percorso TEXT NOT NULL
             )
         ''')

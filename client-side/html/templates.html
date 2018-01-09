@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+    
+<!-- GALLERIA -->
+<script type="text/html" id="galleria">
+    
+    <!-- ELEMENTI -->
+    {{#elementi}}
+        <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
+            <img src="{{percorso}}" class="elemento_galleria">
+        </div>
+    {{/elementi}}
+    
+    <!-- NESSUNO -->
+    {{^elementi}}
+        <div class="w3-display-container vuoto">
+            <div class="w3-display-middle w3-center">
+                <p class="w3-text-grey">
+                    <i class="w3-jumbo material-icons">book</i>
+                    <br><br>Nessuna foto
+                    <br>scattata...
+                </p>
+            </div>
+        </div>
+    {{/elementi}}
+    
+</script>
