@@ -75,8 +75,6 @@ var camera = {
     
     init_gif: function() {
         $('#gif').on('click', function() {
-            $('#gif_icon').html('refresh');
-            $('#gif_icon').addClass('w3-spin');
             $.ajax({
                 url: 'scatta_gif',
                 method: 'POST',
@@ -95,6 +93,19 @@ var camera = {
                     errore.messaggio('Errore del server!');
                 }
             });
+            $('#gif_icon').html('refresh');
+            $('#gif_icon').addClass('w3-spin');
+            var count = 1;
+            var timer = setInterval(function() {
+                if (count <= 10) {
+                    $('#gif p').html('Scatto<br>' + count);
+                    count++;
+                }
+                else {
+                    clearInterval(timer);
+                    $('#gif p').html('<br>Creo');
+                }
+            }, 1000);
         });
     },
     

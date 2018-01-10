@@ -52,12 +52,14 @@ class Zero:
     # Scatto della GIF
     def scatta_gif(self):
         self.lock.acquire()
+        self.camera.resolution(360, 360)
         for i in range(0, 10):
             nome_file = self.percorso + 'temp/GIF' + str(i) + '.jpg'
             self.camera.capture(nome_file)
             sleep(1)
         comando = 'convert -delay 50 ' + self.percorso + 'temp/GIF*.jpg ' + self.percorso + 'temp/GIF.gif'
         call(comando, shell = True)
+        self.camera.resolution(720, 480)
         self.lock.release()
     
     # Salvataggio dell'elemento
