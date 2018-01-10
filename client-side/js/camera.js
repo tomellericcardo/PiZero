@@ -109,6 +109,33 @@ var camera = {
         });
     },
     
+    init_slow: function() {
+        $('#slow').on('click', function() {
+            $.ajax({
+                url: 'slowmotion_video',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function() {
+                    camera.id = Date.now().toString();
+                    camera.tipo = 'SLOW';
+                    var video = '<video class="elemento_anteprima" controls><source src="/img/temp/SLOW.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                    $('#anteprima').html(video);
+                    $('#operazioni').css('display', 'none');
+                    $('#salvataggio').css('display', 'block');
+                    $('#slow_icon').html('directions_run');
+                    $('#slow_icon').removeClass('w3-spin');
+                },
+                error: function() {
+                    errore.messaggio('Errore del server!');
+                }
+            });
+            $('#slow_icon').html('refresh');
+            $('#slow_icon').addClass('w3-spin');
+            $('#slow p').html('<br>REC');
+        });
+    },
+    
     init_salva: function() {
         $('#salva').on('click', function() {
             $.ajax({
@@ -131,9 +158,20 @@ var camera = {
     
     init_scarta: function() {
         $('#scarta').on('click', function() {
-            $('#anteprima').html('<img src="/img/default.jpg" class="w3-image elemento_anteprima">');
-            $('#operazioni').css('display', 'block');
-            $('#salvataggio').css('display', 'none');
+            $.ajax({
+                url: 'scarta',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function() {
+                    $('#anteprima').html('<img src="/img/default.jpg" class="w3-image elemento_anteprima">');
+                    $('#operazioni').css('display', 'block');
+                    $('#salvataggio').css('display', 'none');
+                },
+                error: function() {
+                    errore.messaggio('Errore del server!');
+                }
+            });
         });
     }
     
