@@ -53,7 +53,7 @@ class Zero:
     def scatta_gif(self):
         self.lock.acquire()
         for i in range(0, 10):
-            nome_file = self.percorso + 'temp/GIF' + i + '.jpg'
+            nome_file = self.percorso + 'temp/GIF' + str(i) + '.jpg'
             self.camera.capture(nome_file)
             sleep(1)
         comando = 'convert -delay 50 ' + self.percorso + 'temp/GIF*.jpg ' + self.percorso + 'temp/GIF.gif'

@@ -75,6 +75,8 @@ var camera = {
     
     init_gif: function() {
         $('#gif').on('click', function() {
+            $('#gif_icon').html('refresh');
+            $('#gif_icon').addClass('w3-spin');
             $.ajax({
                 url: 'scatta_gif',
                 method: 'POST',
@@ -86,6 +88,8 @@ var camera = {
                     $('#anteprima').html('<img src="/img/temp/GIF.gif?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
                     $('#operazioni').css('display', 'none');
                     $('#salvataggio').css('display', 'block');
+                    $('#gif_icon').html('toys');
+                    $('#gif_icon').removeClass('w3-spin');
                 },
                 error: function() {
                     errore.messaggio('Errore del server!');
