@@ -5,6 +5,7 @@ var camera = {
         camera.init_foto();
         camera.init_video();
         camera.init_gif();
+        camera.init_slow();
         camera.init_salva();
         camera.init_scarta();
     },
