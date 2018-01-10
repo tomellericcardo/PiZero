@@ -14,7 +14,7 @@ class Zero:
         self.manager = Manager(g)
         self.camera = PiCamera()
         self.lock = Lock()
-        self.estensioni = {'FOTO': '.jpg', 'VIDEO': '.mp4', 'GIF': '.gif'}
+        self.estensioni = {'FOTO': '.jpg', 'VIDEO': '.mp4', 'GIF': '.gif', 'SLOW': '.mp4'}
         self.percorso = '/home/pi/PiZero/client-side/img/'
     
     # Riavvio
