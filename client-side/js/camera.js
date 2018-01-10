@@ -55,7 +55,7 @@ var camera = {
                     dataType: 'json',
                     success: function() {
                         $('#video i').html('pause');
-                        $('#video p').html('<br>REC');
+                        $('#video p').html('REC');
                         $('#video p').addClass('blink');
                     },
                     error: function() {
