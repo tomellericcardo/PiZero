@@ -67,12 +67,14 @@ class Zero:
     # Registrazione in slow motion
     def slowmotion_video(self):
         self.lock.acquire()
+        self.camera.close()
         h264 = self.percorso + 'temp/SLOW.h264 '
         mp4 = self.percorso + 'temp/SLOW.mp4'
         comando = 'sudo raspivid -w 640 -h 480 -fps 90 -t 10000 -o ' + h264
         call(comando, shell = True)
         comando = 'sudo MP4Box -add ' + h264 + mp4
         call(comando, shell = True)
+        self.camera = PiCamera()
         self.lock.release()
     
     # Salvataggio dell'elemento
