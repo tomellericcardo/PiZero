@@ -7,6 +7,7 @@ var camera = {
         camera.init_foto();
         camera.init_video();
         camera.init_gif();
+        camera.init_lapse();
         camera.init_slow();
         camera.init_salva();
         camera.init_scarta();
@@ -123,6 +124,47 @@ var camera = {
                     else {
                         clearInterval(timer);
                         $('#gif p').html('<br>Creo');
+                    }
+                }, 1000);
+            }
+        });
+    },
+    
+    init_lapse: function() {
+        $('#lapse').on('click', function() {
+            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
+            else {
+                camera.occupata = true;
+                $.ajax({
+                    url: 'timelapse_video',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    timeout: 1000000,
+                    success: function() {
+                        camera.id = Date.now().toString();
+                        camera.tipo = 'LAPSE';
+                        var video = '<video class="elemento_anteprima" controls><source src="/img/temp/LAPSE.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                        $('#anteprima').html(video);
+                        $('#operazioni').css('display', 'none');
+                        $('#salvataggio').css('display', 'block');
+                        $('#lapse p').html('Time<br>Lapse');
+                        $('#lapse i').removeClass('blink');
+                    },
+                    error: function() {
+                        errore.messaggio('Errore del server!');
+                    }
+                });
+                $('#lapse i').addClass('blink');
+                var count = 1;
+                var timer = setInterval(function() {
+                    if (count <= 100) {
+                        $('#lapse p').html('Scatto<br>' + count);
+                        count++;
+                    }
+                    else {
+                        clearInterval(timer);
+                        $('#lapse p').html('<br>Creo');
                     }
                 }, 1000);
             }

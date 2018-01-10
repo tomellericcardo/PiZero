@@ -14,7 +14,7 @@ class Zero:
         self.manager = Manager(g)
         self.camera = PiCamera()
         self.lock = Lock()
-        self.estensioni = {'FOTO': '.jpg', 'VIDEO': '.mp4', 'GIF': '.gif', 'SLOW': '.mp4'}
+        self.estensioni = {'FOTO': '.jpg', 'VIDEO': '.mp4', 'GIF': '.gif', 'LAPSE': '.mp4', 'SLOW': '.mp4'}
         self.percorso = '/home/pi/PiZero/client-side/img/'
     
     # Riavvio
@@ -59,6 +59,19 @@ class Zero:
         foto = self.percorso + 'temp/GIF*.jpg '
         gif = self.percorso + 'temp/GIF.gif'
         comando = 'convert -delay 50 ' + foto + gif
+        call(comando, shell = True)
+        self.lock.release()
+    
+    # Registrazione in time lapse
+    def timelapse_video(self):
+        self.lock.acquire()
+        for i in range(0, 100):
+            nome_file = self.percorso + 'temp/LAPSE' + str(i) + '.jpg'
+            self.camera.capture(nome_file)
+            sleep(1)
+        foto = self.percorso + 'temp/LAPSE%d.jpg '
+        lapse = self.percorso + 'temp/LAPSE.mp4'
+        comando = 'avconv -r 10 -i ' + foto + ' -b:v 1000k ' + lapse
         call(comando, shell = True)
         self.lock.release()
     

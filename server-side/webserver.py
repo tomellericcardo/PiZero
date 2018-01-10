@@ -83,6 +83,12 @@ def scatta_gif():
     zero.scatta_gif()
     return dumps({'success': True})
 
+# Registrazione in time lapse
+@app.route('/timelapse_video', methods = ['POST'])
+def timelapse_video():
+    zero.timelapse_video()
+    return dumps({'success': True})
+
 # Registrazione in slow motion
 @app.route('/slowmotion_video', methods = ['POST'])
 def slowmotion_video():
