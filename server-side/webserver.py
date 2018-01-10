@@ -98,6 +98,12 @@ def salva():
     zero.salva(tipo, id_elemento)
     return dumps({'success': True})
 
+# Scarto dell'elemento
+@app.route('/scarta', methods = ['POST'])
+def scarta():
+    zero.scarta()
+    return dumps({'success': True})
+
 # Lettura della galleria
 @app.route('/leggi_galleria', methods = ['POST'])
 def leggi_galleria():

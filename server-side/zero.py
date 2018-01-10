@@ -92,7 +92,7 @@ class Zero:
         self.lock.release()
     
     # Scarto dell'elemento
-    def scarta(self, tipo, id_elemento):
+    def scarta(self):
         self.lock.acquire()
         comando = 'sudo rm ' + self.percorso + 'temp/*'
         call(comando, shell = True)
