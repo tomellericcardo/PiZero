@@ -119,13 +119,25 @@ input::placeholder, textarea::placeholder {
 }
 
 
-/*** ELEMENTO ***/
+/*** ELEMENTO ANTEPRIMA E GALLERIA ***/
 
 .elemento_anteprima {
     max-width: 100%;
     max-height: 200px;
 }
 
-.elemento_galleria {
+.foto_galleria {
     max-width: 100%;
+}
+
+.elemento_galleria {
+    padding-top: 67%;
+}
+
+.elemento_galleria i {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }

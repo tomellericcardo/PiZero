@@ -6,31 +6,39 @@
     <!-- ELEMENTI -->
     {{#elementi}}
         
-        <!-- FOTO -->
         {{#foto}}
+            <!-- FOTO -->
             <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
-                <img src="{{percorso}}" class="elemento_galleria">
+                <div class="w3-card-4 padding-top w3-center w3-indigo">
+                    <img src="{{percorso}}" class="foto_galleria">
+                </div>
             </div>
         {{/foto}}
         
-        <!-- VIDEO -->
         {{#video}}
+            <!-- VIDEO -->
             <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
-                <img src="/img/default.jpg" class="elemento_galleria">
+                <div class="w3-card-4 w3-center w3-indigo">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">videocam</i>
+                </div>
             </div>
         {{/video}}
         
-        <!-- GIF -->
         {{#gif}}
+            <!-- GIF -->
             <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
-                <img src="/img/default.jpg" class="elemento_galleria">
+                <div class="w3-card-4 w3-center w3-green">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">toys</i>
+                </div>
             </div>
         {{/gif}}
         
-        <!-- SLOW -->
         {{#slow}}
+            <!-- SLOW MOTION -->
             <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
-                <img src="/img/default.jpg" class="elemento_galleria">
+                <div class="w3-card-4 w3-center w3-purple">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">directions_run</i>
+                </div>
             </div>
         {{/slow}}
         
@@ -48,5 +56,10 @@
             </div>
         </div>
     {{/elementi}}
+    
+    <!-- SPAZIO -->
+    {{#spazio}}
+        <div class="w3-col s12 m12 l12" id="spazio">&nbsp;</div>
+    {{/spazio}}
     
 </script>

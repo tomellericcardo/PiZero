@@ -40,6 +40,7 @@ var album = {
             else if (tipo == 'GIF') lista.elementi[i].gif = true;
             else if (tipo == 'SLOW') lista.elementi[i].slow = true;
         }
+        if (lista.length > 8) lista.spazio = true;
         return lista;
     },
     
