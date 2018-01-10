@@ -20,13 +20,13 @@ class Zero:
     # Riavvio
     def riavvia(self):
         self.lock.acquire()
-        call('reboot now', shell = True)
+        call('sudo reboot now', shell = True)
         self.lock.release()
     
     # Arresto
     def spegni(self):
         self.lock.acquire()
-        call('shutdown now', shell = True)
+        call('sudo shutdown now', shell = True)
         self.lock.release()
     
     # Scatto della foto
@@ -45,7 +45,7 @@ class Zero:
         self.camera.stop_recording()
         h264 = self.percorso + 'temp/VIDEO.h264 '
         mp4 = self.percorso + 'temp/VIDEO.mp4'
-        comando = 'MP4Box -add ' + h264 + mp4
+        comando = 'sudo MP4Box -add ' + h264 + mp4
         call(comando, shell = True)
         self.lock.release()
     
@@ -59,7 +59,7 @@ class Zero:
             sleep(1)
         foto = self.percorso + 'temp/GIF*.jpg '
         gif = self.percorso + 'temp/GIF.gif'
-        comando = 'convert -delay 50 ' + foto + gif
+        comando = 'sudo convert -delay 50 ' + foto + gif
         call(comando, shell = True)
         self.camera.resolution = (720, 480)
         self.lock.release()
@@ -69,9 +69,9 @@ class Zero:
         self.lock.acquire()
         h264 = self.percorso + 'temp/SLOW.h264 '
         mp4 = self.percorso + 'temp/SLOW.mp4'
-        comando = 'raspivid -w 640 -h 480 -fps 90 -t 10000 -o ' + h264
+        comando = 'sudo raspivid -w 640 -h 480 -fps 90 -t 10000 -o ' + h264
         call(comando, shell = True)
-        comando = 'MP4Box -add ' + h264 + mp4
+        comando = 'sudo MP4Box -add ' + h264 + mp4
         call(comando, shell = True)
         self.lock.release()
     
@@ -81,20 +81,20 @@ class Zero:
         sorgente = self.percorso + 'temp/' + tipo + self.estensioni[tipo]
         cartella = '/img/album/' + tipo + '_' + id_elemento + self.estensioni[tipo]
         destinazione = '/home/pi/PiZero/client-side' + cartella
-        comando = 'cp ' + sorgente + ' ' + destinazione
+        comando = 'sudo cp ' + sorgente + ' ' + destinazione
         call(comando, shell = True)
         self.manager.scrivi('''
             INSERT INTO galleria
             VALUES (?, ?, ?)
         ''', (id_elemento, tipo, cartella))
-        comando = 'rm ' + self.percorso + 'temp/*'
+        comando = 'sudo rm ' + self.percorso + 'temp/*'
         call(comando, shell = True)
         self.lock.release()
     
     # Scarto dell'elemento
     def scarta(self, tipo, id_elemento):
         self.lock.acquire()
-        comando = 'rm ' + self.percorso + 'temp/*'
+        comando = 'sudo rm ' + self.percorso + 'temp/*'
         call(comando, shell = True)
         self.lock.release()
     
