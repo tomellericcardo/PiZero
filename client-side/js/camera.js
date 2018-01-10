@@ -45,9 +45,12 @@ var camera = {
     
     init_video: function() {
         $('#video').bind('mousedown touchstart', function() {
-            camera.inizio = Date.now();
-            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
+            if (camera.occupata) {
+                if (camera.registrando) camera.stop_video();
+                else errore.messaggio('Camera gi&agrave; occupata!');
+            }
             else {
+                camera.inizio = Date.now();
                 camera.occupata = true;
                 camera.registrando = true;
                 $.ajax({
@@ -65,39 +68,36 @@ var camera = {
                 });
             }
         }).bind('mouseup touchend', function() {
-            camera.stop_video();
-        });
-        $('#video').on('click', function() {
-            camera.stop_video();
+            if (camera.registrando) {
+                var durata = Date.now() - camera.inizio;
+                camera.inizio = undefined;
+                if (durata >= 1000) {
+                    camera.stop_video();
+                }
+            }
         });
     },
     
     stop_video: function() {
-        if (camera.registrando) {
-            camera.registrando = false;
-            var durata = Date.now() - camera.inizio;
-            camera.inizio = undefined;
-            if (durata >= 1000) {
-                $.ajax({
-                    url: 'stop_video',
-                    method: 'POST',
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    success: function() {
-                        camera.id = Date.now().toString();
-                        camera.tipo = 'VIDEO';
-                        var video = '<video class="elemento_anteprima" controls><source src="/img/temp/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
-                        $('#anteprima').html(video);
-                        $('#operazioni').css('display', 'none');
-                        $('#salvataggio').css('display', 'block');
-                        $('#operazioni div').css('visibility', 'visible');
-                    },
-                    error: function() {
-                        errore.messaggio('Errore del server!');
-                    }
-                });
+        camera.registrando = false;
+        $.ajax({
+            url: 'stop_video',
+            method: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function() {
+                camera.id = Date.now().toString();
+                camera.tipo = 'VIDEO';
+                var video = '<video class="elemento_anteprima" controls><source src="/img/temp/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                $('#anteprima').html(video);
+                $('#operazioni').css('display', 'none');
+                $('#salvataggio').css('display', 'block');
+                $('#operazioni div').css('visibility', 'visible');
+            },
+            error: function() {
+                errore.messaggio('Errore del server!');
             }
-        }
+        });
     },
     
     init_gif: function() {
