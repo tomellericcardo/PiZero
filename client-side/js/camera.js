@@ -89,6 +89,7 @@ var camera = {
                     $('#salvataggio').css('display', 'block');
                     $('#gif_icon').html('toys');
                     $('#gif_icon').removeClass('w3-spin');
+                    $('#gif p').html('<br>GIF');
                 },
                 error: function() {
                     errore.messaggio('Errore del server!');
@@ -126,6 +127,7 @@ var camera = {
                     $('#salvataggio').css('display', 'block');
                     $('#slow_icon').html('directions_run');
                     $('#slow_icon').removeClass('w3-spin');
+                    $('#slow p').html('Slow<br>Motion');
                 },
                 error: function() {
                     errore.messaggio('Errore del server!');
