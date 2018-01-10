@@ -118,6 +118,14 @@ input::placeholder, textarea::placeholder {
     display: none;
 }
 
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
+
 
 /*** ELEMENTO ANTEPRIMA E GALLERIA ***/
 

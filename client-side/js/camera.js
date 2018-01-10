@@ -44,13 +44,8 @@ var camera = {
     },
     
     init_video: function() {
-        $('#video').bind('mousedown touchstart', function() {
-            if (camera.occupata) {
-                if (camera.registrando) camera.stop_video();
-                else errore.messaggio('Camera gi&agrave; occupata!');
-            }
-            else {
-                camera.inizio = Date.now();
+        $('#video').on('click', function() {
+            if (!camera.occupata) {
                 camera.occupata = true;
                 camera.registrando = true;
                 $.ajax({
@@ -59,43 +54,38 @@ var camera = {
                     contentType: 'application/json',
                     dataType: 'json',
                     success: function() {
-                        $('#operazioni div').css('visibility', 'hidden');
-                        $('#operazioni #video div').css('visibility', 'visible');
+                        $('#video i').html('pause');
+                        $('#video p').html('<br>REC');
+                        $('#video p').addClass('blink');
                     },
                     error: function() {
                         errore.messaggio('Errore del server!');
                     }
                 });
-            }
-        }).bind('mouseup touchend', function() {
-            if (camera.registrando) {
-                var durata = Date.now() - camera.inizio;
-                camera.inizio = undefined;
-                if (durata >= 1000) {
-                    camera.stop_video();
-                }
-            }
-        });
-    },
-    
-    stop_video: function() {
-        camera.registrando = false;
-        $.ajax({
-            url: 'stop_video',
-            method: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            success: function() {
-                camera.id = Date.now().toString();
-                camera.tipo = 'VIDEO';
-                var video = '<video class="elemento_anteprima" controls><source src="/img/temp/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
-                $('#anteprima').html(video);
-                $('#operazioni').css('display', 'none');
-                $('#salvataggio').css('display', 'block');
-                $('#operazioni div').css('visibility', 'visible');
-            },
-            error: function() {
-                errore.messaggio('Errore del server!');
+            } else {
+                if (camera.registrando) {
+                    camera.registrando = false;
+                    $.ajax({
+                        url: 'stop_video',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        success: function() {
+                            camera.id = Date.now().toString();
+                            camera.tipo = 'VIDEO';
+                            var video = '<video class="elemento_anteprima" controls><source src="/img/temp/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                            $('#anteprima').html(video);
+                            $('#operazioni').css('display', 'none');
+                            $('#salvataggio').css('display', 'block');
+                            $('#video i').html('videocam');
+                            $('#video p').html('Video');
+                            $('#video p').removeClass('blink');
+                        },
+                        error: function() {
+                            errore.messaggio('Errore del server!');
+                        }
+                    });
+                } else errore.messaggio('Camera gi&agrave; occupata!');
             }
         });
     },
@@ -116,16 +106,14 @@ var camera = {
                         $('#anteprima').html('<img src="/img/temp/GIF.gif?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
                         $('#operazioni').css('display', 'none');
                         $('#salvataggio').css('display', 'block');
-                        $('#gif_icon').html('toys');
-                        $('#gif_icon').removeClass('w3-spin');
+                        $('#gif i').removeClass('w3-spin');
                         $('#gif p').html('<br>GIF');
                     },
                     error: function() {
                         errore.messaggio('Errore del server!');
                     }
                 });
-                $('#gif_icon').html('refresh');
-                $('#gif_icon').addClass('w3-spin');
+                $('#gif i').addClass('w3-spin');
                 var count = 1;
                 var timer = setInterval(function() {
                     if (count <= 10) {
@@ -158,17 +146,19 @@ var camera = {
                         $('#anteprima').html(video);
                         $('#operazioni').css('display', 'none');
                         $('#salvataggio').css('display', 'block');
-                        $('#slow_icon').html('directions_run');
-                        $('#slow_icon').removeClass('w3-spin');
+                        $('#slow i').html('directions_run');
+                        $('#slow i').removeClass('w3-spin');
                         $('#slow p').html('Slow<br>Motion');
+                        $('#slow p').removeClass('blink');
                     },
                     error: function() {
                         errore.messaggio('Errore del server!');
                     }
                 });
-                $('#slow_icon').html('refresh');
-                $('#slow_icon').addClass('w3-spin');
+                $('#slow i').html('refresh');
+                $('#slow i').addClass('w3-spin');
                 $('#slow p').html('<br>REC');
+                $('#slow p').addClass('blink');
             }
         });
     },
