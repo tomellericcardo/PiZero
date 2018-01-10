@@ -1,6 +1,8 @@
 var camera = {
     
     init: function() {
+        camera.occupata = false;
+        camera.registrando = false;
         camera.init_home();
         camera.init_foto();
         camera.init_video();
@@ -18,124 +20,152 @@ var camera = {
     
     init_foto: function() {
         $('#foto').on('click', function() {
-            $.ajax({
-                url: 'scatta_foto',
-                method: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function() {
-                    camera.id = Date.now().toString();
-                    camera.tipo = 'FOTO';
-                    $('#anteprima').html('<img src="/img/temp/FOTO.jpg?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
-                    $('#operazioni').css('display', 'none');
-                    $('#salvataggio').css('display', 'block');
-                },
-                error: function() {
-                    errore.messaggio('Errore del server!');
-                }
-            });
+            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
+            else {
+                camera.occupata = true;
+                $.ajax({
+                    url: 'scatta_foto',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function() {
+                        camera.id = Date.now().toString();
+                        camera.tipo = 'FOTO';
+                        $('#anteprima').html('<img src="/img/temp/FOTO.jpg?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
+                        $('#operazioni').css('display', 'none');
+                        $('#salvataggio').css('display', 'block');
+                    },
+                    error: function() {
+                        errore.messaggio('Errore del server!');
+                    }
+                });
+            }
         });
     },
     
     init_video: function() {
         $('#video').bind('mousedown touchstart', function() {
-            $.ajax({
-                url: 'registra_video',
-                method: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function() {
-                    $('#operazioni div').css('visibility', 'hidden');
-                    $('#operazioni #video div').css('visibility', 'visible');
-                },
-                error: function() {
-                    errore.messaggio('Errore del server!');
-                }
-            });
+            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
+            else {
+                camera.occupata = true;
+                camera.registrando = true;
+                camera.inizio = Date.now();
+                $.ajax({
+                    url: 'registra_video',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function() {
+                        $('#operazioni div').css('visibility', 'hidden');
+                        $('#operazioni #video div').css('visibility', 'visible');
+                    },
+                    error: function() {
+                        errore.messaggio('Errore del server!');
+                    }
+                });
+            }
         }).bind('mouseup touchend', function() {
-            $.ajax({
-                url: 'stop_video',
-                method: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function() {
-                    camera.id = Date.now().toString();
-                    camera.tipo = 'VIDEO';
-                    var video = '<video class="elemento_anteprima" controls><source src="/img/temp/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
-                    $('#anteprima').html(video);
-                    $('#operazioni').css('display', 'none');
-                    $('#salvataggio').css('display', 'block');
-                    $('#operazioni div').css('visibility', 'visible');
-                },
-                error: function() {
-                    errore.messaggio('Errore del server!');
+            if (camera.registrando) {
+                camera.registrando = false;
+                var durata = Date.now() - camera.inizio;
+                camera.inizio = undefined;
+                if (durata >= 1000) {
+                    $.ajax({
+                        url: 'stop_video',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        success: function() {
+                            camera.id = Date.now().toString();
+                            camera.tipo = 'VIDEO';
+                            var video = '<video class="elemento_anteprima" controls><source src="/img/temp/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                            $('#anteprima').html(video);
+                            $('#operazioni').css('display', 'none');
+                            $('#salvataggio').css('display', 'block');
+                            $('#operazioni div').css('visibility', 'visible');
+                        },
+                        error: function() {
+                            errore.messaggio('Errore del server!');
+                        }
+                    });
+                } else {
+                    errore.messaggio('Tieni premuto per girare un video!');
+                    camera.occupata = false;
                 }
-            });
+            }
         });
     },
     
     init_gif: function() {
         $('#gif').on('click', function() {
-            $.ajax({
-                url: 'scatta_gif',
-                method: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function() {
-                    camera.id = Date.now().toString();
-                    camera.tipo = 'GIF';
-                    $('#anteprima').html('<img src="/img/temp/GIF.gif?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
-                    $('#operazioni').css('display', 'none');
-                    $('#salvataggio').css('display', 'block');
-                    $('#gif_icon').html('toys');
-                    $('#gif_icon').removeClass('w3-spin');
-                    $('#gif p').html('<br>GIF');
-                },
-                error: function() {
-                    errore.messaggio('Errore del server!');
-                }
-            });
-            $('#gif_icon').html('refresh');
-            $('#gif_icon').addClass('w3-spin');
-            var count = 1;
-            var timer = setInterval(function() {
-                if (count <= 10) {
-                    $('#gif p').html('Scatto<br>' + count);
-                    count++;
-                }
-                else {
-                    clearInterval(timer);
-                    $('#gif p').html('<br>Creo');
-                }
-            }, 1000);
+            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
+            else {
+                camera.occupata = true;
+                $.ajax({
+                    url: 'scatta_gif',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function() {
+                        camera.id = Date.now().toString();
+                        camera.tipo = 'GIF';
+                        $('#anteprima').html('<img src="/img/temp/GIF.gif?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
+                        $('#operazioni').css('display', 'none');
+                        $('#salvataggio').css('display', 'block');
+                        $('#gif_icon').html('toys');
+                        $('#gif_icon').removeClass('w3-spin');
+                        $('#gif p').html('<br>GIF');
+                    },
+                    error: function() {
+                        errore.messaggio('Errore del server!');
+                    }
+                });
+                $('#gif_icon').html('refresh');
+                $('#gif_icon').addClass('w3-spin');
+                var count = 1;
+                var timer = setInterval(function() {
+                    if (count <= 10) {
+                        $('#gif p').html('Scatto<br>' + count);
+                        count++;
+                    }
+                    else {
+                        clearInterval(timer);
+                        $('#gif p').html('<br>Creo');
+                    }
+                }, 1000);
+            }
         });
     },
     
     init_slow: function() {
         $('#slow').on('click', function() {
-            $.ajax({
-                url: 'slowmotion_video',
-                method: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function() {
-                    camera.id = Date.now().toString();
-                    camera.tipo = 'SLOW';
-                    var video = '<video class="elemento_anteprima" controls><source src="/img/temp/SLOW.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
-                    $('#anteprima').html(video);
-                    $('#operazioni').css('display', 'none');
-                    $('#salvataggio').css('display', 'block');
-                    $('#slow_icon').html('directions_run');
-                    $('#slow_icon').removeClass('w3-spin');
-                    $('#slow p').html('Slow<br>Motion');
-                },
-                error: function() {
-                    errore.messaggio('Errore del server!');
-                }
-            });
-            $('#slow_icon').html('refresh');
-            $('#slow_icon').addClass('w3-spin');
-            $('#slow p').html('<br>REC');
+            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
+            else {
+                camera.occupata = true;
+                $.ajax({
+                    url: 'slowmotion_video',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function() {
+                        camera.id = Date.now().toString();
+                        camera.tipo = 'SLOW';
+                        var video = '<video class="elemento_anteprima" controls><source src="/img/temp/SLOW.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                        $('#anteprima').html(video);
+                        $('#operazioni').css('display', 'none');
+                        $('#salvataggio').css('display', 'block');
+                        $('#slow_icon').html('directions_run');
+                        $('#slow_icon').removeClass('w3-spin');
+                        $('#slow p').html('Slow<br>Motion');
+                    },
+                    error: function() {
+                        errore.messaggio('Errore del server!');
+                    }
+                });
+                $('#slow_icon').html('refresh');
+                $('#slow_icon').addClass('w3-spin');
+                $('#slow p').html('<br>REC');
+            }
         });
     },
     
@@ -148,6 +178,7 @@ var camera = {
                 dataType: 'json',
                 data: JSON.stringify({tipo: camera.tipo, id: camera.id}),
                 success: function() {
+                    camera.occupata = false;
                     $('#anteprima').html('<img src="/img/default.jpg" class="w3-image elemento_anteprima">');
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
@@ -167,6 +198,7 @@ var camera = {
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function() {
+                    camera.occupata = false;
                     $('#anteprima').html('<img src="/img/default.jpg" class="w3-image elemento_anteprima">');
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
