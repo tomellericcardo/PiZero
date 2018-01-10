@@ -4,6 +4,7 @@ var camera = {
         camera.init_home();
         camera.init_foto();
         camera.init_video();
+        camera.init_gif();
         camera.init_salva();
         camera.init_scarta();
     },
@@ -64,6 +65,27 @@ var camera = {
                     $('#operazioni').css('display', 'none');
                     $('#salvataggio').css('display', 'block');
                     $('#operazioni div').css('visibility', 'visible');
+                },
+                error: function() {
+                    errore.messaggio('Errore del server!');
+                }
+            });
+        });
+    },
+    
+    init_gif: function() {
+        $('#gif').on('click', function() {
+            $.ajax({
+                url: 'scatta_gif',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function() {
+                    camera.id = Date.now().toString();
+                    camera.tipo = 'GIF';
+                    $('#anteprima').html('<img src="/img/temp/GIF.gif?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
+                    $('#operazioni').css('display', 'none');
+                    $('#salvataggio').css('display', 'block');
                 },
                 error: function() {
                     errore.messaggio('Errore del server!');

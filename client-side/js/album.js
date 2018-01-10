@@ -39,6 +39,8 @@ var album = {
                 lista.elementi[i].foto = true;
             else if (tipo == 'VIDEO')
                 lista.elementi[i].video = true;
+            else if (tipo == 'GIF')
+                lista.elementi[i].gif = true;
         }
         return lista;
     },

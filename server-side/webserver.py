@@ -77,6 +77,12 @@ def stop_video():
     zero.stop_video()
     return dumps({'success': True})
 
+# Scatto della GIF
+@app.route('/scatta_gif', methods = ['POST'])
+def scatta_gif():
+    zero.scatta_gif()
+    return dumps({'success': True})
+
 # Salvataggio dell'elemento
 @app.route('/salva', methods = ['POST'])
 def salva():

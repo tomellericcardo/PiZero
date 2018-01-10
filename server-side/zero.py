@@ -4,6 +4,7 @@ from manager import Manager
 from picamera import PiCamera
 from threading import Lock
 from subprocess import call, Popen, PIPE
+from time import sleep
 from psutil import cpu_percent, virtual_memory, disk_usage
 
 
@@ -13,7 +14,7 @@ class Zero:
         self.manager = Manager(g)
         self.camera = PiCamera()
         self.lock = Lock()
-        self.estensioni = {'FOTO': '.jpg', 'VIDEO': '.mp4'}
+        self.estensioni = {'FOTO': '.jpg', 'VIDEO': '.mp4', 'GIF': '.gif'}
         self.percorso = '/home/pi/PiZero/client-side/img/'
     
     # Riavvio
@@ -45,6 +46,17 @@ class Zero:
     def stop_video(self):
         self.camera.stop_recording()
         comando = 'MP4Box -add ' + self.percorso + 'temp/VIDEO.h264 ' + self.percorso + 'temp/VIDEO.mp4'
+        call(comando, shell = True)
+        self.lock.release()
+    
+    # Scatto della GIF
+    def scatta_gif(self):
+        self.lock.acquire()
+        for i in range(0, 10):
+            nome_file = self.percorso + 'temp/GIF' + i + '.jpg'
+            self.camera.capture(nome_file)
+            sleep(1)
+        comando = 'convert -delay 50 ' + self.percorso + 'temp/GIF*.jpg ' + self.percorso + 'temp/GIF.gif'
         call(comando, shell = True)
         self.lock.release()
     
