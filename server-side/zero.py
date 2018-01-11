@@ -3,8 +3,8 @@
 from manager import Manager
 from picamera import PiCamera
 from threading import Lock
-from timelapse import TimeLapse
 from time import sleep
+from timelapse import TimeLapse
 from psutil import cpu_percent, virtual_memory, disk_usage
 from subprocess import call, Popen, PIPE
 
@@ -26,7 +26,6 @@ class Zero:
             'SLOW' : '.mp4'  \
         }
         self.percorso = '/home/pi/PiZero/client-side/img/'
-        self.timelapse = TimeLapse(self.percorso)
     
     # Riavvio
     def riavvia(self):
@@ -74,7 +73,8 @@ class Zero:
         self.lock.release()
     
     def timelapse_video(self):
-        self.timelapse.start(self.camera, self.lock)
+        self.timelapse = TimeLapse(self.lock, self.camera, self.percorso)
+        self.timelapse.start()
     
     def timelapse_completato(self):
         return not self.timelapse.isAlive()
