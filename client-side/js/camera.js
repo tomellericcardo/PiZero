@@ -2,7 +2,8 @@ var camera = {
     
     init: function() {
         camera.occupata = false;
-        camera.registrando = false;
+        camera.video = false;
+        camera.slow = false;
         camera.init_home();
         camera.init_foto();
         camera.init_video();
@@ -11,6 +12,7 @@ var camera = {
         camera.init_slow();
         camera.init_salva();
         camera.init_scarta();
+        camera.init_uscita();
     },
     
     init_home: function() {
@@ -21,7 +23,8 @@ var camera = {
     
     init_foto: function() {
         $('#foto').on('click', function() {
-            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
+            if (camera.occupata)
+                errore.messaggio('Camera gi&agrave; occupata!');
             else {
                 camera.occupata = true;
                 $.ajax({
@@ -32,7 +35,8 @@ var camera = {
                     success: function() {
                         camera.id = Date.now().toString();
                         camera.tipo = 'FOTO';
-                        $('#anteprima').html('<img src="/img/temp/FOTO.jpg?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
+                        var anteprima = '<img src="/img/temp/FOTO.jpg?nc=' + camera.id + '" class="w3-image elemento_anteprima">';
+                        $('#anteprima').html(anteprima);
                         $('#operazioni').css('display', 'none');
                         $('#salvataggio').css('display', 'block');
                     },
@@ -48,7 +52,7 @@ var camera = {
         $('#video').on('click', function() {
             if (!camera.occupata) {
                 camera.occupata = true;
-                camera.registrando = true;
+                camera.video = true;
                 $.ajax({
                     url: 'registra_video',
                     method: 'POST',
@@ -64,10 +68,10 @@ var camera = {
                     }
                 });
             } else {
-                if (camera.registrando) {
-                    camera.registrando = false;
+                if (camera.video) {
+                    camera.video = false;
                     $.ajax({
-                        url: 'stop_video',
+                        url: 'interrompi_video',
                         method: 'POST',
                         contentType: 'application/json',
                         dataType: 'json',
@@ -142,65 +146,95 @@ var camera = {
                     dataType: 'json',
                     timeout: 1000000,
                     success: function() {
-                        camera.id = Date.now().toString();
-                        camera.tipo = 'LAPSE';
-                        var video = '<video class="elemento_anteprima" controls><source src="/img/temp/LAPSE.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
-                        $('#anteprima').html(video);
-                        $('#operazioni').css('display', 'none');
-                        $('#salvataggio').css('display', 'block');
-                        $('#lapse p').html('Time<br>Lapse');
-                        $('#lapse i').removeClass('blink');
+                        $('#lapse i').addClass('blink');
+                        var count = 1;
+                        var timer = setInterval(function() {
+                            if (count <= 120) {
+                                $('#lapse p').html('Scatto<br>' + count);
+                                count++;
+                            }
+                            else {
+                                clearInterval(timer);
+                                $('#lapse p').html('<br>Creo');
+                                camera.lapse_completato();
+                            }
+                        }, 30000);
                     },
                     error: function() {
                         errore.messaggio('Errore del server!');
                     }
                 });
-                $('#lapse i').addClass('blink');
-                var count = 1;
-                var timer = setInterval(function() {
-                    if (count <= 100) {
-                        $('#lapse p').html('Scatto<br>' + count);
-                        count++;
-                    }
-                    else {
-                        clearInterval(timer);
-                        $('#lapse p').html('<br>Creo');
-                    }
-                }, 1000);
+            }
+        });
+    },
+    
+    lapse_completato: function() {
+        $.ajax({
+            url: 'timelapse_completato',
+            method: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function(risposta) {
+                if (risposta.completato) {
+                    camera.id = Date.now().toString();
+                    camera.tipo = 'LAPSE';
+                    var video = '<video class="elemento_anteprima" controls><source src="/img/temp/LAPSE.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                    $('#anteprima').html(video);
+                    $('#operazioni').css('display', 'none');
+                    $('#salvataggio').css('display', 'block');
+                    $('#lapse p').html('Time<br>Lapse');
+                    $('#lapse i').removeClass('blink');
+                }
+            },
+            error: function() {
+                errore.messaggio('Errore del server!');
             }
         });
     },
     
     init_slow: function() {
         $('#slow').on('click', function() {
-            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
-            else {
+            if (!camera.occupata) {
                 camera.occupata = true;
+                camera.slow = true;
                 $.ajax({
-                    url: 'slowmotion_video',
+                    url: 'registra_slowmotion',
                     method: 'POST',
                     contentType: 'application/json',
                     dataType: 'json',
                     success: function() {
-                        camera.id = Date.now().toString();
-                        camera.tipo = 'SLOW';
-                        var video = '<video class="elemento_anteprima" controls><source src="/img/temp/SLOW.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
-                        $('#anteprima').html(video);
-                        $('#operazioni').css('display', 'none');
-                        $('#salvataggio').css('display', 'block');
-                        $('#slow i').html('directions_run');
-                        $('#slow i').removeClass('w3-spin');
-                        $('#slow p').html('Slow<br>Motion');
-                        $('#slow p').removeClass('blink');
+                        $('#slow i').html('pause');
+                        $('#slow p').html('REC');
+                        $('#slow p').addClass('blink');
                     },
                     error: function() {
                         errore.messaggio('Errore del server!');
                     }
                 });
-                $('#slow i').html('refresh');
-                $('#slow i').addClass('w3-spin');
-                $('#slow p').html('<br>REC');
-                $('#slow p').addClass('blink');
+            } else {
+                if (camera.slow) {
+                    camera.slow = false;
+                    $.ajax({
+                        url: 'interrompi_slowmotion',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        success: function() {
+                            camera.id = Date.now().toString();
+                            camera.tipo = 'SLOW';
+                            var video = '<video class="elemento_anteprima" controls><source src="/img/temp/SLOW.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                            $('#anteprima').html(video);
+                            $('#operazioni').css('display', 'none');
+                            $('#salvataggio').css('display', 'block');
+                            $('#slow i').html('videocam');
+                            $('#slow p').html('Video');
+                            $('#slow p').removeClass('blink');
+                        },
+                        error: function() {
+                            errore.messaggio('Errore del server!');
+                        }
+                    });
+                } else errore.messaggio('Camera gi&agrave; occupata!');
             }
         });
     },
@@ -208,7 +242,7 @@ var camera = {
     init_salva: function() {
         $('#salva').on('click', function() {
             $.ajax({
-                url: 'salva',
+                url: 'salva_elemento',
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
@@ -229,7 +263,7 @@ var camera = {
     init_scarta: function() {
         $('#scarta').on('click', function() {
             $.ajax({
-                url: 'scarta',
+                url: 'scarta_elemento',
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
@@ -244,6 +278,14 @@ var camera = {
                 }
             });
         });
+    },
+    
+    init_uscita: function() {
+        window.onbeforeunload = function() {
+            if (camera.occupata) {
+                return 'La fotocamera &egrave; in uso, attendi...';
+            }
+        };
     }
     
 };

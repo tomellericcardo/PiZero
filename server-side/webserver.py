@@ -47,18 +47,6 @@ def invia_elemento(cartella, nome_file):
 
 # CONTESTI
 
-# Riavvio
-@app.route('/riavvia', methods = ['POST'])
-def riavvia():
-    zero.riavvia()
-    return dumps({'success': True})
-
-# Arresto
-@app.route('/spegni', methods = ['POST'])
-def spegni():
-    zero.spegni()
-    return dumps({'success': True})
-
 # Scatto della foto
 @app.route('/scatta_foto', methods = ['POST'])
 def scatta_foto():
@@ -72,9 +60,9 @@ def registra_video():
     return dumps({'success': True})
 
 # Interruzione del video
-@app.route('/stop_video', methods = ['POST'])
-def stop_video():
-    zero.stop_video()
+@app.route('/interrompi_video', methods = ['POST'])
+def interrompi_video():
+    zero.interrompi_video()
     return dumps({'success': True})
 
 # Scatto della GIF
@@ -86,28 +74,39 @@ def scatta_gif():
 # Registrazione in time lapse
 @app.route('/timelapse_video', methods = ['POST'])
 def timelapse_video():
-    zero.timelapse_video()
+    zero.timelapse.start()
     return dumps({'success': True})
 
+# Controllo completamento time lapse
+@app.route('/timelapse_completato', methods = ['POST'])
+def timelapse_completato():
+    return dumps({'completato': not zero.timelapse.isAlive()})
+
 # Registrazione in slow motion
-@app.route('/slowmotion_video', methods = ['POST'])
-def slowmotion_video():
-    zero.slowmotion_video()
+@app.route('/registra_slowmotion', methods = ['POST'])
+def registra_slowmotion():
+    zero.registra_slowmotion()
+    return dumps({'success': True})
+
+# Interruzione slow motion
+@app.route('/interrompi_slowmotion', methods = ['POST'])
+def interrompi_slowmotion():
+    zero.interrompi_slowmotion()
     return dumps({'success': True})
 
 # Salvataggio dell'elemento
-@app.route('/salva', methods = ['POST'])
-def salva():
+@app.route('/salva_elemento', methods = ['POST'])
+def salva_elemento():
     richiesta = request.get_json(force = True)
     tipo = richiesta['tipo']
     id_elemento = richiesta['id']
-    zero.salva(tipo, id_elemento)
+    zero.salva_elemento(tipo, id_elemento)
     return dumps({'success': True})
 
 # Scarto dell'elemento
-@app.route('/scarta', methods = ['POST'])
-def scarta():
-    zero.scarta()
+@app.route('/scarta_elemento', methods = ['POST'])
+def scarta_elemento():
+    zero.scarta_elemento()
     return dumps({'success': True})
 
 # Lettura della galleria
@@ -119,6 +118,18 @@ def leggi_galleria():
 @app.route('/leggi_statistiche', methods = ['POST'])
 def leggi_statistiche():
     return dumps(zero.leggi_statistiche())
+
+# Riavvio
+@app.route('/riavvia', methods = ['POST'])
+def riavvia():
+    zero.riavvia()
+    return dumps({'success': True})
+
+# Arresto
+@app.route('/spegni', methods = ['POST'])
+def spegni():
+    zero.spegni()
+    return dumps({'success': True})
 
 
 # AVVIO SERVER

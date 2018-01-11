@@ -3,9 +3,10 @@
 from manager import Manager
 from picamera import PiCamera
 from threading import Lock
-from subprocess import call, Popen, PIPE
+from timelapse import TimeLapse
 from time import sleep
 from psutil import cpu_percent, virtual_memory, disk_usage
+from subprocess import call, Popen, PIPE
 
 
 class Zero:
@@ -14,8 +15,18 @@ class Zero:
         self.manager = Manager(g)
         self.camera = PiCamera()
         self.lock = Lock()
-        self.estensioni = {'FOTO': '.jpg', 'VIDEO': '.mp4', 'GIF': '.gif', 'LAPSE': '.mp4', 'SLOW': '.mp4'}
+        self.init_variabili()
+    
+    def init_variabili(self):
+        self.estensioni = {  \
+            'FOTO' : '.jpg', \
+            'VIDEO': '.mp4', \
+            'GIF'  : '.gif', \
+            'LAPSE': '.mp4', \
+            'SLOW' : '.mp4'  \
+        }
         self.percorso = '/home/pi/PiZero/client-side/img/'
+        self.timelapse = TimeLapse(self.percorso)
     
     # Riavvio
     def riavvia(self):
@@ -41,7 +52,7 @@ class Zero:
         self.camera.start_recording(self.percorso + 'temp/VIDEO.h264')
     
     # Interruzione del video
-    def stop_video(self):
+    def interrompi_video(self):
         self.camera.stop_recording()
         h264 = self.percorso + 'temp/VIDEO.h264 '
         mp4 = self.percorso + 'temp/VIDEO.mp4'
@@ -62,34 +73,24 @@ class Zero:
         call(comando, shell = True)
         self.lock.release()
     
-    # Registrazione in time lapse
-    def timelapse_video(self):
-        self.lock.acquire()
-        for i in range(0, 100):
-            nome_file = self.percorso + 'temp/LAPSE' + str(i) + '.jpg'
-            self.camera.capture(nome_file)
-            sleep(1)
-        foto = self.percorso + 'temp/LAPSE%d.jpg '
-        lapse = self.percorso + 'temp/LAPSE.mp4'
-        comando = 'avconv -r 10 -i ' + foto + ' -b:v 1000k ' + lapse
-        call(comando, shell = True)
-        self.lock.release()
-    
     # Registrazione in slow motion
-    def slowmotion_video(self):
+    def registra_slowmotion(self):
         self.lock.acquire()
-        self.camera.close()
+        self.camera.framerate = 90
+        self.camera.start_recording(self.percorso + 'temp/SLOW.h264')
+    
+    # Interruzione slow motion
+    def interrompi_slowmotion(self):
+        self.camera.stop_recording()
         h264 = self.percorso + 'temp/SLOW.h264 '
         mp4 = self.percorso + 'temp/SLOW.mp4'
-        comando = 'raspivid -w 640 -h 480 -fps 90 -t 10000 -o ' + h264
-        call(comando, shell = True)
         comando = 'MP4Box -add ' + h264 + mp4
         call(comando, shell = True)
-        self.camera = PiCamera()
+        self.camera.framerate = 30
         self.lock.release()
     
     # Salvataggio dell'elemento
-    def salva(self, tipo, id_elemento):
+    def salva_elemento(self, tipo, id_elemento):
         self.lock.acquire()
         sorgente = self.percorso + 'temp/' + tipo + self.estensioni[tipo]
         cartella = '/img/album/' + tipo + '_' + id_elemento + self.estensioni[tipo]
@@ -105,7 +106,7 @@ class Zero:
         self.lock.release()
     
     # Scarto dell'elemento
-    def scarta(self):
+    def scarta_elemento(self):
         self.lock.acquire()
         comando = 'rm ' + self.percorso + 'temp/*'
         call(comando, shell = True)
