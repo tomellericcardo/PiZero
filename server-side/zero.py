@@ -73,6 +73,12 @@ class Zero:
         call(comando, shell = True)
         self.lock.release()
     
+    def timelapse_video(self):
+        self.timelapse.start(self.camera, self.lock)
+    
+    def timelapse_completato(self):
+        return not self.timelapse.isAlive()
+    
     # Registrazione in slow motion
     def registra_slowmotion(self):
         self.lock.acquire()

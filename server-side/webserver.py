@@ -74,13 +74,13 @@ def scatta_gif():
 # Registrazione in time lapse
 @app.route('/timelapse_video', methods = ['POST'])
 def timelapse_video():
-    zero.timelapse.start()
+    zero.timelapse_video()
     return dumps({'success': True})
 
 # Controllo completamento time lapse
 @app.route('/timelapse_completato', methods = ['POST'])
 def timelapse_completato():
-    return dumps({'completato': not zero.timelapse.isAlive()})
+    return dumps({'completato': zero.timelapse_completato()})
 
 # Registrazione in slow motion
 @app.route('/registra_slowmotion', methods = ['POST'])
