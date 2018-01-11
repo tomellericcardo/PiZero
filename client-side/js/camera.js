@@ -90,14 +90,16 @@ var camera = {
                             errore.messaggio('Errore del server!');
                         }
                     });
-                } else errore.messaggio('Camera gi&agrave; occupata!');
+                } else
+                    errore.messaggio('Camera gi&agrave; occupata!');
             }
         });
     },
     
     init_gif: function() {
         $('#gif').on('click', function() {
-            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
+            if (camera.occupata)
+                errore.messaggio('Camera gi&agrave; occupata!');
             else {
                 camera.occupata = true;
                 $.ajax({
@@ -136,7 +138,8 @@ var camera = {
     
     init_lapse: function() {
         $('#lapse').on('click', function() {
-            if (camera.occupata) errore.messaggio('Camera gi&agrave; occupata!');
+            if (camera.occupata)
+                errore.messaggio('Camera gi&agrave; occupata!');
             else {
                 camera.occupata = true;
                 $.ajax({
@@ -144,7 +147,6 @@ var camera = {
                     method: 'POST',
                     contentType: 'application/json',
                     dataType: 'json',
-                    timeout: 1000000,
                     success: function() {
                         $('#lapse i').addClass('blink');
                         var count = 1;
@@ -204,7 +206,7 @@ var camera = {
                     dataType: 'json',
                     success: function() {
                         $('#slow i').html('pause');
-                        $('#slow p').html('REC');
+                        $('#slow p').html('<br>REC');
                         $('#slow p').addClass('blink');
                     },
                     error: function() {
@@ -226,15 +228,16 @@ var camera = {
                             $('#anteprima').html(video);
                             $('#operazioni').css('display', 'none');
                             $('#salvataggio').css('display', 'block');
-                            $('#slow i').html('videocam');
-                            $('#slow p').html('Video');
+                            $('#slow i').html('directions_run');
+                            $('#slow p').html('Slow<br>Motion');
                             $('#slow p').removeClass('blink');
                         },
                         error: function() {
                             errore.messaggio('Errore del server!');
                         }
                     });
-                } else errore.messaggio('Camera gi&agrave; occupata!');
+                } else
+                    errore.messaggio('Camera gi&agrave; occupata!');
             }
         });
     },

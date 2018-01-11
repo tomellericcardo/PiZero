@@ -6,6 +6,7 @@ from threading import Thread
 class TimeLapse(Thread):
     
     def __init__(self, percorso):
+        Thread.__init__(self)
         self.percorso = percorso
     
     def run(self, camera, lock):
