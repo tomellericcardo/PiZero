@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from threading import Thread
+from time import sleep
+from subprocess import call
 
 
 class TimeLapse(Thread):
