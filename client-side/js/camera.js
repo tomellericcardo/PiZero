@@ -5,6 +5,7 @@ var camera = {
         camera.video = false;
         camera.slow = false;
         camera.init_home();
+        camera.init_impostazioni();
         camera.init_foto();
         camera.init_video();
         camera.init_gif();
@@ -18,6 +19,12 @@ var camera = {
     init_home: function() {
         $('#home').on('click', function() {
             window.location.href = '/home';
+        });
+    },
+    
+    init_impostazioni: function() {
+        $('#impostazioni').on('click', function() {
+            window.location.href = '/impostazioni';
         });
     },
     

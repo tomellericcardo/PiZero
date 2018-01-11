@@ -29,15 +29,11 @@ class Zero:
     
     # Riavvio
     def riavvia(self):
-        self.lock.acquire()
         call('reboot now', shell = True)
-        self.lock.release()
     
     # Arresto
     def spegni(self):
-        self.lock.acquire()
         call('shutdown now', shell = True)
-        self.lock.release()
     
     # Scatto della foto
     def scatta_foto(self):
@@ -128,7 +124,6 @@ class Zero:
     
     # Lettura statistiche dashboard
     def leggi_statistiche(self):
-        self.lock.acquire()
         risposta = {}
         
         # Temperatura e CPU
@@ -147,7 +142,6 @@ class Zero:
         risposta['sd_free'] = str(round(((sd.total - sd.used) / 1024.0 / 1024.0 / 1024.0), 1)) + ' GB'
         risposta['sd_tot'] = str(round((sd.total / 1024.0 / 1024.0 / 1024.0), 1)) + ' GB'
         
-        self.lock.release()
         return risposta
     
     # Lettura della temperatura
