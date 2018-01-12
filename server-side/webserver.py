@@ -145,10 +145,41 @@ def scarta_elemento():
 def leggi_galleria():
     return dumps({'elementi': zero.leggi_galleria()})
 
+# Eliminazione elemento
+@app.route('/elimina', methods = ['POST'])
+def elimina():
+    richiesta = request.get_json(force = True)
+    id_elemento = richiesta['id']
+    zero.elimina(id_elemento)
+    return dumps({'success': True})
+
 # Lettura statistiche dashboard
 @app.route('/leggi_statistiche', methods = ['POST'])
 def leggi_statistiche():
     return dumps(zero.leggi_statistiche())
+
+# Modifica delle impostazioni
+@app.route('/modifica_impostazioni', methods = ['POST'])
+def modifica_impostazioni():
+    richiesta = request.get_json(force = True)
+    sharpness = richiesta['sharpness']
+    contrast = richiesta['contrast']
+    brightness = richiesta['brightness']
+    saturation = richiesta['saturation']
+    iso = richiesta['iso']
+    zero.modifica_impostazioni(sharpness, contrast, brightness, saturation, iso)
+    return dumps({'success': True})
+
+# Impostazione valori predefiniti
+@app.route('/impostazioni_predefinite', methods = ['POST'])
+def impostazioni_predefinite():
+    zero.modifica_impostazioni(0, 0, 50, 0, 0)
+    return dumps({'success': True})
+
+# Lettura impostazioni correnti
+@app.route('/leggi_impostazioni', methods = ['POST'])
+def leggi_impostazioni():
+    return dumps(zero.leggi_impostazioni())
 
 # Riavvio dispositivo
 @app.route('/riavvia', methods = ['POST'])
@@ -160,14 +191,6 @@ def riavvia():
 @app.route('/spegni', methods = ['POST'])
 def spegni():
     zero.spegni()
-    return dumps({'success': True})
-
-# Eliminazione elemento
-@app.route('/elimina', methods = ['POST'])
-def elimina():
-    richiesta = request.get_json(force = True)
-    id_elemento = richiesta['id']
-    zero.elimina(id_elemento)
     return dumps({'success': True})
 
 
