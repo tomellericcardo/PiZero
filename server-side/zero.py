@@ -31,7 +31,7 @@ class Zero:
         }
     
     # Inizializzazione delle impostazioni
-    def init_stato(self):
+    def init_impostazioni(self):
         impostate = self.database.leggi_presenza('''
             SELECT *
             FROM impostazioni
@@ -68,7 +68,7 @@ class Zero:
             self.camera.saturation = saturation
             self.camera.ISO = iso
         else:
-            self.modifica_impostazioni(0, 0, 50, 0, 0)
+            self.database.init_impostazioni()
     
     # Scatto della foto
     def scatta_foto(self):
