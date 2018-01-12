@@ -89,7 +89,7 @@ def interrompi_video():
 # Scatto della GIF
 @app.route('/scatta_gif', methods = ['POST'])
 def scatta_gif():
-    zero.gif.start()()
+    zero.gif.start()
     return dumps({'success': True})
 
 # Registrazione time lapse
