@@ -1,9 +1,17 @@
 var impostazioni = {
     
     init: function() {
+        impostazioni.init_home();
         impostazioni.init_modifica();
         impostazioni.init_predefinite();
         impostazioni.leggi_impostazioni();
+    },
+    
+    // Bottone home
+    init_home: function() {
+        $('#home').on('click', function() {
+            window.location.href = '/home';
+        });
     },
     
     init_modifica: function() {
