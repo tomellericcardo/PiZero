@@ -26,44 +26,8 @@ class DataBase:
             )
         ''')
         database.commit()
-        cursore.execute('''
-            CREATE TABLE IF NOT EXISTS impostazioni (
-                    chiave TEXT PRIMARY KEY,
-                    valore TEXT NOT NULL
-            )
-        ''')
-        database.commit()
         cursore.close()
         database.close()
-    
-    # Inizializzazione delle impostazioni
-    def init_impostazioni(self):
-        database = connect(self.percorso)
-        cursore = database.cursor()
-        cursore.execute('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('sharpness', 0))
-        database.commit()
-        cursore.execute('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('contrast', 0))
-        database.commit()
-        cursore.execute('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('brightness', 50))
-        database.commit()
-        cursore.execute('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('saturation', 0))
-        database.commit()
-        cursore.execute('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('iso', 0))
     
     # Apertura della connessione
     def apri_connessione(self):

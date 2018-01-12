@@ -15,7 +15,6 @@ class Zero:
         self.camera = PiCamera()
         self.lock = Lock()
         self.init_stato()
-        self.init_impostazioni()
     
     # Inizializzazione delle variabili di stato
     def init_stato(self):
@@ -29,46 +28,6 @@ class Zero:
             'LAPSE': '.mp4', \
             'SLOW' : '.mp4'  \
         }
-    
-    # Inizializzazione delle impostazioni
-    def init_impostazioni(self):
-        impostate = self.database.leggi_presenza('''
-            SELECT *
-            FROM impostazioni
-        ''')
-        if impostate:
-            sharpness = self.database.leggi_dato('''
-                SELECT valore
-                FROM impostazioni
-                WHERE chiave = ?
-            ''', ('sharpness',))
-            contrast = self.database.leggi_dato('''
-                SELECT valore
-                FROM impostazioni
-                WHERE chiave = ?
-            ''', ('contrast',))
-            brightness = self.database.leggi_dato('''
-                SELECT valore
-                FROM impostazioni
-                WHERE chiave = ?
-            ''', ('brightness',))
-            saturation = self.database.leggi_dato('''
-                SELECT valore
-                FROM impostazioni
-                WHERE chiave = ?
-            ''', ('saturation',))
-            iso = self.database.leggi_dato('''
-                SELECT valore
-                FROM impostazioni
-                WHERE chiave = ?
-            ''', ('iso',))
-            self.camera.sharpness = sharpness
-            self.camera.contrast = contrast
-            self.camera.brightness = brightness
-            self.camera.saturation = saturation
-            self.camera.ISO = iso
-        else:
-            self.database.init_impostazioni()
     
     # Scatto della foto
     def scatta_foto(self):
@@ -194,64 +153,21 @@ class Zero:
     
     # Modifica delle impostazioni
     def modifica_impostazioni(self, sharpness, contrast, brightness, saturation, iso):
-        self.database.scrivi('''
-            DELETE FROM impostazioni
-        ''')
-        self.database.scrivi('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('sharpness', sharpness))
-        self.database.scrivi('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('contrast', contrast))
-        self.database.scrivi('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('brightness', brightness))
-        self.database.scrivi('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('saturation', saturation))
-        self.database.scrivi('''
-            INSERT INTO impostazioni (chiave, valore)
-            VALUES (?, ?)
-        ''', ('iso', iso))
         self.camera.sharpness = sharpness
         self.camera.contrast = contrast
         self.camera.brightness = brightness
         self.camera.saturation = saturation
         self.camera.ISO = iso
     
-    # Lettura impostazioni correnti
+    # Lettura delle impostazioni
     def leggi_impostazioni(self):
-        dizionario = {}
-        dizionario['sharpness'] = self.database.leggi_dato('''
-            SELECT valore
-            FROM impostazioni
-            WHERE chiave = ?
-        ''', ('sharpness',))
-        dizionario['contrast'] = self.database.leggi_dato('''
-            SELECT valore
-            FROM impostazioni
-            WHERE chiave = ?
-        ''', ('contrast',))
-        dizionario['brightness'] = self.database.leggi_dato('''
-            SELECT valore
-            FROM impostazioni
-            WHERE chiave = ?
-        ''', ('brightness',))
-        dizionario['saturation'] = self.database.leggi_dato('''
-            SELECT valore
-            FROM impostazioni
-            WHERE chiave = ?
-        ''', ('saturation',))
-        dizionario['iso'] = self.database.leggi_dato('''
-            SELECT valore
-            FROM impostazioni
-            WHERE chiave = ?
-        ''', ('iso',))
-        return dizionario
+        risposta = {}
+        risposta['sharpness'] = self.camera.sharpness
+        risposta['contrast'] = self.camera.contrast
+        risposta['brightness'] = self.camera.brightness
+        risposta['saturation'] = self.camera.saturation
+        risposta['iso'] = self.camera.ISO
+        return risposta
     
     # Riavvio dispositivo
     def riavvia(self):
