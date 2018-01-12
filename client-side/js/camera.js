@@ -118,7 +118,7 @@ var camera = {
         $('#gif p').html('<br>Creo');
         var timer = setInterval(function() {
             $.ajax({
-                url: 'elemento_completato',
+                url: 'elemento_completo',
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
@@ -168,7 +168,7 @@ var camera = {
         $('#lapse p').html('<br>Creo');
         var timer = setInterval(function() {
             $.ajax({
-                url: 'elemento_completato',
+                url: 'elemento_completo',
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
