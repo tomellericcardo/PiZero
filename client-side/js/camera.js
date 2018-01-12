@@ -1,9 +1,7 @@
 var camera = {
     
     init: function() {
-        camera.occupata = false;
-        camera.video = false;
-        camera.slow = false;
+        camera.init_stato();
         camera.init_home();
         camera.init_impostazioni();
         camera.controlla_stato();
@@ -14,6 +12,15 @@ var camera = {
         camera.init_slow();
         camera.init_salva();
         camera.init_scarta();
+    },
+    
+    init_stato: function() {
+        camera.occupata = false;
+        camera.video = false;
+        camera.gif = false;
+        camera.lapse = false;
+        camera.slow = false;
+        camera.stop = false;
     },
     
     init_home: function() {
@@ -100,7 +107,7 @@ var camera = {
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function(risposta) {
-                    if (risposta.stato < 10) {
+                    if (risposta.stato < 20 && !camera.stop) {
                         $('#gif p').html('Scatto<br>' + risposta.stato);
                     } else {
                         clearInterval(timer);
@@ -150,7 +157,7 @@ var camera = {
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function(risposta) {
-                    if (risposta.stato < 120) {
+                    if (risposta.stato < 240 && !camera.stop) {
                         $('#lapse p').html('Scatto<br>' + risposta.stato);
                     } else {
                         clearInterval(timer);
@@ -261,18 +268,17 @@ var camera = {
                             errore.messaggio('Errore del server!');
                         }
                     });
-                } else
-                    errore.messaggio('Camera gi&agrave; occupata!');
+                } else errore.messaggio('Camera gi&agrave; occupata!');
             }
         });
     },
     
     init_gif: function() {
         $('#gif').on('click', function() {
-            if (camera.occupata)
-                errore.messaggio('Camera gi&agrave; occupata!');
-            else {
+            if (!camera.occupata) {
                 camera.occupata = true;
+                camera.gif = true;
+                camera.stop = false;
                 $.ajax({
                     url: 'scatta_gif',
                     method: 'POST',
@@ -285,16 +291,30 @@ var camera = {
                         errore.messaggio('Errore del server!');
                     }
                 });
+            } else {
+                if (camera.gif) {
+                    camera.gif = false;
+                    camera.stop = true;
+                    $.ajax({
+                        url: 'interrompi_gif',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        error: function() {
+                            errore.messaggio('Errore del server!');
+                        }
+                    });
+                } else errore.messaggio('Camera gi&agrave; occupata!');
             }
         });
     },
     
     init_lapse: function() {
         $('#lapse').on('click', function() {
-            if (camera.occupata)
-                errore.messaggio('Camera gi&agrave; occupata!');
-            else {
+            if (!camera.occupata) {
                 camera.occupata = true;
+                camera.lapse = true;
+                camera.stop = false;
                 $.ajax({
                     url: 'timelapse_video',
                     method: 'POST',
@@ -307,6 +327,20 @@ var camera = {
                         errore.messaggio('Errore del server!');
                     }
                 });
+            } else {
+                if (camera.lapse) {
+                    camera.lapse = false;
+                    camera.stop = true;
+                    $.ajax({
+                        url: 'interrompi_timelapse',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        error: function() {
+                            errore.messaggio('Errore del server!');
+                        }
+                    });
+                } else errore.messaggio('Camera gi&agrave; occupata!');
             }
         });
     },
@@ -353,8 +387,7 @@ var camera = {
                             errore.messaggio('Errore del server!');
                         }
                     });
-                } else
-                    errore.messaggio('Camera gi&agrave; occupata!');
+                } else errore.messaggio('Camera gi&agrave; occupata!');
             }
         });
     },

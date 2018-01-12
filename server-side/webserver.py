@@ -61,16 +61,6 @@ def elemento_completo():
 def camera_occupata():
     return dumps({'tipo': zero.occupato})
 
-# Lettura dello stato della GIF
-@app.route('/stato_gif', methods = ['POST'])
-def stato_gif():
-    return dumps({'stato': gif.stato})
-
-# Lettura dello stato del time lapse
-@app.route('/stato_timelapse', methods = ['POST'])
-def stato_timelapse():
-    return dumps({'stato': timelapse.stato})
-
 # Scatto della foto
 @app.route('/scatta_foto', methods = ['POST'])
 def scatta_foto():
@@ -95,10 +85,32 @@ def scatta_gif():
     gif.start()
     return dumps({'success': True})
 
+# Lettura dello stato della GIF
+@app.route('/stato_gif', methods = ['POST'])
+def stato_gif():
+    return dumps({'stato': gif.stato})
+
+# Interruzione della GIF
+@app.route('/interrompi_gif', methods = ['POST'])
+def interrompi_gif():
+    gif.stop = True
+    return dumps({'success': True})
+
 # Registrazione time lapse
 @app.route('/timelapse_video', methods = ['POST'])
 def timelapse_video():
-    timelapse.start()()
+    timelapse.start()
+    return dumps({'success': True})
+
+# Lettura dello stato del time lapse
+@app.route('/stato_timelapse', methods = ['POST'])
+def stato_timelapse():
+    return dumps({'stato': timelapse.stato})
+
+# Interruzione time lapse
+@app.route('/interrompi_timelapse', methods = ['POST'])
+def interrompi_timelapse():
+    timelapse.stop = True
     return dumps({'success': True})
 
 # Registrazione slow motion
