@@ -4,7 +4,7 @@ from flask import Flask, g, send_from_directory, request
 from zero import Zero
 from json import dumps
 
-
+# Variabili globali
 app = Flask(__name__)
 zero = Zero(g)
 
@@ -47,6 +47,27 @@ def invia_elemento(cartella, nome_file):
 
 # CONTESTI
 
+
+# Controllo elemento completo
+@app.route('/elemento_completo', methods = ['POST'])
+def elemento_completo():
+    return dumps({'tipo': zero.completo})
+
+# Controllo camera occupata
+@app.route('/camera_occupata', methods = ['POST'])
+def camera_occupata():
+    return dumps({'tipo': zero.occupato})
+
+# Lettura dello stato della GIF
+@app.route('/stato_gif', methods = ['POST'])
+def stato_gif():
+    return dumps({'stato': zero.gif.stato})
+
+# Lettura dello stato del time lapse
+@app.route('/stato_timelapse', methods = ['POST'])
+def stato_timelapse():
+    return dumps({'stato': zero.timelapse.stato})
+
 # Scatto della foto
 @app.route('/scatta_foto', methods = ['POST'])
 def scatta_foto():
@@ -68,21 +89,16 @@ def interrompi_video():
 # Scatto della GIF
 @app.route('/scatta_gif', methods = ['POST'])
 def scatta_gif():
-    zero.scatta_gif()
+    zero.GIF.start()()
     return dumps({'success': True})
 
-# Registrazione in time lapse
+# Registrazione time lapse
 @app.route('/timelapse_video', methods = ['POST'])
 def timelapse_video():
-    zero.timelapse_video()
+    zero.timelapse.start()()
     return dumps({'success': True})
 
-# Controllo completamento time lapse
-@app.route('/timelapse_completato', methods = ['POST'])
-def timelapse_completato():
-    return dumps({'completato': zero.timelapse_completato()})
-
-# Registrazione in slow motion
+# Registrazione slow motion
 @app.route('/registra_slowmotion', methods = ['POST'])
 def registra_slowmotion():
     zero.registra_slowmotion()
@@ -119,13 +135,13 @@ def leggi_galleria():
 def leggi_statistiche():
     return dumps(zero.leggi_statistiche())
 
-# Riavvio
+# Riavvio dispositivo
 @app.route('/riavvia', methods = ['POST'])
 def riavvia():
     zero.riavvia()
     return dumps({'success': True})
 
-# Arresto
+# Arresto dispositivo
 @app.route('/spegni', methods = ['POST'])
 def spegni():
     zero.spegni()

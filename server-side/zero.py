@@ -1,23 +1,29 @@
 # -*- coding: utf-8 -*-
 
-from manager import Manager
+from database import DataBase
 from picamera import PiCamera
+from camera import GIF, TimeLapse
 from threading import Lock
-from time import sleep
-from timelapse import TimeLapse
 from psutil import cpu_percent, virtual_memory, disk_usage
 from subprocess import call, Popen, PIPE
 
 
 class Zero:
     
+    # Inizializzazione della classe
     def __init__(self, g):
-        self.manager = Manager(g)
+        self.database = DataBase(g)
         self.camera = PiCamera()
         self.lock = Lock()
-        self.init_variabili()
+        self.init_stato()
+        self.timelapse = TimeLapse(self.lock, self.completo, self.occupato, self.percorso, self.camera)
+        self.gif = GIF(self.lock, self.completo, self.occupato, self.percorso, self.camera)
     
-    def init_variabili(self):
+    # Inizializzazione delle variabili di stato
+    def init_stato(self):
+        self.percorso = '/home/pi/PiZero/client-side/img/'
+        self.completo = False
+        self.occupato = False
         self.estensioni = {  \
             'FOTO' : '.jpg', \
             'VIDEO': '.mp4', \
@@ -25,59 +31,37 @@ class Zero:
             'LAPSE': '.mp4', \
             'SLOW' : '.mp4'  \
         }
-        self.percorso = '/home/pi/PiZero/client-side/img/'
-    
-    # Riavvio
-    def riavvia(self):
-        call('reboot now', shell = True)
-    
-    # Arresto
-    def spegni(self):
-        call('shutdown now', shell = True)
     
     # Scatto della foto
     def scatta_foto(self):
         self.lock.acquire()
-        self.camera.capture(self.percorso + 'temp/FOTO.jpg')
+        nome_file = self.percorso + 'temp/FOTO.jpg'
+        self.camera.capture(nome_file)
+        self.completo = 'FOTO'
         self.lock.release()
     
     # Registrazione del video
     def registra_video(self):
         self.lock.acquire()
-        self.camera.start_recording(self.percorso + 'temp/VIDEO.h264')
+        self.occupato = 'VIDEO'
+        nome_file = self.percorso + 'temp/VIDEO.h264'
+        self.camera.start_recording(nome_file)
     
     # Interruzione del video
     def interrompi_video(self):
         self.camera.stop_recording()
-        h264 = self.percorso + 'temp/VIDEO.h264 '
-        mp4 = self.percorso + 'temp/VIDEO.mp4'
-        comando = 'MP4Box -add ' + h264 + mp4
+        file_h264 = self.percorso + 'temp/VIDEO.h264 '
+        file_mp4 = self.percorso + 'temp/VIDEO.mp4'
+        comando = 'MP4Box -add ' + file_h264 + file_mp4
         call(comando, shell = True)
+        self.occupato = False
+        self.completo = 'VIDEO'
         self.lock.release()
     
-    # Scatto della GIF
-    def scatta_gif(self):
-        self.lock.acquire()
-        for i in range(0, 10):
-            nome_file = self.percorso + 'temp/GIF' + str(i) + '.jpg'
-            self.camera.capture(nome_file)
-            sleep(1)
-        foto = self.percorso + 'temp/GIF*.jpg '
-        gif = self.percorso + 'temp/GIF.gif'
-        comando = 'convert -delay 50 ' + foto + gif
-        call(comando, shell = True)
-        self.lock.release()
-    
-    def timelapse_video(self):
-        self.timelapse = TimeLapse(self.lock, self.camera, self.percorso)
-        self.timelapse.start()
-    
-    def timelapse_completato(self):
-        return not self.timelapse.isAlive()
-    
-    # Registrazione in slow motion
+    # Registrazione slow motion
     def registra_slowmotion(self):
         self.lock.acquire()
+        self.occupato = 'SLOW'
         self.camera.framerate = 90
         self.camera.start_recording(self.percorso + 'temp/SLOW.h264')
     
@@ -89,6 +73,8 @@ class Zero:
         comando = 'MP4Box -add ' + h264 + mp4
         call(comando, shell = True)
         self.camera.framerate = 30
+        self.occupato = False
+        self.completo = 'SLOW'
         self.lock.release()
     
     # Salvataggio dell'elemento
@@ -105,6 +91,7 @@ class Zero:
         ''', (id_elemento, tipo, cartella))
         comando = 'rm ' + self.percorso + 'temp/*'
         call(comando, shell = True)
+        self.completo = False
         self.lock.release()
     
     # Scarto dell'elemento
@@ -112,6 +99,7 @@ class Zero:
         self.lock.acquire()
         comando = 'rm ' + self.percorso + 'temp/*'
         call(comando, shell = True)
+        self.completo = False
         self.lock.release()
     
     # Lettura della galleria
@@ -146,6 +134,14 @@ class Zero:
     
     # Lettura della temperatura
     def leggi_temperatura(self):
-        process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
+        process = Popen(['vcgencmd', 'measure_temp'], stdout = PIPE)
         output, _error = process.communicate()
         return output[output.index('=') + 1:output.rindex("'")]
+    
+    # Riavvio dispositivo
+    def riavvia(self):
+        call('reboot now', shell = True)
+    
+    # Arresto dispositivo
+    def spegni(self):
+        call('shutdown now', shell = True)

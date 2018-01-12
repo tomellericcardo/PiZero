@@ -127,12 +127,23 @@ input::placeholder, textarea::placeholder {
 }
 
 
-/*** ELEMENTO ANTEPRIMA E GALLERIA ***/
+/*** CAMERA ***/
+
+#operazioni, #salvataggio {
+    display: none;
+}
+
+#anteprima {
+    height: 200px;
+}
 
 .elemento_anteprima {
     max-width: 100%;
     max-height: 200px;
 }
+
+
+/*** ALBUM ***/
 
 .foto_galleria {
     max-width: 100%;
