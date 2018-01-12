@@ -23,8 +23,8 @@ class GIF(Thread):
         i = 0
         while i < 20 and not self.stop:
             self.stato = i + 1
-            i = formatta_indice(str(i))
-            nome_file = self.zero.percorso + 'temp/GIF' + str(i) + '.jpg'
+            indice = formatta_indice(str(i))
+            nome_file = self.zero.percorso + 'temp/GIF' + indice + '.jpg'
             self.zero.camera.capture(nome_file)
             sleep(1)
             i += 1
@@ -56,8 +56,8 @@ class TimeLapse(Thread):
         i = 0
         while i < 240 and not self.stop:
             self.stato = i + 1
-            i = formatta_indice(str(i))
-            nome_file = self.zero.percorso + 'temp/LAPSE' + i + '.jpg'
+            indice = formatta_indice(str(i))
+            nome_file = self.zero.percorso + 'temp/LAPSE' + indice + '.jpg'
             self.zero.camera.capture(nome_file)
             sleep(30)
             i += 1
