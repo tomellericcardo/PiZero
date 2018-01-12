@@ -1,6 +1,7 @@
 var album = {
     
     init: function() {
+        album.init_stato();
         album.init_home();
         album.init_chiudi();
         album.init_avanti();
