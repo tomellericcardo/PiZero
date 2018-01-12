@@ -1,7 +1,6 @@
 {
     "name": "PiZero",
     "short_name": "PiZero",
-    "description": "Raspberry Pi Zero Wireless Project",
     "start_url": "/",
     "display": "standalone",
     "orientation": "portrait",
