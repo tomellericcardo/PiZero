@@ -359,6 +359,7 @@ var camera = {
         });
     },
     
+    // Salvataggio dell'elemento
     init_salva: function() {
         $('#salva').on('click', function() {
             $.ajax({
@@ -380,6 +381,7 @@ var camera = {
         });
     },
     
+    // Scarto dell'elemento
     init_scarta: function() {
         $('#scarta').on('click', function() {
             $.ajax({

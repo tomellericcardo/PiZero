@@ -85,7 +85,7 @@ class Zero:
         destinazione = '/home/pi/PiZero/client-side' + cartella
         comando = 'cp ' + sorgente + ' ' + destinazione
         call(comando, shell = True)
-        self.manager.scrivi('''
+        self.database.scrivi('''
             INSERT INTO galleria
             VALUES (?, ?, ?)
         ''', (id_elemento, tipo, cartella))
@@ -104,7 +104,7 @@ class Zero:
     
     # Lettura della galleria
     def leggi_galleria(self):
-        return self.manager.leggi_righe('''
+        return self.database.leggi_righe('''
             SELECT percorso, tipo
             FROM galleria
             ORDER BY id DESC

@@ -13,11 +13,11 @@ zero = Zero(g)
 
 @app.before_request
 def apri_connessione():
-    zero.manager.apri_connessione()
+    zero.database.apri_connessione()
 
 @app.teardown_request
 def chiudi_connessione(exception):
-    zero.manager.chiudi_connessione()
+    zero.database.chiudi_connessione()
 
 
 # INVIO DI FILE
