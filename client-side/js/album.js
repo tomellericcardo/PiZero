@@ -2,7 +2,14 @@ var album = {
     
     init: function() {
         album.init_home();
+        // album.init_avanti();
+        // album.init_dietro();
         album.leggi_galleria();
+    },
+    
+    init_stato: function() {
+        album.galleria = {};
+        album.in_mostra = '';
     },
     
     init_home: function() {
@@ -18,10 +25,10 @@ var album = {
             contentType: 'application/json',
             dataType: 'json',
             success: function(risposta) {
-                risposta = album.formatta_risposta(risposta);
+                album.galleria = album.formatta_risposta(risposta);
                 $.get('/html/templates.html', function(contenuto) {
                     var template = $(contenuto).filter('#galleria').html();
-                    $('#galleria').html(Mustache.render(template, risposta));
+                    $('#galleria').html(Mustache.render(template, album.galleria));
                 });
             },
             error: function() {
@@ -45,8 +52,19 @@ var album = {
         return lista;
     },
     
-    mostra_elemento: function(percorso) {
-        window.location.href = percorso;
+    mostra_elemento: function(id, tipo, percorso) {
+        album.in_mostra = id;
+        var codice;
+        if (tipo == 'FOTO' || tipo == 'GIF') codice = '<img src="' + percorso + '" class="foto_galleria">';
+        else codice = '<video class="foto_galleria" controls><source src="' + percorso + '" type="video/mp4"></video>';
+        $('#contenuto_mostra').html(codice);
+        $('#mostra').css('display', 'block');
+    },
+    
+    init_chiudi: function() {
+        $('#chiudi_mostra').on('click', function() {
+            $('#mostra').css('display', 'none');
+        });
     }
     
 };

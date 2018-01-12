@@ -21,6 +21,7 @@ var camera = {
         camera.lapse = false;
         camera.slow = false;
         camera.stop = false;
+        camera.indice = '';
     },
     
     init_home: function() {
@@ -116,9 +117,13 @@ var camera = {
                         var indice = (risposta.stato - 1).toString();
                         if (indice.length == 1) indice = '0' + indice;
                         indice = '0' + indice;
-                        var id = Date.now().toString();
-                        $('#anteprima').html('<img src="/img/temp/GIF' + indice + '.jpg?nc=' + id + '" class="w3-image elemento_anteprima">');
+                        if (indice != camera.indice) {
+                            camera.indice = indice;
+                            var id = Date.now().toString();
+                            $('#anteprima').html('<img src="/img/temp/GIF' + indice + '.jpg?nc=' + id + '" class="w3-image elemento_anteprima">');
+                        }
                     } else {
+                        camera.indice = '';
                         clearInterval(timer);
                         camera.gif_completata();
                     }
@@ -171,9 +176,13 @@ var camera = {
                         var indice = (risposta.stato - 1).toString();
                         if (indice.length == 1) indice = '0' + indice;
                         indice = '0' + indice;
-                        var id = Date.now().toString();
-                        $('#anteprima').html('<img src="/img/temp/LAPSE' + indice + '.jpg?nc=' + id + '" class="w3-image elemento_anteprima">');
+                        if (indice != camera.indice) {
+                            camera.indice = indice;
+                            var id = Date.now().toString();
+                            $('#anteprima').html('<img src="/img/temp/LAPSE' + indice + '.jpg?nc=' + id + '" class="w3-image elemento_anteprima">');
+                        }
                     } else {
+                        camera.indice = '';
                         clearInterval(timer);
                         camera.timelapse_completato();
                     }
