@@ -146,7 +146,7 @@ input::placeholder, textarea::placeholder {
 /*** ALBUM ***/
 
 .foto_galleria {
-    max-width: 100%;
+    width: 100%;
 }
 
 .elemento_galleria {
@@ -169,4 +169,36 @@ input::placeholder, textarea::placeholder {
     left: 0;
     width: 100%;
     height: 100%;
+    /*white-space: nowrap;
+    text-align: center;
+    margin: 1em 0;*/
+}
+
+#chiudi_container {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+#foto_mostra {
+    width: 100%;
+    vertical-align: middle;
+}
+
+#dietro {
+    background-color: transparent;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 30%;
+    height: 50%;
+}
+
+avanti {
+    background-color: transparent;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 30%;
+    height: 50%;
 }

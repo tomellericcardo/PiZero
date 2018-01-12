@@ -102,7 +102,7 @@ class Zero:
     # Lettura della galleria
     def leggi_galleria(self):
         return self.database.leggi_righe('''
-            SELECT percorso, tipo
+            SELECT id, tipo, percorso
             FROM galleria
             ORDER BY id DESC
         ''')

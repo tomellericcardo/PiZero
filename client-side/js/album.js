@@ -41,7 +41,11 @@ var album = {
         var tipo;
         for (var i = 0; i < lista.elementi.length; i++) {
             tipo = lista.elementi[i][1];
-            lista.elementi[i] = {percorso: lista.elementi[i][0]};
+            lista.elementi[i] = {
+                id: lista.elementi[i][0],
+                tipo: lista.elementi[i][1],
+                percorso: lista.elementi[i][2]
+            };
             if (tipo == 'FOTO') lista.elementi[i].foto = true;
             else if (tipo == 'VIDEO') lista.elementi[i].video = true;
             else if (tipo == 'GIF') lista.elementi[i].gif = true;
