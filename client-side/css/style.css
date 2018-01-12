@@ -199,3 +199,10 @@ input::placeholder, textarea::placeholder {
     width: 20%;
     height: 80%;
 }
+
+
+/*** IMPOSTAZIONI ***/
+
+#modifica, #predefinite {
+    width: 100%;
+}
