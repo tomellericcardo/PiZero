@@ -14,6 +14,7 @@ var camera = {
         camera.init_scarta();
     },
     
+    // Inizializzazione variabili di stato
     init_stato: function() {
         camera.occupata = false;
         camera.video = false;
@@ -24,18 +25,21 @@ var camera = {
         camera.indice = '';
     },
     
+    // Bottone home
     init_home: function() {
         $('#home').on('click', function() {
             window.location.href = '/home';
         });
     },
     
+    // Bottone impostazioni
     init_impostazioni: function() {
         $('#impostazioni').on('click', function() {
             window.location.href = '/impostazioni';
         });
     },
     
+    // Controllo stato della camera
     controlla_stato: function() {
         $.ajax({
             url: 'elemento_completo',
@@ -58,6 +62,7 @@ var camera = {
         });
     },
     
+    // Richiesta di salvataggio
     richiedi_salvataggio: function() {
         camera.id = Date.now().toString();
         var anteprima;
@@ -69,6 +74,7 @@ var camera = {
         $('#salvataggio').css('display', 'block');
     },
     
+    // Controllo camera occupata
     camera_occupata: function() {
         $.ajax({
             url: 'camera_occupata',
@@ -103,6 +109,7 @@ var camera = {
         });
     },
     
+    // Avanzamento scatto della GIF
     stato_gif: function() {
         $('#gif i').addClass('w3-spin');
         var timer = setInterval(function() {
@@ -135,6 +142,7 @@ var camera = {
         }, 1000);
     },
     
+    // Controllo completamento GIF
     gif_completata: function() {
         $('#gif p').html('<br>Creo');
         var timer = setInterval(function() {
@@ -162,6 +170,7 @@ var camera = {
         }, 3000);
     },
     
+    // Avanzamento ripresa time lapse
     stato_timelapse: function() {
         $('#lapse i').addClass('blink');
         var timer = setInterval(function() {
@@ -194,6 +203,7 @@ var camera = {
         }, 3000);
     },
     
+    // Controllo completamento time lapse
     timelapse_completato: function() {
         $('#lapse p').html('<br>Creo');
         var timer = setInterval(function() {
@@ -222,6 +232,7 @@ var camera = {
         }, 3000);
     },
     
+    // Bottone foto
     init_foto: function() {
         $('#foto').on('click', function() {
             if (camera.occupata)
@@ -249,9 +260,12 @@ var camera = {
         });
     },
     
+    // Bottone video
     init_video: function() {
         $('#video').on('click', function() {
             if (!camera.occupata) {
+                
+                // Inizio registrazione
                 camera.occupata = true;
                 camera.video = true;
                 $.ajax({
@@ -268,8 +282,11 @@ var camera = {
                         errore.messaggio('Errore del server!');
                     }
                 });
+                
             } else {
                 if (camera.video) {
+                    
+                    // Fine registrazione
                     camera.video = false;
                     $.ajax({
                         url: 'interrompi_video',
@@ -292,13 +309,17 @@ var camera = {
                         }
                     });
                 } else errore.messaggio('Camera gi&agrave; occupata!');
+                
             }
         });
     },
     
+    // Bottone GIF
     init_gif: function() {
         $('#gif').on('click', function() {
             if (!camera.occupata) {
+                
+                // Inizio scatto
                 camera.occupata = true;
                 camera.gif = true;
                 camera.stop = false;
@@ -314,7 +335,10 @@ var camera = {
                         errore.messaggio('Errore del server!');
                     }
                 });
+                
             } else {
+                
+                // Fine scatto
                 if (camera.gif) {
                     camera.gif = false;
                     camera.stop = true;
@@ -328,13 +352,17 @@ var camera = {
                         }
                     });
                 } else errore.messaggio('Camera gi&agrave; occupata!');
+                
             }
         });
     },
     
+    // Bottone time lapse
     init_lapse: function() {
         $('#lapse').on('click', function() {
             if (!camera.occupata) {
+                
+                // Inizio ripresa
                 camera.occupata = true;
                 camera.lapse = true;
                 camera.stop = false;
@@ -350,7 +378,10 @@ var camera = {
                         errore.messaggio('Errore del server!');
                     }
                 });
+                
             } else {
+                
+                // Fine ripresa
                 if (camera.lapse) {
                     camera.lapse = false;
                     camera.stop = true;
@@ -364,13 +395,17 @@ var camera = {
                         }
                     });
                 } else errore.messaggio('Camera gi&agrave; occupata!');
+                
             }
         });
     },
     
+    // Bottone slowmotion
     init_slow: function() {
         $('#slow').on('click', function() {
             if (!camera.occupata) {
+                
+                // Inizio ripresa
                 camera.occupata = true;
                 camera.slow = true;
                 $.ajax({
@@ -387,7 +422,10 @@ var camera = {
                         errore.messaggio('Errore del server!');
                     }
                 });
+                
             } else {
+                
+                // Fine ripresa
                 if (camera.slow) {
                     camera.slow = false;
                     $.ajax({
@@ -411,11 +449,12 @@ var camera = {
                         }
                     });
                 } else errore.messaggio('Camera gi&agrave; occupata!');
+                
             }
         });
     },
     
-    // Salvataggio dell'elemento
+    // Bottone salvataggio
     init_salva: function() {
         $('#salva').on('click', function() {
             $.ajax({
@@ -437,7 +476,7 @@ var camera = {
         });
     },
     
-    // Scarto dell'elemento
+    // Bottone scarto
     init_scarta: function() {
         $('#scarta').on('click', function() {
             $.ajax({

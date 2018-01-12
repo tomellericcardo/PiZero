@@ -2,22 +2,26 @@ var album = {
     
     init: function() {
         album.init_home();
-        // album.init_avanti();
-        // album.init_dietro();
+        album.init_chiudi();
+        album.init_avanti();
+        album.init_dietro();
         album.leggi_galleria();
     },
     
+    // Inizializzazione variabili di stato
     init_stato: function() {
         album.galleria = {};
         album.in_mostra = '';
     },
     
+    // Bottone home
     init_home: function() {
         $('#home').on('click', function() {
             window.location.href = '/home';
         });
     },
     
+    // Lettura della galleria
     leggi_galleria: function() {
         $.ajax({
             url: 'leggi_galleria',
@@ -37,6 +41,7 @@ var album = {
         });
     },
     
+    // Formattazione della risposta
     formatta_risposta: function(lista) {
         var tipo;
         for (var i = 0; i < lista.elementi.length; i++) {
@@ -56,6 +61,7 @@ var album = {
         return lista;
     },
     
+    // Visualizzazione dell'elemento
     mostra_elemento: function(id, tipo, percorso) {
         album.in_mostra = id;
         var codice;
@@ -65,9 +71,24 @@ var album = {
         $('#mostra').css('display', 'block');
     },
     
+    // Bottone chiusura
     init_chiudi: function() {
         $('#chiudi_mostra').on('click', function() {
             $('#mostra').css('display', 'none');
+        });
+    },
+    
+    // Bottone dietro
+    init_dietro: function() {
+        $('#dietro').on('click', function() {
+            // DA COMPLETARE
+        });
+    },
+    
+    // Bottone avanti
+    init_avanti: function() {
+        $('#avanti').on('click', function() {
+            // DA COMPLETARE
         });
     }
     

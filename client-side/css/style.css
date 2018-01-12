@@ -194,7 +194,7 @@ input::placeholder, textarea::placeholder {
     height: 50%;
 }
 
-avanti {
+#avanti {
     background-color: transparent;
     position: fixed;
     bottom: 0;

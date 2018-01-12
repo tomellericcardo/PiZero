@@ -9,30 +9,39 @@ var home = {
         home.init_spegni();
     },
     
+    // Bottone camera
     init_camera: function() {
         $('#camera').on('click', function() {
             window.location.href = '/camera';
         });
     },
     
+    
+    // Bottone album
     init_album: function() {
         $('#album').on('click', function() {
             window.location.href = '/album';
         });
     },
     
+    
+    // Bottone dashboard
     init_dashboard: function() {
         $('#dashboard').on('click', function() {
             window.location.href = '/dashboard';
         });
     },
     
+    
+    // Bottone impostazioni
     init_impostazioni: function() {
         $('#impostazioni').on('click', function() {
             window.location.href = '/impostazioni';
         });
     },
     
+    
+    // Bottone riavvio
     init_riavvia: function() {
         
         // Apertura modal
@@ -58,6 +67,8 @@ var home = {
         
     },
     
+    
+    // Bottone spegnimento
     init_spegni: function() {
         
         // Apertura modal

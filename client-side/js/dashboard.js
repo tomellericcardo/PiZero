@@ -6,12 +6,14 @@ var dashboard = {
         setInterval(dashboard.aggiorna_contatori, 3000);
     },
     
+    // Bottone home
     init_home: function() {
         $('#home').on('click', function() {
             window.location.href = '/home';
         });
     },
     
+    // Aggiornamento dei contatori
     aggiorna_contatori: function() {
         $.ajax({
             url: 'leggi_statistiche',
@@ -45,20 +47,14 @@ var dashboard = {
         });
     },
     
+    // Colore testo temperatura
     colore_temperatura: function(temp) {
-        if (temp <= 0) {
-            $('#temp').css('color', '#2196f3');
-        } else if (temp > 0 && temp <= 10) {
-            $('#temp').css('color', '#009688');
-        } else if (temp > 10 && temp <= 40) {
-            $('#temp').css('color', '#4caf50');
-        } else if (temp > 40 && temp <= 60) {
-            $('#temp').css('color', '#ffc107');
-        } else if (temp > 60 && temp <= 70) {
-            $('#temp').css('color', '#ff5722');
-        } else if (temp > 70) {
-            $('#temp').css('color', '#f44336');
-        }
+        if (temp <= 0) $('#temp').css('color', '#2196f3');
+        else if (temp > 0 && temp <= 10) $('#temp').css('color', '#009688');
+        else if (temp > 10 && temp <= 40) $('#temp').css('color', '#4caf50');
+        else if (temp > 40 && temp <= 60) $('#temp').css('color', '#ffc107');
+        else if (temp > 60 && temp <= 70) $('#temp').css('color', '#ff5722');
+        else if (temp > 70) $('#temp').css('color', '#f44336');
     }
     
 };
