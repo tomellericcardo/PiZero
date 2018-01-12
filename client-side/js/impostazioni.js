@@ -55,7 +55,7 @@ var impostazioni = {
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function(risposta) {
-                    album.leggi_impostazioni();
+                    window.location.href = '/impostazioni';
                 },
                 error: function() {
                     errore.messaggio('Errore del server!');
