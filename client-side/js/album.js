@@ -48,21 +48,20 @@ var album = {
     
     // Formattazione della risposta
     formatta_risposta: function(lista) {
-        var tipo;
         for (var i = 0; i < lista.elementi.length; i++) {
             album.galleria.id[i] = lista.elementi[i][0];
             album.galleria.tipo[i] = lista.elementi[i][1];
             album.galleria.percorso[i] = lista.elementi[i][2];
             lista.elementi[i] = {
-                id: lista.elementi[i][0],
-                tipo: lista.elementi[i][1],
-                percorso: lista.elementi[i][2]
+                id: album.galleria.id[i],
+                tipo: album.galleria.tipo[i],
+                percorso: album.galleria.percorso[i]
             };
-            if (tipo == 'FOTO') lista.elementi[i].foto = true;
-            else if (tipo == 'VIDEO') lista.elementi[i].video = true;
-            else if (tipo == 'GIF') lista.elementi[i].gif = true;
-            else if (tipo == 'SLOW') lista.elementi[i].slow = true;
-            else if (tipo == 'LAPSE') lista.elementi[i].lapse = true;
+            if (album.galleria.tipo[i] == 'FOTO') lista.elementi[i].foto = true;
+            else if (album.galleria.tipo[i] == 'VIDEO') lista.elementi[i].video = true;
+            else if (album.galleria.tipo[i] == 'GIF') lista.elementi[i].gif = true;
+            else if (album.galleria.tipo[i] == 'SLOW') lista.elementi[i].slow = true;
+            else if (album.galleria.tipo[i] == 'LAPSE') lista.elementi[i].lapse = true;
         }
         if (lista.length > 8) lista.spazio = true;
         return lista;
