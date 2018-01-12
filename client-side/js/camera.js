@@ -87,9 +87,13 @@ var camera = {
                         $('#slow i').html('pause');
                         $('#slow p').html('<br>REC');
                         $('#slow p').addClass('blink');
+                    } else if (risposta.tipo == 'GIF') {
+                        camera.gif = true;
+                        camera.stato_gif();
+                    } else if (risposta.tipo == 'LAPSE') {
+                        camera.lapse = true;
+                        camera.stato_timelapse();
                     }
-                    else if (risposta.tipo == 'GIF') camera.stato_gif();
-                    else if (risposta.tipo == 'LAPSE') camera.stato_timelapse();
                 }
             },
             error: function() {
@@ -107,7 +111,7 @@ var camera = {
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function(risposta) {
-                    if (risposta.stato < 20 && !camera.stop) {
+                    if (risposta.stato > 0) {
                         $('#gif p').html('Scatto<br>' + risposta.stato);
                     } else {
                         clearInterval(timer);
@@ -157,7 +161,7 @@ var camera = {
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function(risposta) {
-                    if (risposta.stato < 240 && !camera.stop) {
+                    if (risposta.stato > 0) {
                         $('#lapse p').html('Scatto<br>' + risposta.stato);
                     } else {
                         clearInterval(timer);
