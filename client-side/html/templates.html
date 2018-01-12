@@ -8,7 +8,7 @@
         
         {{#foto}}
             <!-- FOTO -->
-            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
+            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 w3-margin-top">
                 <div class="w3-card-4 padding-top w3-center w3-indigo">
                     <img src="{{percorso}}" class="foto_galleria">
                 </div>
@@ -17,7 +17,7 @@
         
         {{#video}}
             <!-- VIDEO -->
-            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
+            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 w3-margin-top">
                 <div class="w3-card-4 w3-center w3-indigo elemento_galleria">
                     <i class="material-icons w3-margin-top w3-xxxlarge">videocam</i>
                 </div>
@@ -26,16 +26,25 @@
         
         {{#gif}}
             <!-- GIF -->
-            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
+            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 w3-margin-top">
                 <div class="w3-card-4 w3-center w3-green elemento_galleria">
                     <i class="material-icons w3-margin-top w3-xxxlarge">toys</i>
                 </div>
             </div>
         {{/gif}}
         
+        {{#lapse}}
+            <!-- TIME LAPSE -->
+            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 w3-margin-top">
+                <div class="w3-card-4 w3-center w3-teal elemento_galleria">
+                    <i class="material-icons w3-margin-top w3-xxxlarge">slow_motion_video</i>
+                </div>
+            </div>
+        {{/lapse}}
+        
         {{#slow}}
             <!-- SLOW MOTION -->
-            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 m3 l2 w3-margin-top">
+            <div onclick="album.mostra_elemento('{{percorso}}')" class="w3-col s6 w3-margin-top">
                 <div class="w3-card-4 w3-center w3-purple elemento_galleria">
                     <i class="material-icons w3-margin-top w3-xxxlarge">directions_run</i>
                 </div>

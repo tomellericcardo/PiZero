@@ -39,6 +39,7 @@ var album = {
             else if (tipo == 'VIDEO') lista.elementi[i].video = true;
             else if (tipo == 'GIF') lista.elementi[i].gif = true;
             else if (tipo == 'SLOW') lista.elementi[i].slow = true;
+            else if (tipo == 'LAPSE') lista.elementi[i].lapse = true;
         }
         if (lista.length > 8) lista.spazio = true;
         return lista;
