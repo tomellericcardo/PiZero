@@ -29,7 +29,7 @@ class GIF(Thread):
             sleep(1)
             i += 1
         self.stato = 0
-        foto = self.zero.percorso + 'temp/GIF%03d.jpg '
+        foto = self.zero.percorso + 'temp/GIF*.jpg '
         gif = self.zero.percorso + 'temp/GIF.gif'
         comando = 'convert -delay 50 ' + foto + gif
         call(comando, shell = True)
