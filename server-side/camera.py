@@ -72,7 +72,7 @@ class TimeLapse(Thread):
     
     
 # Formattazione dell'indice
-def formatta_indice(self, i):
+def formatta_indice(i):
     while len(i) < 3:
         i = '0' + i
     return i
