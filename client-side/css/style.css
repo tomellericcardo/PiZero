@@ -203,6 +203,10 @@ input::placeholder, textarea::placeholder {
 
 /*** IMPOSTAZIONI ***/
 
+.range {
+    text-align: right;
+}
+
 #modifica, #predefinite {
     width: 100%;
 }
