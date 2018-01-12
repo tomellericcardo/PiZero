@@ -142,3 +142,19 @@ class Zero:
     # Arresto dispositivo
     def spegni(self):
         call('shutdown now', shell = True)
+    
+    # Eliminazione elemento
+    def elimina(self, id_elemento):
+        self.lock.acquire()
+        percorso = self.database.leggi_dato('''
+            SELECT percorso
+            FROM galleria
+            WHERE id = ?
+        ''', (id_elemento,))
+        self.database.scrivi('''
+            DELETE FROM galleria
+            WHERE id = ?
+        ''', (id_elemento,))
+        comando = 'rm /home/pi/PiZero/client-side' + percorso
+        call(comando, shell = True)
+        self.lock.release()

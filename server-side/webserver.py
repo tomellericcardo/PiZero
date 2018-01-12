@@ -162,6 +162,14 @@ def spegni():
     zero.spegni()
     return dumps({'success': True})
 
+# Eliminazione elemento
+@app.route('/elimina', methods = ['POST'])
+def elimina():
+    richiesta = request.get_json(force = True)
+    id_elemento = richiesta['id']
+    zero.elimina(id_elemento)
+    return dumps({'success': True})
+
 
 # AVVIO SERVER
 
