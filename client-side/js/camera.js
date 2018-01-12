@@ -113,6 +113,11 @@ var camera = {
                 success: function(risposta) {
                     if (risposta.stato > 0) {
                         $('#gif p').html('Scatto<br>' + risposta.stato);
+                        var indice = (risposta.stato - 1).toString();
+                        if (indice.length == 1) indice = '0' + indice;
+                        indice = '0' + indice;
+                        var id = Date.now().toString();
+                        $('#anteprima').html('<img src="/img/temp/GIF' + indice + '.jpg?nc=' + id + '" class="w3-image elemento_anteprima">');
                     } else {
                         clearInterval(timer);
                         camera.gif_completata();
@@ -163,6 +168,11 @@ var camera = {
                 success: function(risposta) {
                     if (risposta.stato > 0) {
                         $('#lapse p').html('Scatto<br>' + risposta.stato);
+                        var indice = (risposta.stato - 1).toString();
+                        if (indice.length == 1) indice = '0' + indice;
+                        indice = '0' + indice;
+                        var id = Date.now().toString();
+                        $('#anteprima').html('<img src="/img/temp/LAPSE' + indice + '.jpg?nc=' + id + '" class="w3-image elemento_anteprima">');
                     } else {
                         clearInterval(timer);
                         camera.timelapse_completato();
@@ -172,7 +182,7 @@ var camera = {
                     errore.messaggio('Errore del server!');
                 }
             });
-        }, 10000);
+        }, 3000);
     },
     
     timelapse_completato: function() {
@@ -200,7 +210,7 @@ var camera = {
                     errore.messaggio('Errore del server!');
                 }
             });
-        }, 10000);
+        }, 3000);
     },
     
     init_foto: function() {
