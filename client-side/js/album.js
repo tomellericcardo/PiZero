@@ -10,7 +10,11 @@ var album = {
     
     // Inizializzazione variabili di stato
     init_stato: function() {
-        album.galleria = {};
+        album.galleria = {
+            id: [],
+            tipo: [],
+            percorso: []
+        };
         album.in_mostra = '';
     },
     
@@ -29,7 +33,7 @@ var album = {
             contentType: 'application/json',
             dataType: 'json',
             success: function(risposta) {
-                album.galleria = album.formatta_risposta(risposta);
+                risposta = album.formatta_risposta(risposta);
                 $.get('/html/templates.html', function(contenuto) {
                     var template = $(contenuto).filter('#galleria').html();
                     $('#galleria').html(Mustache.render(template, album.galleria));
@@ -45,7 +49,9 @@ var album = {
     formatta_risposta: function(lista) {
         var tipo;
         for (var i = 0; i < lista.elementi.length; i++) {
-            tipo = lista.elementi[i][1];
+            album.galleria.id[i] = lista.elementi[i][0];
+            album.galleria.tipo[i] = lista.elementi[i][1];
+            album.galleria.percorso[i] = lista.elementi[i][2];
             lista.elementi[i] = {
                 id: lista.elementi[i][0],
                 tipo: lista.elementi[i][1],
@@ -81,14 +87,30 @@ var album = {
     // Bottone dietro
     init_dietro: function() {
         $('#dietro').on('click', function() {
-            // DA COMPLETARE
+            var i = album.galleria.id.indexOf(album.in_mostra);
+            if (i == 0) $('#mostra').css('display', 'none');
+            else {
+                i = i - 1;
+                var id = album.galleria.id[i];
+                var tipo = album.galleria.tipo[i];
+                var percorso = album.galleria.percorso[i];
+                album.mostra_elemento(id, tipo, percorso);
+            }
         });
     },
     
     // Bottone avanti
     init_avanti: function() {
         $('#avanti').on('click', function() {
-            // DA COMPLETARE
+            var i = album.galleria.id.indexOf(alcum.in_mostra);
+            i += 1;
+            if (i == album.galleria.id.length) $('#mostra').css('display', 'none');
+            else {
+                var id = album.galleria.id[i];
+                var tipo = album.galleria.tipo[i];
+                var percorso = album.galleria.percorso[i];
+                album.mostra_elemento(id, tipo, percorso);
+            }
         });
     }
     
