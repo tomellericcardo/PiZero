@@ -37,7 +37,7 @@ var album = {
                 risposta = album.formatta_risposta(risposta);
                 $.get('/html/templates.html', function(contenuto) {
                     var template = $(contenuto).filter('#galleria').html();
-                    $('#galleria').html(Mustache.render(template, album.galleria));
+                    $('#galleria').html(Mustache.render(template, risposta));
                 });
             },
             error: function() {
