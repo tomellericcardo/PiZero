@@ -2,7 +2,6 @@
 
 from database import DataBase
 from picamera import PiCamera
-from camera import GIF, TimeLapse
 from threading import Lock
 from psutil import cpu_percent, virtual_memory, disk_usage
 from subprocess import call, Popen, PIPE
@@ -16,8 +15,6 @@ class Zero:
         self.camera = PiCamera()
         self.lock = Lock()
         self.init_stato()
-        self.timelapse = TimeLapse(self.lock, self.completo, self.occupato, self.percorso, self.camera)
-        self.gif = GIF(self.lock, self.completo, self.occupato, self.percorso, self.camera)
     
     # Inizializzazione delle variabili di stato
     def init_stato(self):

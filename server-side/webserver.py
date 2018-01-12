@@ -2,11 +2,14 @@
 
 from flask import Flask, g, send_from_directory, request
 from zero import Zero
+from camera import GIF, TimeLapse
 from json import dumps
 
 # Variabili globali
 app = Flask(__name__)
 zero = Zero(g)
+gif = GIF(zero)
+timelapse = TimeLapse(zero)
 
 
 # OPERAZIONI DI SESSIONE
@@ -61,12 +64,12 @@ def camera_occupata():
 # Lettura dello stato della GIF
 @app.route('/stato_gif', methods = ['POST'])
 def stato_gif():
-    return dumps({'stato': zero.gif.stato})
+    return dumps({'stato': gif.stato})
 
 # Lettura dello stato del time lapse
 @app.route('/stato_timelapse', methods = ['POST'])
 def stato_timelapse():
-    return dumps({'stato': zero.timelapse.stato})
+    return dumps({'stato': timelapse.stato})
 
 # Scatto della foto
 @app.route('/scatta_foto', methods = ['POST'])
@@ -89,13 +92,13 @@ def interrompi_video():
 # Scatto della GIF
 @app.route('/scatta_gif', methods = ['POST'])
 def scatta_gif():
-    zero.gif.start()
+    gif.start()
     return dumps({'success': True})
 
 # Registrazione time lapse
 @app.route('/timelapse_video', methods = ['POST'])
 def timelapse_video():
-    zero.timelapse.start()()
+    timelapse.start()()
     return dumps({'success': True})
 
 # Registrazione slow motion
