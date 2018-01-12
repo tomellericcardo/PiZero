@@ -14,6 +14,7 @@ var impostazioni = {
         });
     },
     
+    // Bottone applicazione modifiche
     init_modifica: function() {
         $('#modifica').on('click', function() {
             var sharpness = $('#sharpness').val();
@@ -47,6 +48,7 @@ var impostazioni = {
         });
     },
     
+    // Bottone impostazioni predefinite
     init_predefinite: function() {
         $('#predefinite').on('click', function() {
             $.ajax({
@@ -64,6 +66,7 @@ var impostazioni = {
         });
     },
     
+    // Lettura delle impostazioni
     leggi_impostazioni: function() {
         $.ajax({
             url: 'leggi_impostazioni',
