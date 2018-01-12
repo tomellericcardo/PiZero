@@ -162,11 +162,11 @@ def leggi_statistiche():
 @app.route('/modifica_impostazioni', methods = ['POST'])
 def modifica_impostazioni():
     richiesta = request.get_json(force = True)
-    sharpness = richiesta['sharpness']
-    contrast = richiesta['contrast']
-    brightness = richiesta['brightness']
-    saturation = richiesta['saturation']
-    iso = richiesta['iso']
+    sharpness = int(richiesta['sharpness'])
+    contrast = int(richiesta['contrast'])
+    brightness = int(richiesta['brightness'])
+    saturation = int(richiesta['saturation'])
+    iso = int(richiesta['iso'])
     zero.modifica_impostazioni(sharpness, contrast, brightness, saturation, iso)
     return dumps({'success': True})
 
