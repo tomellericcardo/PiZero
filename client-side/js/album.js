@@ -69,13 +69,15 @@ var album = {
     },
     
     // Visualizzazione dell'elemento
-    mostra_elemento: function(id, tipo, percorso) {
+    mostra_elemento: function(id, tipo, percorso, animazione = 'opacity') {
         album.in_mostra = id;
         var codice;
-        if (tipo == 'FOTO' || tipo == 'GIF') codice = '<img src="' + percorso + '" class="foto_galleria">';
-        else codice = '<video class="foto_galleria" controls><source src="' + percorso + '" type="video/mp4"></video>';
-        $('#contenuto_mostra').html(codice);
+        if (tipo == 'FOTO' || tipo == 'GIF') codice = '<img src="' + percorso + '" class="w3-animate-' + animazione + ' foto_galleria">';
+        else codice = '<video class="w3-animate-' + animazione + ' foto_galleria" controls><source src="' + percorso + '" type="video/mp4"></video>';
         $('#mostra').css('display', 'block');
+        $('#contenuto_mostra img').fadeOut(function() {
+            $('#contenuto_mostra').html(codice);
+        });
     },
     
     // Bottone chiusura
@@ -95,7 +97,7 @@ var album = {
                 var id = album.galleria.id[i];
                 var tipo = album.galleria.tipo[i];
                 var percorso = album.galleria.percorso[i];
-                album.mostra_elemento(id, tipo, percorso);
+                album.mostra_elemento(id, tipo, percorso, 'left');
             }
         });
     },
@@ -110,7 +112,7 @@ var album = {
                 var id = album.galleria.id[i];
                 var tipo = album.galleria.tipo[i];
                 var percorso = album.galleria.percorso[i];
-                album.mostra_elemento(id, tipo, percorso);
+                album.mostra_elemento(id, tipo, percorso, 'right');
             }
         });
     },
