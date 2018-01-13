@@ -93,7 +93,7 @@ var album = {
     
     // Bottone dietro
     init_dietro: function() {
-        $('#dietro').on('click', function() {
+        $('#dietro').on('mousedown touchstart', function() {
             var i = album.galleria.id.indexOf(album.in_mostra);
             if (i == 0) $('#mostra').css('display', 'none');
             else {
@@ -108,7 +108,7 @@ var album = {
     
     // Bottone avanti
     init_avanti: function() {
-        $('#avanti').on('click', function() {
+        $('#avanti').on('mousedown touchstart', function() {
             var i = album.galleria.id.indexOf(album.in_mostra);
             i += 1;
             if (i == album.galleria.id.length) $('#mostra').css('display', 'none');
