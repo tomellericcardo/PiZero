@@ -153,11 +153,13 @@ class Zero:
     
     # Modifica delle impostazioni
     def modifica_impostazioni(self, sharpness, contrast, brightness, saturation, iso):
+        self.lock.acquire()
         self.camera.sharpness = sharpness
         self.camera.contrast = contrast
         self.camera.brightness = brightness
         self.camera.saturation = saturation
         self.camera.ISO = iso
+        self.lock.release()
     
     # Lettura delle impostazioni
     def leggi_impostazioni(self):
@@ -171,8 +173,12 @@ class Zero:
     
     # Riavvio dispositivo
     def riavvia(self):
+        self.lock.acquire()
         call('reboot now', shell = True)
+        self.lock.release()
     
     # Arresto dispositivo
     def spegni(self):
+        self.lock.acquire()
         call('shutdown now', shell = True)
+        self.lock.release()

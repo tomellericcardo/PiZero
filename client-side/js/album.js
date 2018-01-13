@@ -87,7 +87,7 @@ var album = {
     // Bottone chiusura
     init_chiudi: function() {
         $('#chiudi_mostra').on('click', function() {
-            $('#mostra').css('display', 'none');
+            $('#mostra').fadeOut();
         });
     },
     
@@ -95,7 +95,7 @@ var album = {
     init_dietro: function() {
         $('#dietro').on('mousedown touchstart', function() {
             var i = album.galleria.id.indexOf(album.in_mostra);
-            if (i == 0) $('#mostra').css('display', 'none');
+            if (i == 0) $('#mostra').fadeOut();
             else {
                 i = i - 1;
                 var id = album.galleria.id[i];
@@ -111,7 +111,7 @@ var album = {
         $('#avanti').on('mousedown touchstart', function() {
             var i = album.galleria.id.indexOf(album.in_mostra);
             i += 1;
-            if (i == album.galleria.id.length) $('#mostra').css('display', 'none');
+            if (i == album.galleria.id.length) $('#mostra').fadeOut();
             else {
                 var id = album.galleria.id[i];
                 var tipo = album.galleria.tipo[i];
