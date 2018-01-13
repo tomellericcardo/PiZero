@@ -74,10 +74,14 @@ var album = {
         var codice;
         if (tipo == 'FOTO' || tipo == 'GIF') codice = '<img src="' + percorso + '" class="w3-animate-' + animazione + ' foto_galleria">';
         else codice = '<video class="w3-animate-' + animazione + ' foto_galleria" controls><source src="' + percorso + '" type="video/mp4"></video>';
-        $('#mostra').css('display', 'block');
-        $('#contenuto_mostra .foto_galleria').fadeOut(function() {
+        if ($('#mostra').css('display') == 'none') {
             $('#contenuto_mostra').html(codice);
-        });
+            $('#mostra').css('display', 'block');
+        } else {
+            $('#contenuto_mostra .foto_galleria').fadeOut(function() {
+                $('#contenuto_mostra').html(codice);
+            });
+        }
     },
     
     // Bottone chiusura
