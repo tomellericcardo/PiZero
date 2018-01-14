@@ -72,7 +72,8 @@ var album = {
         return lista;
     },
     
-    init_pagina: function() {
+    // Navigazione delle pagine
+    init_pagine: function() {
         album.pagina = 0;
         
         // Swipe
