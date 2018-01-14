@@ -71,6 +71,10 @@ input::placeholder, textarea::placeholder {
     cursor: pointer;
 }
 
+.w3-card-4, #chiudi_mostra, #elimina {
+    cursor: pointer;
+}
+
 
 /*** SPAZIATORI ***/
 
