@@ -66,8 +66,9 @@ var album = {
         album.lista = lista;
         if (lista.elementi.length > 8) {
             album.init_pagine();
-            lista.elementi = lista.elementi.slice(0, 8)
-            return lista;
+            var nuova_lista = {};
+            nuova_lista.elementi = lista.elementi.slice(0, 8)
+            return nuova_lista;
         }
         return lista;
     },
