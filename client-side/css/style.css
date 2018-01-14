@@ -149,6 +149,10 @@ input::placeholder, textarea::placeholder {
 
 /*** ALBUM ***/
 
+#pagina {
+    height: 100%;
+}
+
 .foto_galleria {
     width: 100%;
 }

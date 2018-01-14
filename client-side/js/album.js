@@ -78,7 +78,7 @@ var album = {
         album.pagina = 0;
         
         // Swipe
-        $('#body').swipe({
+        $('#pagina').swipe({
             swipeRight: function() {
                 album.pagina_dietro();
             },
@@ -89,42 +89,40 @@ var album = {
         
         // Frecce
         $(document).keydown(function(e) {
-            if (e.keyCode == 37) album.pagina_dietro();
-            else if (e.keyCode == 39) album.pagina_avanti();
+            if ($('#mostra').css('display') == 'none') {
+                if (e.keyCode == 37) album.pagina_dietro();
+                else if (e.keyCode == 39) album.pagina_avanti();
+            }
         });
     },
     
     // Pagina precedente
     pagina_dietro: function() {
-        if ($('#mostra').css('display') == 'none') {
-            if (album.pagina > 0) {
-                album.pagina = album.pagina - 1;
-                var inizio = album.pagina * 8;
-                var fine = inizio + 8;
-                var lista = {};
-                lista.elementi = album.lista.elementi.slice(inizio, fine);
-                $.get('/html/templates.html', function(contenuto) {
-                    var template = $(contenuto).filter('#galleria').html();
-                    $('#galleria').html(Mustache.render(template, lista));
-                });
-            }
+        if (album.pagina > 0) {
+            album.pagina = album.pagina - 1;
+            var inizio = album.pagina * 8;
+            var fine = inizio + 8;
+            var lista = {};
+            lista.elementi = album.lista.elementi.slice(inizio, fine);
+            $.get('/html/templates.html', function(contenuto) {
+                var template = $(contenuto).filter('#galleria').html();
+                $('#galleria').html(Mustache.render(template, lista));
+            });
         }
     },
     
     // Pagina successiva
     pagina_avanti: function() {
-        if ($('#mostra').css('display') == 'none') {
-            if (album.lista.elementi.length > (album.pagina + 1) * 8) {
-                album.pagina = album.pagina + 1;
-                var inizio = album.pagina * 8;
-                var fine = inizio + 8;
-                var lista = {};
-                lista.elementi = album.lista.elementi.slice(inizio, fine);
-                $.get('/html/templates.html', function(contenuto) {
-                    var template = $(contenuto).filter('#galleria').html();
-                    $('#galleria').html(Mustache.render(template, lista));
-                });
-            }
+        if (album.lista.elementi.length > (album.pagina + 1) * 8) {
+            album.pagina = album.pagina + 1;
+            var inizio = album.pagina * 8;
+            var fine = inizio + 8;
+            var lista = {};
+            lista.elementi = album.lista.elementi.slice(inizio, fine);
+            $.get('/html/templates.html', function(contenuto) {
+                var template = $(contenuto).filter('#galleria').html();
+                $('#galleria').html(Mustache.render(template, lista));
+            });
         }
     },
     
