@@ -4,8 +4,7 @@ var album = {
         album.init_stato();
         album.init_home();
         album.init_chiudi();
-        album.init_swipe();
-        album.init_frecce();
+        album.init_navigazione();
         album.init_elimina();
         album.leggi_galleria();
     },
@@ -64,8 +63,66 @@ var album = {
             else if (album.galleria.tipo[i] == 'SLOW') lista.elementi[i].slow = true;
             else if (album.galleria.tipo[i] == 'LAPSE') lista.elementi[i].lapse = true;
         }
-        if (lista.length > 8) lista.spazio = true;
+        album.lista = lista;
+        if (lista.elementi.length > 8) {
+            album.init_pagine();
+            lista.elementi = lista.elementi.slice(0, 8)
+            return lista;
+        }
         return lista;
+    },
+    
+    init_pagina: function() {
+        album.pagina = 0;
+        
+        // Swipe
+        $('#pagina').swipe({
+            swipeRight: function() {
+                album.pagina_dietro();
+            },
+            swipeLeft: function() {
+                album.pagina_avanti();
+            }
+        });
+        
+        // Frecce
+        $(document).keydown(function(e) {
+            if ($('#mostra').css('display') == 'none') {
+                if (e.keyCode == 37) album.pagina_dietro();
+                else if (e.keyCode == 39) album.pagina_avanti();
+            }
+        });
+    },
+    
+    // Pagina precedente
+    pagina_dietro: function() {
+        if (album.pagina > 0) {
+            album.pagina = album.pagina - 1;
+            var inizio = album.pagina * 8;
+            var fine = inizio + 8;
+            var lista = {};
+            lista.elementi = album.lista.elementi.slice(inizio, fine);
+            $.get('/html/templates.html', function(contenuto) {
+                var template = $(contenuto).filter('#galleria').html();
+                $('#galleria').html(Mustache.render(template, lista));
+            });
+        }
+    },
+    
+    // Pagina successiva
+    pagina_avanti: function() {
+        if (album.lista.elementi.length > album.pagina * 8) {
+            album.pagina = album.pagina + 1;
+            var inizio = album.pagina * 8;
+            var fine = inizio + 8;
+            if (album.lista.elementi.length < fine) fine = album.lista.elementi.length - 1;
+            var lista = {};
+            lista.elementi = album.lista.elementi.slice(inizio, fine);
+            $.get('/html/templates.html', function(contenuto) {
+                var template = $(contenuto).filter('#galleria').html();
+                $('#galleria').html(Mustache.render(template, lista));
+            });
+        }
     },
     
     // Visualizzazione dell'elemento
@@ -91,26 +148,27 @@ var album = {
         });
     },
     
-    // Swipe per la navigazione
-    init_swipe: function() {
+    // Navigazione degli elementi
+    init_navigazione: function() {
+        
+        // Swipe
         $('#mostra').swipe({
             swipeRight: function() {
-                album.dietro()
+                album.dietro();
             },
             swipeLeft: function() {
-                album.avanti()
+                album.avanti();
             }
         });
-    },
-    
-    // Frecce per la navigazione
-    init_frecce: function() {
+        
+        // Frecce
         $(document).keydown(function(e) {
             if ($('#mostra').css('display') != 'none') {
                 if (e.keyCode == 37) album.dietro();
                 else if (e.keyCode == 39) album.avanti();
             }
         });
+        
     },
     
     // Mostra precedente
