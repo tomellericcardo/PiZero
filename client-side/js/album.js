@@ -5,6 +5,7 @@ var album = {
         album.init_home();
         album.init_chiudi();
         album.init_swipe();
+        album.init_frecce();
         album.init_elimina();
         album.leggi_galleria();
     },
@@ -90,37 +91,52 @@ var album = {
         });
     },
     
-    // Swipe mostra
+    // Swipe per la navigazione
     init_swipe: function() {
         $('#mostra').swipe({
-            
-            // Mostra precedente
             swipeRight: function() {
-                var i = album.galleria.id.indexOf(album.in_mostra);
-                if (i == 0) $('#mostra').fadeOut();
-                else {
-                    i = i - 1;
-                    var id = album.galleria.id[i];
-                    var tipo = album.galleria.tipo[i];
-                    var percorso = album.galleria.percorso[i];
-                    album.mostra_elemento(id, tipo, percorso, 'left');
-                }
+                album.dietro()
             },
-            
-            // Mostra successivo
             swipeLeft: function() {
-                var i = album.galleria.id.indexOf(album.in_mostra);
-                i += 1;
-                if (i == album.galleria.id.length) $('#mostra').fadeOut();
-                else {
-                    var id = album.galleria.id[i];
-                    var tipo = album.galleria.tipo[i];
-                    var percorso = album.galleria.percorso[i];
-                    album.mostra_elemento(id, tipo, percorso, 'right');
-                }
+                album.avanti()
             }
-            
         });
+    },
+    
+    // Frecce per la navigazione
+    init_frecce: function() {
+        $(document).keydown(function(e) {
+            if ($('#mostra').css('display') != 'none') {
+                if (e.keyCode == 37) album.dietro();
+                else if (e.keyCode == 39) album.avanti();
+            }
+        });
+    },
+    
+    // Mostra precedente
+    dietro: function() {
+        var i = album.galleria.id.indexOf(album.in_mostra);
+        if (i == 0) $('#mostra').fadeOut();
+        else {
+            i = i - 1;
+            var id = album.galleria.id[i];
+            var tipo = album.galleria.tipo[i];
+            var percorso = album.galleria.percorso[i];
+            album.mostra_elemento(id, tipo, percorso, 'left');
+        }
+    },
+    
+    // Mostra successivo
+    avanti: function() {
+        var i = album.galleria.id.indexOf(album.in_mostra);
+        i += 1;
+        if (i == album.galleria.id.length) $('#mostra').fadeOut();
+        else {
+            var id = album.galleria.id[i];
+            var tipo = album.galleria.tipo[i];
+            var percorso = album.galleria.percorso[i];
+            album.mostra_elemento(id, tipo, percorso, 'right');
+        }
     },
     
     // Bottone eliminazione

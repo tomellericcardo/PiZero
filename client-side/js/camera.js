@@ -5,7 +5,6 @@ var camera = {
         camera.init_home();
         camera.init_impostazioni();
         camera.controlla_stato();
-        camera.scatta_anteprima();
         camera.init_foto();
         camera.init_video();
         camera.init_gif();
@@ -102,7 +101,7 @@ var camera = {
                         camera.lapse = true;
                         camera.stato_timelapse();
                     }
-                }
+                } else camera.scatta_anteprima();
             },
             error: function() {
                 errore.messaggio('Errore del server!');
