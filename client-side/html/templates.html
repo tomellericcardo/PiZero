@@ -9,7 +9,7 @@
         {{#foto}}
             <!-- FOTO -->
             <div onclick="album.mostra_elemento('{{id}}', '{{tipo}}', '{{percorso}}')" class="w3-col s6 w3-margin-top">
-                <div class="w3-card-4 padding-top w3-center w3-indigo">
+                <div class="w3-card-4 padding-top w3-center w3-indigo w3-animate-opacity">
                     <img src="{{percorso}}" class="foto_galleria">
                 </div>
             </div>
@@ -18,7 +18,7 @@
         {{#video}}
             <!-- VIDEO -->
             <div onclick="album.mostra_elemento('{{id}}', '{{tipo}}', '{{percorso}}')" class="w3-col s6 w3-margin-top">
-                <div class="w3-card-4 w3-center w3-indigo elemento_galleria">
+                <div class="w3-card-4 w3-center w3-indigo w3-animate-opacity elemento_galleria">
                     <i class="material-icons w3-margin-top w3-xxxlarge">videocam</i>
                 </div>
             </div>
@@ -27,7 +27,7 @@
         {{#gif}}
             <!-- GIF -->
             <div onclick="album.mostra_elemento('{{id}}', '{{tipo}}', '{{percorso}}')" class="w3-col s6 w3-margin-top">
-                <div class="w3-card-4 w3-center w3-green elemento_galleria">
+                <div class="w3-card-4 w3-center w3-green w3-animate-opacity elemento_galleria">
                     <i class="material-icons w3-margin-top w3-xxxlarge">toys</i>
                 </div>
             </div>
@@ -36,7 +36,7 @@
         {{#lapse}}
             <!-- TIME LAPSE -->
             <div onclick="album.mostra_elemento('{{id}}', '{{tipo}}', '{{percorso}}')" class="w3-col s6 w3-margin-top">
-                <div class="w3-card-4 w3-center w3-teal elemento_galleria">
+                <div class="w3-card-4 w3-center w3-teal w3-animate-opacity elemento_galleria">
                     <i class="material-icons w3-margin-top w3-xxxlarge">slow_motion_video</i>
                 </div>
             </div>
@@ -45,7 +45,7 @@
         {{#slow}}
             <!-- SLOW MOTION -->
             <div onclick="album.mostra_elemento('{{id}}', '{{tipo}}', '{{percorso}}')" class="w3-col s6 w3-margin-top">
-                <div class="w3-card-4 w3-center w3-purple elemento_galleria">
+                <div class="w3-card-4 w3-center w3-purple w3-animate-opacity elemento_galleria">
                     <i class="material-icons w3-margin-top w3-xxxlarge">directions_run</i>
                 </div>
             </div>
@@ -57,7 +57,7 @@
     {{^elementi}}
         <div class="w3-display-container vuoto">
             <div class="w3-display-middle w3-center">
-                <p class="w3-text-grey">
+                <p class="w3-text-grey w3-animate-opacity">
                     <i class="w3-jumbo material-icons">book</i>
                     <br><br>Nessuna foto
                     <br>scattata...

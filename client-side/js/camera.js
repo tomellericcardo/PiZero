@@ -5,6 +5,7 @@ var camera = {
         camera.init_home();
         camera.init_impostazioni();
         camera.controlla_stato();
+        camera.scatta_anteprima();
         camera.init_foto();
         camera.init_video();
         camera.init_gif();
@@ -66,9 +67,9 @@ var camera = {
     richiedi_salvataggio: function() {
         camera.id = Date.now().toString();
         var anteprima;
-        if (camera.tipo == 'FOTO') anteprima = '<img src="/img/temp/FOTO.jpg?nc=' + camera.id + '" class="w3-image elemento_anteprima">';
-        else if (camera.tipo == 'GIF') anteprima = '<img src="/img/temp/GIF.gif?nc=' + camera.id + '" class="w3-image elemento_anteprima">';
-        else anteprima = '<video class="elemento_anteprima" controls><source src="/img/temp/' + camera.tipo + '.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+        if (camera.tipo == 'FOTO') anteprima = '<img src="/img/temp/FOTO.jpg?nc=' + camera.id + '" class="w3-image w3-animate-opacity elemento_anteprima">';
+        else if (camera.tipo == 'GIF') anteprima = '<img src="/img/temp/GIF.gif?nc=' + camera.id + '" class="w3-image w3-animate-opacity elemento_anteprima">';
+        else anteprima = '<video class="w3-animate-opacity elemento_anteprima" controls><source src="/img/temp/' + camera.tipo + '.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
         $('#anteprima').html(anteprima);
         $('#operazioni').css('display', 'none');
         $('#salvataggio').css('display', 'block');
@@ -127,7 +128,7 @@ var camera = {
                         if (indice != camera.indice) {
                             camera.indice = indice;
                             var id = Date.now().toString();
-                            $('#anteprima').html('<img src="/img/temp/GIF' + indice + '.jpg?nc=' + id + '" class="w3-image elemento_anteprima">');
+                            $('#anteprima').html('<img src="/img/temp/GIF' + indice + '.jpg?nc=' + id + '" class="w3-image w3-animate-opacity elemento_anteprima">');
                         }
                     } else {
                         camera.indice = '';
@@ -156,7 +157,7 @@ var camera = {
                         clearInterval(timer);
                         camera.id = Date.now().toString();
                         camera.tipo = 'GIF';
-                        $('#anteprima').html('<img src="/img/temp/GIF.gif?nc=' + camera.id + '" class="w3-image elemento_anteprima">');
+                        $('#anteprima').html('<img src="/img/temp/GIF.gif?nc=' + camera.id + '" class="w3-image w3-animate-opacity elemento_anteprima">');
                         $('#operazioni').css('display', 'none');
                         $('#salvataggio').css('display', 'block');
                         $('#gif i').removeClass('w3-spin');
@@ -188,7 +189,7 @@ var camera = {
                         if (indice != camera.indice) {
                             camera.indice = indice;
                             var id = Date.now().toString();
-                            $('#anteprima').html('<img src="/img/temp/LAPSE' + indice + '.jpg?nc=' + id + '" class="w3-image elemento_anteprima">');
+                            $('#anteprima').html('<img src="/img/temp/LAPSE' + indice + '.jpg?nc=' + id + '" class="w3-image w3-animate-opacity elemento_anteprima">');
                         }
                     } else {
                         camera.indice = '';
@@ -217,7 +218,7 @@ var camera = {
                         clearInterval(timer);
                         camera.id = Date.now().toString();
                         camera.tipo = 'LAPSE';
-                        var video = '<video class="elemento_anteprima" controls><source src="/img/temp/LAPSE.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                        var video = '<video class="w3-animate-opacity elemento_anteprima" controls><source src="/img/temp/LAPSE.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
                         $('#anteprima').html(video);
                         $('#operazioni').css('display', 'none');
                         $('#salvataggio').css('display', 'block');
@@ -230,6 +231,24 @@ var camera = {
                 }
             });
         }, 3000);
+    },
+    
+    // Scatto dell'anteprima
+    scatta_anteprima: function() {
+        $.ajax({
+            url: 'scatta_anteprima',
+            method: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function() {
+                var id = Date.now().toString();
+                var anteprima = '<img src="/img/temp/anteprima.jpg?nc=' + id + '" class="w3-image w3-animate-opacity elemento_anteprima">';
+                $('#anteprima').html(anteprima);
+            },
+            error: function() {
+                errore.messaggio('Errore del server!');
+            }
+        });
     },
     
     // Bottone foto
@@ -247,7 +266,7 @@ var camera = {
                     success: function() {
                         camera.id = Date.now().toString();
                         camera.tipo = 'FOTO';
-                        var anteprima = '<img src="/img/temp/FOTO.jpg?nc=' + camera.id + '" class="w3-image elemento_anteprima">';
+                        var anteprima = '<img src="/img/temp/FOTO.jpg?nc=' + camera.id + '" class="w3-image w3-animate-opacity elemento_anteprima">';
                         $('#anteprima').html(anteprima);
                         $('#operazioni').css('display', 'none');
                         $('#salvataggio').css('display', 'block');
@@ -296,7 +315,7 @@ var camera = {
                         success: function() {
                             camera.id = Date.now().toString();
                             camera.tipo = 'VIDEO';
-                            var video = '<video class="elemento_anteprima" controls><source src="/img/temp/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                            var video = '<video class="w3-animate-opacity elemento_anteprima" controls><source src="/img/temp/VIDEO.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
                             $('#anteprima').html(video);
                             $('#operazioni').css('display', 'none');
                             $('#salvataggio').css('display', 'block');
@@ -436,7 +455,7 @@ var camera = {
                         success: function() {
                             camera.id = Date.now().toString();
                             camera.tipo = 'SLOW';
-                            var video = '<video class="elemento_anteprima" controls><source src="/img/temp/SLOW.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
+                            var video = '<video class="w3-animate-opacity elemento_anteprima" controls><source src="/img/temp/SLOW.mp4?nc=' + camera.id + '" type="video/mp4"></video>';
                             $('#anteprima').html(video);
                             $('#operazioni').css('display', 'none');
                             $('#salvataggio').css('display', 'block');
@@ -465,7 +484,7 @@ var camera = {
                 data: JSON.stringify({tipo: camera.tipo, id: camera.id}),
                 success: function() {
                     camera.occupata = false;
-                    $('#anteprima').html('<img src="/img/default.jpg" class="w3-image elemento_anteprima">');
+                    $('#anteprima').html('<img src="/img/default.jpg" class="w3-image w3-animate-opacity elemento_anteprima">');
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
                 },
@@ -486,7 +505,7 @@ var camera = {
                 dataType: 'json',
                 success: function() {
                     camera.occupata = false;
-                    $('#anteprima').html('<img src="/img/default.jpg" class="w3-image elemento_anteprima">');
+                    $('#anteprima').html('<img src="/img/default.jpg" class="w3-image w3-animate-opacity elemento_anteprima">');
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
                 },
