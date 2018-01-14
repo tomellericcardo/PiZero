@@ -61,6 +61,12 @@ def elemento_completo():
 def camera_occupata():
     return dumps({'tipo': zero.occupato})
 
+# Scatto dell'a foto'anteprima
+@app.route('/scatta_anteprima', methods = ['POST'])
+def scatta_anteprima():
+    zero.scatta_anteprima()
+    return dumps({'success': True})
+
 # Scatto della foto
 @app.route('/scatta_foto', methods = ['POST'])
 def scatta_foto():

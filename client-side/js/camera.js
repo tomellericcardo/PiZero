@@ -484,7 +484,7 @@ var camera = {
                 data: JSON.stringify({tipo: camera.tipo, id: camera.id}),
                 success: function() {
                     camera.occupata = false;
-                    $('#anteprima').html('<img src="/img/default.jpg" class="w3-image w3-animate-opacity elemento_anteprima">');
+                    camera.scatta_anteprima();
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
                 },
@@ -505,7 +505,7 @@ var camera = {
                 dataType: 'json',
                 success: function() {
                     camera.occupata = false;
-                    $('#anteprima').html('<img src="/img/default.jpg" class="w3-image w3-animate-opacity elemento_anteprima">');
+                    camera.scatta_anteprima();
                     $('#operazioni').css('display', 'block');
                     $('#salvataggio').css('display', 'none');
                 },

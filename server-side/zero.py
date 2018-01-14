@@ -29,6 +29,13 @@ class Zero:
             'SLOW' : '.mp4'  \
         }
     
+    # Scatto dell'a foto'anteprima
+    def scatta_anteprima(self):
+        self.lock.acquire()
+        nome_file = self.percorso + 'temp/anteprima.jpg'
+        self.camera.capture(nome_file)
+        self.lock.release()
+    
     # Scatto della foto
     def scatta_foto(self):
         self.lock.acquire()
