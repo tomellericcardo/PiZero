@@ -53,20 +53,23 @@
         </div>
         
         <!-- MOSTRA -->
-        <div id="mostra" class="w3-light-grey">
-            <div id="chiudi_container" class="w3-display-container w3-text-grey">
-                <div id="chiudi_mostra" class="w3-display-topleft w3-margin">
-                    <i class="material-icons">arrow_back</i>
-                </div>
-                <div id="elimina" class="w3-display-topright w3-margin">
-                    <i class="material-icons">delete</i>
+        <div id="mostra">
+            <div class="w3-third w3-hide-small">&nbsp;</div>
+            <div class="w3-third">
+                <div class="w3-light-grey">
+                    <div id="chiudi_container" class="w3-display-container w3-text-grey">
+                        <div id="chiudi_mostra" class="w3-display-topleft w3-margin">
+                            <i class="material-icons">arrow_back</i>
+                        </div>
+                        <div id="elimina" class="w3-display-topright w3-margin">
+                            <i class="material-icons">delete</i>
+                        </div>
+                    </div>
+                    <div id="contenuto_mostra">
+                        <img src="/img/default.jpg" class="foto_galleria">
+                    </div>
                 </div>
             </div>
-            <div id="contenuto_mostra">
-                <img src="/img/default.jpg" class="foto_galleria">
-            </div>
-            <div id="dietro">&nbsp;</div>
-            <div id="avanti">&nbsp;</div>
         </div>
         
         <!-- CONFERMA ELIMINA -->
@@ -110,6 +113,7 @@
         
         <!-- SCRIPTS -->
         <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/touchSwipe.min.js"></script>
         <script type="text/javascript" src="/js/mustache.min.js"></script>
         <script type="text/javascript" src="/js/errore.js"></script>
         <script type="text/javascript" src="/js/album.js"></script>

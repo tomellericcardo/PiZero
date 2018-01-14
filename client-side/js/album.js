@@ -4,8 +4,7 @@ var album = {
         album.init_stato();
         album.init_home();
         album.init_chiudi();
-        album.init_avanti();
-        album.init_dietro();
+        album.init_swipe();
         album.init_elimina();
         album.leggi_galleria();
     },
@@ -91,33 +90,36 @@ var album = {
         });
     },
     
-    // Bottone dietro
-    init_dietro: function() {
-        $('#dietro').on('mousedown touchstart', function() {
-            var i = album.galleria.id.indexOf(album.in_mostra);
-            if (i == 0) $('#mostra').fadeOut();
-            else {
-                i = i - 1;
-                var id = album.galleria.id[i];
-                var tipo = album.galleria.tipo[i];
-                var percorso = album.galleria.percorso[i];
-                album.mostra_elemento(id, tipo, percorso, 'left');
+    // Swipe mostra
+    init_swipe: function() {
+        $('#mostra').swipe({
+            
+            // Mostra precedente
+            swipeRight: function() {
+                var i = album.galleria.id.indexOf(album.in_mostra);
+                if (i == 0) $('#mostra').fadeOut();
+                else {
+                    i = i - 1;
+                    var id = album.galleria.id[i];
+                    var tipo = album.galleria.tipo[i];
+                    var percorso = album.galleria.percorso[i];
+                    album.mostra_elemento(id, tipo, percorso, 'left');
+                }
+            },
+            
+            // Mostra successivo
+            swipeLeft: function() {
+                var i = album.galleria.id.indexOf(album.in_mostra);
+                i += 1;
+                if (i == album.galleria.id.length) $('#mostra').fadeOut();
+                else {
+                    var id = album.galleria.id[i];
+                    var tipo = album.galleria.tipo[i];
+                    var percorso = album.galleria.percorso[i];
+                    album.mostra_elemento(id, tipo, percorso, 'right');
+                }
             }
-        });
-    },
-    
-    // Bottone avanti
-    init_avanti: function() {
-        $('#avanti').on('mousedown touchstart', function() {
-            var i = album.galleria.id.indexOf(album.in_mostra);
-            i += 1;
-            if (i == album.galleria.id.length) $('#mostra').fadeOut();
-            else {
-                var id = album.galleria.id[i];
-                var tipo = album.galleria.tipo[i];
-                var percorso = album.galleria.percorso[i];
-                album.mostra_elemento(id, tipo, percorso, 'right');
-            }
+            
         });
     },
     
