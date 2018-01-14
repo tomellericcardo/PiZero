@@ -174,6 +174,10 @@ input::placeholder, textarea::placeholder {
     height: 100%;
 }
 
+#mostra .w3-third, #mostra .w3-light-grey {
+    height: 100%;
+}
+
 #chiudi_container {
     height: 120px;
 }
