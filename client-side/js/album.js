@@ -117,7 +117,6 @@ var album = {
             album.pagina = album.pagina + 1;
             var inizio = album.pagina * 8;
             var fine = inizio + 8;
-            if (album.lista.elementi.length < fine) fine = album.lista.elementi.length - 1;
             var lista = {};
             lista.elementi = album.lista.elementi.slice(inizio, fine);
             $.get('/html/templates.html', function(contenuto) {
