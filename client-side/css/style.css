@@ -162,9 +162,17 @@ input::placeholder, textarea::placeholder {
     position: relative;
 }
 
-.elemento_galleria i, .elemento_galleria img {
+.elemento_galleria i {
     position: absolute;
     top: 8%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.elemento_galleria img {
+    position: absolute;
+    top: 0;
     left: 0;
     bottom: 0;
     right: 0;
