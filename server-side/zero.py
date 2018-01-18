@@ -168,6 +168,12 @@ class Zero:
         self.camera.ISO = iso
         self.lock.release()
     
+    # Connessione
+    def connetti(self):
+        self.lock.acquire()
+        call('/home/pi/connetti.sh', shell = True)
+        self.lock.release()
+    
     # Lettura delle impostazioni
     def leggi_impostazioni(self):
         risposta = {}
@@ -182,10 +188,8 @@ class Zero:
     def riavvia(self):
         self.lock.acquire()
         call('reboot now', shell = True)
-        self.lock.release()
     
     # Arresto dispositivo
     def spegni(self):
         self.lock.acquire()
         call('shutdown now', shell = True)
-        self.lock.release()

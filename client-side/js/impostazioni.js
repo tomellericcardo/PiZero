@@ -4,6 +4,7 @@ var impostazioni = {
         impostazioni.init_home();
         impostazioni.init_modifica();
         impostazioni.init_predefinite();
+        impostazioni.init_connetti();
         impostazioni.leggi_impostazioni();
     },
     
@@ -64,6 +65,22 @@ var impostazioni = {
                 }
             });
         });
+    },
+    
+    // Bottone connessione
+    init_connetti: function() {
+        $('#connetti').on('click', function() {
+            $.ajax({
+                url: 'connetti',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                error: function() {
+                    errore.messaggio('Errore del server!');
+                }
+            });
+        });
+        window.location.href = '/home';
     },
     
     // Lettura delle impostazioni

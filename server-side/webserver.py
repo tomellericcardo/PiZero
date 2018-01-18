@@ -182,6 +182,12 @@ def impostazioni_predefinite():
     zero.modifica_impostazioni(0, 0, 50, 0, 0)
     return dumps({'success': True})
 
+# Connessione
+@app.route('/connetti', methods = ['POST'])
+def connetti():
+    zero.connetti()
+    return dumps({'success': True})
+
 # Lettura impostazioni correnti
 @app.route('/leggi_impostazioni', methods = ['POST'])
 def leggi_impostazioni():
