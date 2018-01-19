@@ -179,6 +179,8 @@ def modifica_impostazioni():
 # Connessione
 @app.route('/connetti', methods = ['POST'])
 def connetti():
+    if zero.connesso:
+        return dumps({'connesso': True})
     zero.connetti()
     return dumps({'success': True})
 

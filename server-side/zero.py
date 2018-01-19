@@ -21,6 +21,7 @@ class Zero:
         self.percorso = '/home/pi/PiZero/client-side/img/'
         self.completo = False
         self.occupato = False
+        self.connesso = False
         self.estensioni = {  \
             'FOTO' : '.jpg', \
             'VIDEO': '.mp4', \
@@ -171,6 +172,7 @@ class Zero:
     # Connessione
     def connetti(self):
         self.lock.acquire()
+        self.connesso = True
         call('/home/pi/connetti.sh', shell = True)
         self.lock.release()
     

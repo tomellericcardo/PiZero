@@ -85,6 +85,9 @@ var impostazioni = {
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
+                success: function(risposta) {
+                    if (risposta.connesso) messaggio.errore('Dispositivo gi&agrave; connesso!');
+                },
                 error: function() {
                     messaggio.errore('Errore del server!');
                 }
