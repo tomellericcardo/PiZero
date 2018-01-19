@@ -1,7 +1,7 @@
 # PiZero
 
-PiZero √® un'applicazione web per la gestione di una fotocamera wireless basata sul Raspberry Pi Zero.
-Il suo scopo √® scattare foto e video (ma anche GIF e video in Time-Lapse e Slow-Motion), salvare gli elementi in un album e modificare le impostazioni della fotocamera.
+PiZero Ë un'applicazione web per la gestione di una fotocamera wireless basata sul Raspberry Pi Zero.
+Il suo scopo Ë scattare foto e video (ma anche GIF e video in Time-Lapse e Slow-Motion), salvare gli elementi in un album e modificare le impostazioni della fotocamera.
 
 
 ### Prerequisiti
@@ -9,7 +9,7 @@ Il suo scopo √® scattare foto e video (ma anche GIF e video in Time-Lapse e Slow
 * Raspberry Pi (modello qualsiasi)
 * Micro SD (almeno 4GB consigliati)
 * Sistema operativo Raspbian (testato solo con Stretch)
-* Connessione ad una rete LAN (non √® necessario Internet)
+* Connessione ad una rete LAN (non Ë necessario Internet)
 * Modulo fotocamera compatibile
 
 
@@ -30,10 +30,18 @@ Aggiorna l'elenco locale di `apt-get`:
 ```
 sudo apt-get update
 ```
+Se non possiedi `pip`, installalo:
+```
+sudo apt-get install python-pip
+```
 Installa le dipendenze con `apt-get` e `pip`:
 ```
-sudo apt-get install python-pip python-picamera imagemagick gpac libav-tools
+sudo apt-get install python-picamera imagemagick gpac libav-tools
 sudo pip install flask psutil
+```
+Se non possiedi `git`, installalo:
+```
+sudo apt-get install git
 ```
 Clona la directory in `/home/pi`:
 ```
@@ -86,4 +94,4 @@ sudo reboot now
 
 ### Note
 
-Il server web si metter√† in ascolto alla porta `80`, per cui per raggiungere l'applicazione web baster√† aprire il browser di un dispositivo connesso alla stessa rete del Raspberry Pi ed inserire l'indirizzo IP.
+Il server web si metter‡† in ascolto alla porta `80`, per cui per raggiungere l'applicazione web baster‡† aprire il browser di un dispositivo connesso alla stessa rete del Raspberry Pi ed inserire l'indirizzo IP.
