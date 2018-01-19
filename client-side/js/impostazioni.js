@@ -89,8 +89,8 @@ var impostazioni = {
                     messaggio.errore('Errore del server!');
                 }
             });
+            window.location.href = '/home';
         });
-        window.location.href = '/home';
     },
     
     // Lettura delle impostazioni
