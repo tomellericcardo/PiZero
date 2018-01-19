@@ -41,7 +41,7 @@ var album = {
                 });
             },
             error: function() {
-                errore.messaggio('Errore del server!');
+                messaggio.errore('Errore del server!');
             }
         });
     },
@@ -219,7 +219,7 @@ var album = {
                     window.location.href = '/album';
                 },
                 error: function() {
-                    errore.messaggio('Errore del server!');
+                    messaggio.errore('Errore del server!');
                 }
             });
         });

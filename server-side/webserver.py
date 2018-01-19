@@ -176,12 +176,6 @@ def modifica_impostazioni():
     zero.modifica_impostazioni(sharpness, contrast, brightness, saturation, iso)
     return dumps({'success': True})
 
-# Impostazione valori predefiniti
-@app.route('/impostazioni_predefinite', methods = ['POST'])
-def impostazioni_predefinite():
-    zero.modifica_impostazioni(0, 0, 50, 0, 0)
-    return dumps({'success': True})
-
 # Connessione
 @app.route('/connetti', methods = ['POST'])
 def connetti():

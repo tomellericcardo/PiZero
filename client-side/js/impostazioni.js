@@ -23,11 +23,11 @@ var impostazioni = {
             var brightness = $('#brightness').val();
             var saturation = $('#saturation').val();
             var iso = $('#iso').val();
-            if (sharpness < -100 || sharpness > 100) errore.messaggio('Valore della nitidezza non valido!');
-            else if (contrast < -100 || contrast > 100) errore.messaggio('Valore del contrasto non valido!');
-            else if (brightness < 0 || brightness > 100) errore.messaggio('Valore della luminosit&agrave; non valido!');
-            else if (saturation < -100 || saturation > 100) errore.messaggio('Valore della saturazione non valido!');
-            else if (iso < 0 || iso > 1600) errore.messaggio('Valore ISO non valido!');
+            if (sharpness < -100 || sharpness > 100) messaggio.errore('Valore della nitidezza non valido!');
+            else if (contrast < -100 || contrast > 100) messaggio.errore('Valore del contrasto non valido!');
+            else if (brightness < 0 || brightness > 100) messaggio.errore('Valore della luminosit&agrave; non valido!');
+            else if (saturation < -100 || saturation > 100) messaggio.errore('Valore della saturazione non valido!');
+            else if (iso < 0 || iso > 1600) messaggio.errore('Valore ISO non valido!');
             else {
                 $.ajax({
                     url: 'modifica_impostazioni',
@@ -41,8 +41,11 @@ var impostazioni = {
                         saturation: saturation,
                         iso: iso
                     }),
+                    success: function() {
+                        messaggio.successo('Impostazioni modificate!');
+                    },
                     error: function() {
-                        errore.messaggio('Errore del server!');
+                        messaggio.errore('Errore del server!');
                     }
                 });
             }
@@ -53,15 +56,22 @@ var impostazioni = {
     init_predefinite: function() {
         $('#predefinite').on('click', function() {
             $.ajax({
-                url: 'impostazioni_predefinite',
+                url: 'modifica_impostazioni',
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
-                success: function(risposta) {
-                    window.location.href = '/impostazioni';
+                data: JSON.stringify({
+                    sharpness: 0,
+                    contrast: 0,
+                    brightness: 50,
+                    saturation: 0,
+                    iso: 0
+                }),
+                success: function() {
+                    messaggio.successo('Impostazioni predefinite applicate!');
                 },
                 error: function() {
-                    errore.messaggio('Errore del server!');
+                    messaggio.errore('Errore del server!');
                 }
             });
         });
@@ -76,7 +86,7 @@ var impostazioni = {
                 contentType: 'application/json',
                 dataType: 'json',
                 error: function() {
-                    errore.messaggio('Errore del server!');
+                    messaggio.errore('Errore del server!');
                 }
             });
         });
@@ -98,7 +108,7 @@ var impostazioni = {
                 $('#iso').val(risposta.iso);
             },
             error: function() {
-                errore.messaggio('Errore del server!');
+                messaggio.errore('Errore del server!');
             }
         });
     }

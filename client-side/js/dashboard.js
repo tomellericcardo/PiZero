@@ -42,7 +42,7 @@ var dashboard = {
                 
             },
             error: function() {
-                errore.messaggio('Errore del server!');
+                messaggio.errore('Errore del server!');
             }
         });
     },
