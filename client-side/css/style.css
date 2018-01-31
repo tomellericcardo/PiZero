@@ -178,7 +178,7 @@ input::placeholder, textarea::placeholder {
     right: 0;
 }
 
-#download, #download_link {
+#pulisci, #download, #download_link {
     display: none;
 }
 
