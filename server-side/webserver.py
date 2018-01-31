@@ -159,6 +159,12 @@ def elimina():
     zero.elimina(id_elemento)
     return dumps({'success': True})
 
+# Download dell'album
+@app.route('/download', methods = ['POST'])
+def download():
+    zero.download()
+    return dumps({'success': True})
+
 # Lettura statistiche dashboard
 @app.route('/leggi_statistiche', methods = ['POST'])
 def leggi_statistiche():

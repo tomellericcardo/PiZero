@@ -6,6 +6,7 @@ var album = {
         album.init_chiudi();
         album.init_navigazione();
         album.init_elimina();
+        album.init_download();
         album.leggi_galleria();
     },
     
@@ -64,6 +65,7 @@ var album = {
             else if (album.galleria.tipo[i] == 'LAPSE') lista.elementi[i].lapse = true;
         }
         album.lista = lista;
+        if (lista.elementi.length > 0) album.lista.download = 'album_' + Date.now().toString() + '.zip';
         if (lista.elementi.length > 8) {
             album.init_pagine();
             var nuova_lista = {};
@@ -229,6 +231,27 @@ var album = {
             $('#modal_elimina').css('display', 'none');
         });
         
+    },
+    
+    // Bottone download
+    init_download: function() {
+        $('#download').on('click', function() {
+            $('#download').html('<i class="material-icons w3-spin">refresh</i>');
+            $.ajax({
+                url: 'download',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({id: album.in_mostra}),
+                success: function(risposta) {
+                    $('#download').html('<i class="material-icons">file_download</i>');
+                    $('#download_link').click();
+                },
+                error: function() {
+                    messaggio.errore('Errore del server!');
+                }
+            });
+        });
     }
     
 };

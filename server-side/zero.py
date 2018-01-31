@@ -115,6 +115,13 @@ class Zero:
             ORDER BY id DESC
         ''')
     
+    # Download dell'album
+    def download(self):
+        self.lock.acquire()
+        comando = 'zip ' + self.percorso + 'album/archivio.zip *'
+        call(comando, shell = True)
+        self.lock.release()
+    
     # Eliminazione elemento
     def elimina(self, id_elemento):
         self.lock.acquire()
