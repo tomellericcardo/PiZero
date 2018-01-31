@@ -65,7 +65,7 @@ var album = {
             else if (album.galleria.tipo[i] == 'LAPSE') lista.elementi[i].lapse = true;
         }
         album.lista = lista;
-        if (lista.elementi.length > 0) $('#download').css('display', 'none');
+        if (lista.elementi.length > 0) $('#download').css('display', 'block');
         if (lista.elementi.length > 8) {
             album.init_pagine();
             var nuova_lista = {};
