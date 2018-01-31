@@ -235,7 +235,7 @@ var album = {
     
     // Bottone download
     init_download: function() {
-        $('#download').on('click', function() {
+        $('.bottone_circolare').on('click', function() {
             $('#download').html('<i class="material-icons w3-spin">refresh</i>');
             $.ajax({
                 url: 'download',
