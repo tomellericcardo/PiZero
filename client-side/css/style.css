@@ -178,6 +178,10 @@ input::placeholder, textarea::placeholder {
     right: 0;
 }
 
+#download, #download_link {
+    dispay: none;
+}
+
 
 /*** MOSTRA ***/
 

@@ -65,7 +65,7 @@ var album = {
             else if (album.galleria.tipo[i] == 'LAPSE') lista.elementi[i].lapse = true;
         }
         album.lista = lista;
-        if (lista.elementi.length > 0) album.lista.download = 'album_' + Date.now().toString() + '.zip';
+        if (lista.elementi.length > 0) $('#download').css('display', 'none');
         if (lista.elementi.length > 8) {
             album.init_pagine();
             var nuova_lista = {};
@@ -235,7 +235,7 @@ var album = {
     
     // Bottone download
     init_download: function() {
-        $('.bottone_circolare').on('click', function() {
+        $('#download').on('click', function() {
             $('#download').html('<i class="material-icons w3-spin">refresh</i>');
             $.ajax({
                 url: 'download',
