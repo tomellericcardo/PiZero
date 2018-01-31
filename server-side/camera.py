@@ -26,12 +26,12 @@ class GIF(Thread):
             nome_file = self.zero.percorso + 'temp/GIF' + indice + '.jpg'
             self.zero.camera.capture(nome_file)
             self.stato = i + 1
-            sleep(1)
+            sleep(0.25)
             i += 1
         self.stato = 0
         foto = self.zero.percorso + 'temp/GIF*.jpg '
         gif = self.zero.percorso + 'temp/GIF.gif'
-        comando = 'convert -delay 50 ' + foto + gif
+        comando = 'convert -delay 25 ' + foto + gif
         call(comando, shell = True)
         self.zero.occupato = False
         self.zero.completo = 'GIF'
@@ -54,12 +54,12 @@ class TimeLapse(Thread):
         self.stato = 1
         self.zero.occupato = 'LAPSE'
         i = 0
-        while i < 240 and not self.stop:
+        while i < 270 and not self.stop:
             indice = formatta_indice(str(i))
             nome_file = self.zero.percorso + 'temp/LAPSE' + indice + '.jpg'
             self.zero.camera.capture(nome_file)
             self.stato = i + 1
-            sleep(30)
+            sleep(20)
             i += 1
         self.stato = 0
         foto = self.zero.percorso + 'temp/LAPSE%03d.jpg '

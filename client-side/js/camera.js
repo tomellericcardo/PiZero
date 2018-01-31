@@ -139,7 +139,7 @@ var camera = {
                     messaggio.errore('Errore del server!');
                 }
             });
-        }, 1000);
+        }, 500);
     },
     
     // Controllo completamento GIF
