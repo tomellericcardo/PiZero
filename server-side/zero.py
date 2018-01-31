@@ -118,7 +118,7 @@ class Zero:
     # Download dell'album
     def download(self):
         self.lock.acquire()
-        comando = 'zip ' + self.percorso + 'album/archivio.zip *'
+        comando = 'zip ' + self.percorso + 'album/archivio.zip ' + self.percorso + 'album/*'
         call(comando, shell = True)
         self.lock.release()
     

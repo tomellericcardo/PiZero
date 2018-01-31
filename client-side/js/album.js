@@ -245,7 +245,7 @@ var album = {
                 data: JSON.stringify({id: album.in_mostra}),
                 success: function(risposta) {
                     $('#download').html('<i class="material-icons">file_download</i>');
-                    $('#download_link').click();
+                    document.getElementById('download_link').click();
                 },
                 error: function() {
                     messaggio.errore('Errore del server!');
