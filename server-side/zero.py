@@ -115,6 +115,16 @@ class Zero:
             ORDER BY id DESC
         ''')
     
+    # Pulizia dell'album
+    def pulisci(self):
+        self.lock.acquire()
+        self.database.scrivi('''
+            DELETE FROM galleria
+        ''')
+        comando = 'rm /home/pi/PiZero/client-side/img/album/*'
+        call(comando, shell = True)
+        self.lock.release()
+    
     # Download dell'album
     def download(self):
         self.lock.acquire()

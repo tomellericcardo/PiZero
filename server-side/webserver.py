@@ -151,7 +151,13 @@ def scarta_elemento():
 def leggi_galleria():
     return dumps({'elementi': zero.leggi_galleria()})
 
-# Eliminazione elemento
+# Pulizia dell'album
+@app.route('/pulisci', methods = ['POST'])
+def pulisci():
+    zero.pulisci()
+    return dumps({'success': True})
+
+# Eliminazione dell'elemento
 @app.route('/elimina', methods = ['POST'])
 def elimina():
     richiesta = request.get_json(force = True)

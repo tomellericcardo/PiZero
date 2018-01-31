@@ -3,6 +3,7 @@ var album = {
     init: function() {
         album.init_stato();
         album.init_home();
+        album.init_pulisci();
         album.init_chiudi();
         album.init_navigazione();
         album.init_elimina();
@@ -25,6 +26,37 @@ var album = {
         $('#home').on('click', function() {
             window.location.href = '/home';
         });
+    },
+    
+    // Bottone pulizia
+    init_pulisci: function() {
+        
+        // Apertura modal
+        $('#pulisci').on('click', function() {
+            $('#modal_pulisci').css('display', 'block');
+        });
+        
+        // Conferma pulizia
+        $('#conferma_pulisci').on('click', function() {
+            $.ajax({
+                url: 'pulisci',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function(risposta) {
+                    window.location.href = '/album';
+                },
+                error: function() {
+                    messaggio.errore('Errore del server!');
+                }
+            });
+        });
+        
+        // Chiusura modal
+        $('#chiudi_pulisci, #sfondo_pulisci').on('click', function() {
+            $('#modal_pulisci').css('display', 'none');
+        });
+        
     },
     
     // Lettura della galleria
@@ -209,7 +241,7 @@ var album = {
             $('#modal_elimina').css('display', 'block');
         });
         
-        // Conferma aliminazione
+        // Conferma eliminazione
         $('#conferma_elimina').on('click', function() {
             $.ajax({
                 url: 'elimina',
@@ -235,7 +267,8 @@ var album = {
     
     // Bottone download
     init_download: function() {
-        $('#download').on('click', function() {
+        $('#download, #download_modal').on('click', function() {
+            $('#modal_pulisci').css('display', 'none');
             $('#download').html('<i class="material-icons w3-spin">refresh</i>');
             $.ajax({
                 url: 'download',

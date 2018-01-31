@@ -50,6 +50,7 @@
         <header class="w3-container w3-center w3-green ombra">
             <i id="home" class="w3-margin w3-display-topleft material-icons bottone_header">arrow_back</i>
             <h1 class="w3-xlarge">Album</h1>
+            <i id="pulisci" class="w3-margin w3-display-topright material-icons bottone_header">clear_all</i>
         </header>
     
         <!-- DOWNLOAD -->
@@ -98,6 +99,29 @@
                 <div class="w3-container w3-padding-bottom w3-white">
                     <p>Sicuro di voler eliminare l'elemento?</p>
                     <button id="conferma_elimina" class="w3-btn w3-margin-bottom w3-right w3-blue">Conferma</button>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- CONFERMA PULISCI -->
+        <div id="modal_pulisci" class="w3-modal">
+            <div id="sfondo_pulisci" class="sfondo_modal"></div>
+            <div class="w3-modal-content w3-card-8">
+                
+                <!-- HEADER -->
+                <div class="w3-container w3-indigo">
+                    <span id="chiudi_pulisci" class="w3-closebtn">&times;</span>
+                    <h1 class="w3-xlarge">Pulisci tutto</h1>
+                </div>
+                
+                <!-- MESSAGGIO -->
+                <div class="w3-container w3-padding-bottom w3-white">
+                    <p>
+                        Sicuro di voler eliminare tutti gli elementi dell'album?
+                        <br><a id="download_modal" href="#">Scarica l'album</a> se non l'hai gi&agrave; fatto.
+                    </p>
+                    <button id="conferma_pulisci" class="w3-btn w3-margin-bottom w3-right w3-blue">Conferma</button>
                 </div>
                 
             </div>
