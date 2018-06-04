@@ -48,18 +48,13 @@ Clona la directory in `/home/pi`:
 cd /home/pi
 sudo git clone http://www.github.com/tomellericcardo/PiZero.git
 ```
-Crea le cartelle necessarie:
-```
-cd PiZero/
-sudo mkdir client-side/img/temp client-side/img/album
-```
 Assicurati di aver abilitato il modulo fotocamera nella configurazione del Raspberry Pi:
 ```
 sudo raspi-config
 ```
 Avvia l'applicazione:
 ```
-sudo python server-side/webserver.py
+sudo python PiZero/server-side/webserver.py
 ```
 
 
